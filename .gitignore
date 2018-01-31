@@ -6,4 +6,4 @@
 /Models/model_*
 /Models/Old
 /Models/Preprocessed_*
-/__pycache__/
+/Models/__pycache__/
