@@ -8,7 +8,7 @@ import math
 
 ##############################################################################
 call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
-# call_folder = '/media/dario/Semesterarbeit/Images_RAD'
+# call_folder = '/media/dario/Semesterarbeit/Images_RAD/'
 store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 # store_folder = '/media/dario/Semesterarbeit/Data_224_224_new/'
 
@@ -22,7 +22,7 @@ Green_boundaries = np.array([[0.5, 525, 28], [0.6, 540, 35]])
 Blue_boundaries = np.array([[0.5, 460, 28], [0.6, 475, 35]])
 
 # Calculate parameters for 3 channels:
-nr_images = 1; # for each image in dataset, it creates "nr_images"
+nr_images = 150; # for each image in dataset, it creates "nr_images"
 ##############################################################################
 # CREATE CSS PARAMETERS
 
@@ -62,12 +62,11 @@ np.savetxt(os.path.join(store_folder, 'Parameters.csv'), (r_alpha, r_mean, r_sig
 # GENERATE RGB IMAGES
 nr_hyp_images = len(fnmatch.filter(os.listdir(call_folder), '*.mat'))
 batch_counter = 1
-nr_hyp_images = 5
 
 CSS_calc = np.full((3, 31), 0, dtype = np.float16)
 CSS = np.full((int(np.floor(1392/X_shape)) * int(np.floor(1300/Y_shape)) * nr_hyp_images * nr_images, 3, 3), 0, dtype = np.float16)
-for i in range(1, nr_hyp_images):
-    print('Evaluating Image ' + str(i))
+for i in range(0, nr_hyp_images):
+    print('Evaluating Image ' + str(i+1))
     mat_contents = sio.loadmat(os.path.join(call_folder, 'RAD_' + str(i+1) + '.mat'))
     rad =mat_contents['rad_new']
 

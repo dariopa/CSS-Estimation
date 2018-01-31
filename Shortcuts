@@ -8,7 +8,8 @@ cd /scratch_net/biwidl102/dariopa/Models
 
 
 %% Submitting a job on gpu
-qsub -cwd -l gpu=1 -l h_vmem=40G -R y Main.py
+qsub -cwd -l h_vmem=30G -R y Generate_Image.py
+qsub -cwd -l h_vmem=20G -R y Generate_Image.py
 
 % or better
 qrsh -l gpu=1 -l h_vmem=40G -q gpu.middle.q@*
