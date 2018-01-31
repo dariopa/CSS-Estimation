@@ -7,10 +7,10 @@ import random
 import math
 
 ##############################################################################
-# call_folder = '/scratch_net/biwidl102/dariopa/Image_RAD/'
-call_folder = '/media/dario/Semesterarbeit/Images_RAD'
-# store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224'
-store_folder = '/media/dario/Semesterarbeit/Data_224_224_new/'
+call_folder = '/scratch_net/biwidl102/dariopa/Image_RAD/'
+# call_folder = '/media/dario/Semesterarbeit/Images_RAD'
+store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
+# store_folder = '/media/dario/Semesterarbeit/Data_224_224_new/'
 
 X_shape = 224
 Y_shape = 224
