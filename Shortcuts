@@ -1,0 +1,26 @@
+%% LOGIN REMOTE
+ssh dariopa@biwidl102.ethz.ch
+
+%% Path to Folder with code
+cd '/media/dariopa/Semesterarbeit/Models'
+cd /scratch/dariopa
+cd /scratch_net/biwidl102/dariopa/Models
+
+
+%% Submitting a job on gpu
+qsub -cwd -l gpu=1 -l h_vmem=40G -R y Main.py
+
+% or better
+qrsh -l gpu=1 -l h_vmem=40G -q gpu.middle.q@*
+% or
+qrsh -l gpu=1 -l h_vmem=40G -l h_rt=24:00:00 -l hostname=biwirender04
+% with
+cd /scratch_net/biwidl102/dariopa/Models
+exec $SHELL
+export SGE_GPU=`grep -h $(whoami) /tmp/lock-gpu*/info.txt | sed  's/^[^0-9]*//;s/[^0-9].*$//'`
+python Main.py
+
+%% Make softlinks
+ls -li setup.py
+ln -s setup.py <softlink-name>
+
