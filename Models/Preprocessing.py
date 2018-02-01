@@ -27,10 +27,10 @@ Test_split = 1./10
 ##############################################################################
 
 # Number of Images:
-nr_images = int(use_data * len(fnmatch.filter(os.listdir(call_folder), '*.jpeg')))
+nr_images = int(use_data * len(fnmatch.filter(os.listdir(call_folder), '*.jpg')))
 
 # Pixels in x- and y-direction:
-arr = np.array(Image.open(call_folder + '/Image1.jpeg'))
+arr = np.array(Image.open(call_folder + '1.jpg'))
 x_row, y_col, _ = arr.shape
 
 ##############################################################################
@@ -40,10 +40,10 @@ print('Processing X Data...')
 X = np.full((nr_images,x_row,y_col,3),0, dtype = np.uint8)
 # X = []
 for i in range(1, nr_images+1):
-    img = Image.open(call_folder + '/Image' + str(i) + '.jpeg')
+    img = Image.open(call_folder + str(i) + '.jpg')
     img = np.array(img, dtype = np.uint8)
     X[i-1,:,:,:] = img
-    # img = cv2.imread(call_folder + '/Image' + str(i) + '.jpeg')
+    # img = cv2.imread(call_folder + '/Image' + str(i) + '.jpg')
     # X.append(img, dtype=np.uint8)
 
 print('Done!')
