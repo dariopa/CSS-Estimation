@@ -13,7 +13,7 @@ import numpy as np
 # Folder Path
 call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 # call_folder = '/media/dario/Semesterarbeit/Data_28_28/'
-store_folder = '/Preprocessed_Data_224_224/'
+store_folder = '/scratch_net/biwidl102/dariopa/Models/Preprocessed_Data_224_224/'
 # store_folder = '/Data_28_28/'
 
 # How many data to use?
@@ -88,9 +88,7 @@ for i in range(0,len(y)):
     y_binned[i, 2, 2] = np.argmax(class_b_sigma)
 
 
-# np.savetxt(os.path.join(store_folder, 'Bins.csv'), (bins_r_alpha, bins_r_mean, bins_r_sigma, bins_g_alpha, bins_g_mean, bins_g_sigma, bins_b_alpha, bins_b_mean, bins_b_sigma), delimiter=',')
-np.savetxt('Bins.csv', (bins_r_alpha, bins_r_mean, bins_r_sigma, bins_g_alpha, bins_g_mean, bins_g_sigma, bins_b_alpha, bins_b_mean, bins_b_sigma), delimiter=',')
-
+np.savetxt(os.path.join(store_folder, 'Bins.csv'), (bins_r_alpha, bins_r_mean, bins_r_sigma, bins_g_alpha, bins_g_mean, bins_g_sigma, bins_b_alpha, bins_b_mean, bins_b_sigma), delimiter=',')
 
 print('Done!')
 
