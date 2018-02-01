@@ -88,7 +88,9 @@ for i in range(0,len(y)):
     y_binned[i, 2, 2] = np.argmax(class_b_sigma)
 
 
-np.savetxt(os.path.join(store_folder, 'Bins.csv'), (bins_r_alpha, bins_r_mean, bins_r_sigma, bins_g_alpha, bins_g_mean, bins_g_sigma, bins_b_alpha, bins_b_mean, bins_b_sigma), delimiter=',')
+# np.savetxt(os.path.join(store_folder, 'Bins.csv'), (bins_r_alpha, bins_r_mean, bins_r_sigma, bins_g_alpha, bins_g_mean, bins_g_sigma, bins_b_alpha, bins_b_mean, bins_b_sigma), delimiter=',')
+np.savetxt('Bins.csv', (bins_r_alpha, bins_r_mean, bins_r_sigma, bins_g_alpha, bins_g_mean, bins_g_sigma, bins_b_alpha, bins_b_mean, bins_b_sigma), delimiter=',')
+
 
 print('Done!')
 
