@@ -7,3 +7,4 @@
 /Models/Old
 /Models/Preprocessed_*
 /Models/__pycache__/
+/.DS_Store
