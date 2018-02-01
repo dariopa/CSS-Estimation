@@ -13,7 +13,7 @@ import numpy as np
 # Folder Path
 call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 # call_folder = '/media/dario/Semesterarbeit/Data_28_28/'
-store_folder = '/Data_224_224/'
+store_folder = '/Preprocessed_Data_224_224/'
 # store_folder = '/Data_28_28/'
 
 # How many data to use?
