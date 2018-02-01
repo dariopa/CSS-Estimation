@@ -2,6 +2,8 @@ import os
 import fnmatch
 # from matplotlib.pyplot import imshow
 # import matplotlib.pyplot as plt
+os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
+import tensorflow as tf
 from PIL import Image
 from sklearn.utils import shuffle
 import numpy as np
@@ -9,11 +11,13 @@ import numpy as np
 
 ##############################################################################
 # Folder Path
-call_folder = '/media/dario/Semesterarbeit/Data_224_224'
-store_folder = 'Preprocessed_Data_224_224_small'
+call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
+# call_folder = '/media/dario/Semesterarbeit/Data_28_28/'
+store_folder = '/Data_224_224/'
+# store_folder = '/Data_28_28/'
 
 # How many data to use?
-use_data = 0.01/10
+use_data = 0.1/10
 
 # Divison factor for Training, Validation and Test data [0,1]:
 Train_split = 8./10
