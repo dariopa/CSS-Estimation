@@ -14,7 +14,7 @@ store_folder = '/scratch_net/biwidl102/dariopa/Models/Preprocessed_Data_224_224/
 # store_folder = '/Data_28_28/'
 
 # How many data to use?
-use_data = 0.1/10
+use_data = 0.01/10
 
 # Divison factor for Training, Validation and Test data [0,1]:
 Train_split = 8./10

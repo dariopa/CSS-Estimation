@@ -22,7 +22,7 @@ from NN_VGG_16 import CNN
 rate = 0.0002
 batch_size = 32
 random_seed = 123
-epochs = 1000
+epochs = 100
 
 # Classes
 classes = 10
