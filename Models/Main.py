@@ -7,8 +7,7 @@ from utils import train, predict, save, load
 
 ##############################################################################
 # Folder Path
-call_folder = 'Preprocessed_Data_224_224_small/' # for Trial
-# call_folder = 'Preprocessed_Data_28_28/' # for Trial
+call_folder = '/scratch_net/biwidl102/dariopa/Models/Preprocessed_Data_224_224/' # for Trial
 
 store_folder = './model_r_alpha/' 
 Name = 'r_alpha'
