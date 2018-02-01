@@ -14,7 +14,7 @@ qsub -cwd -l h_vmem=10G -R y Generate_Image.py
 % or better
 qrsh -l gpu=1 -l h_vmem=40G -q gpu.middle.q@*
 % or
-qrsh -l gpu=1 -l h_vmem=40G -l h_rt=24:00:00 -l hostname=biwirender04
+qrsh -l gpu=1 -l h_vmem=80G -l h_rt=12:00:00 -l hostname=biwirender08
 % with
 cd /scratch_net/biwidl102/dariopa/Models
 exec $SHELL
