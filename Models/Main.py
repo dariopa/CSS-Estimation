@@ -7,22 +7,23 @@ from utils import train, predict, save, load
 
 ##############################################################################
 # Folder Path
-call_folder = '/scratch_net/biwidl102/dariopa/Models/Preprocessed_Data_224_224/' # for Trial
+# call_folder = '/scratch_net/biwidl102/dariopa/Models/Preprocessed_Data_224_224/'
+call_folder = '/scratch_net/biwidl102/dariopa/Models/Preprocessed_Data_28_28/'
 
 store_folder = './model_r_alpha/' 
 Name = 'r_alpha'
 
 # Select Net:
-from NN_VGG_16 import CNN
+# from NN_VGG_16 import CNN
 # from NN_VGG_19 import CNN
-# from NN_LeNet import CNN
+from NN_LeNet import CNN
 # from NN_Basis import CNN
 
 # Define hyperparameters
 rate = 0.001
 batch_size = 32
 random_seed = 123
-epochs = 100
+epochs = 200
 
 # Classes
 classes = 10

@@ -8,13 +8,13 @@ import numpy as np
 
 ##############################################################################
 # Folder Path
-call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
-# call_folder = '/media/dario/Semesterarbeit/Data_28_28/'
-store_folder = '/scratch_net/biwidl102/dariopa/Models/Preprocessed_Data_224_224/'
-# store_folder = '/Data_28_28/'
+# call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
+call_folder = '/scratch_net/biwidl102/dariopa/Data_28_28/'
+# store_folder = '/scratch_net/biwidl102/dariopa/Models/Preprocessed_Data_224_224/'
+store_folder = '/scratch_net/biwidl102/dariopa/Models/Preprocessed_Data_28_28/'
 
 # How many data to use?
-use_data = 0.005
+use_data = 1.0
 
 # Divison factor for Training, Validation and Test data [0,1]:
 Train_split = 8./10
@@ -35,13 +35,10 @@ x_row, y_col, _ = arr.shape
 print()
 print('Processing X Data...')
 X = np.full((nr_images,x_row,y_col,3),0, dtype = np.uint8)
-# X = []
 for i in range(1, nr_images+1):
     img = Image.open(call_folder + str(i) + '.jpg')
     img = np.array(img, dtype = np.uint8)
     X[i-1,:,:,:] = img
-    # img = cv2.imread(call_folder + '/Image' + str(i) + '.jpg')
-    # X.append(img, dtype=np.uint8)
 
 print('Done!')
 

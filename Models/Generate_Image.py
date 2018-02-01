@@ -5,15 +5,23 @@ import scipy.misc
 import fnmatch
 import random
 import math
+import cv2
 
 ##############################################################################
 call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
-# call_folder = '/media/dario/Semesterarbeit/Images_RAD/'
-store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
-# store_folder = '/media/dario/Semesterarbeit/Data_224_224_new/'
+# store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
+store_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
 
+# Batch size of images
 X_shape = 224
 Y_shape = 224
+
+# Downscaling of images
+X_shape_output = 32
+Y_shape_output = 32
+
+# Want to resize image?
+resize = True
 
 
 # FIRST COMPUTE PARAMETERS
@@ -103,6 +111,8 @@ for i in range(0, nr_hyp_images):
         for i in range(0,X_window):
             for j in range (0,Y_window):
                 I_image_batch = I_image[(0 + i * X_shape):(i * X_shape + X_shape), (0 + j * Y_shape):(j * Y_shape + Y_shape), :]
+                if resize == True:
+                    I_image_batch = cv2.resize(I_image_batch, (X_shape_output, Y_shape_output))
                 scipy.misc.toimage(I_image_batch, cmin=0, cmax=1).save(os.path.join(store_folder, str(batch_counter) + '.jpg'))
 
                 # Fill CSS Array
