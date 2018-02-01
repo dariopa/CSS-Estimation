@@ -2,7 +2,7 @@ import os
 import fnmatch
 # from matplotlib.pyplot import imshow
 # import matplotlib.pyplot as plt
-os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
+# os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
 import tensorflow as tf
 from PIL import Image
 from sklearn.utils import shuffle
