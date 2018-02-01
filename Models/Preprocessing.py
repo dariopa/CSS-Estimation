@@ -9,9 +9,9 @@ import numpy as np
 ##############################################################################
 # Folder Path
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
-call_folder = '/scratch_net/biwidl102/dariopa/Data_28_28/'
+call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
 # store_folder = '/scratch_net/biwidl102/dariopa/Models/Preprocessed_Data_224_224/'
-store_folder = '/scratch_net/biwidl102/dariopa/Models/Preprocessed_Data_28_28/'
+store_folder = '/scratch_net/biwidl102/dariopa/Models/Preprocessed_Data_32_32/'
 
 # How many data to use?
 use_data = 1.0
