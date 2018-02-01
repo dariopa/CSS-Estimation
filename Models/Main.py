@@ -19,7 +19,7 @@ from NN_VGG_16 import CNN
 # from NN_Basis import CNN
 
 # Define hyperparameters
-rate = 0.0002
+rate = 0.001
 batch_size = 32
 random_seed = 123
 epochs = 100
