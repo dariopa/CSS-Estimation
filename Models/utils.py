@@ -76,11 +76,12 @@ def train(sess, epochs, training_set, validation_set, test_set,
             X_data = np.array(validation_set[0])
             y_data = np.array(validation_set[1])
             y_pred = np.full((len(X_data)),0)
-            X = np.full((1, 32, 32, 1), 0)                                    # NUMERISCHER WERT - ÄNDERN!
+            x_row, y_col, _ = np.array(Image.open(str(X_data[0]))).shape
+            X = np.full((1, x_row, y_col, 1), 0)
 
             for i in range(len(X_data)):
                 X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:,:,0:1] # NUMERISCHER WERT - ÄNDERN!
-                y_pred[i] = predict(sess, X, return_proba=False)              # NUMERISCHER WERT - ÄNDERN!
+                y_pred[i] = predict(sess, X, return_proba=False)
             valid_acc = 100*np.sum((y_pred == y_data)/len(y_data))
             val_accuracy_plot.append(valid_acc)
             print(' Validation Acc: %7.3f%%' % valid_acc, end=' ')
@@ -90,12 +91,12 @@ def train(sess, epochs, training_set, validation_set, test_set,
         if test_set is not None:
             X_data = np.array(test_set[0])
             y_data = np.array(test_set[1])
-            y_pred = np.full((len(X_data)),0)
-            X = np.full((1, 32, 32, 1), 0)                                    # NUMERISCHER WERT - ÄNDERN!
+            x_row, y_col, _ = np.array(Image.open(str(X_data[0]))).shape
+            X = np.full((1, x_row, y_col, 1), 0)
 
             for i in range(len(X_data)):
                 X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:,:,0:1] # NUMERISCHER WERT - ÄNDERN!
-                y_pred[i] = predict(sess, X, return_proba=False)              # NUMERISCHER WERT - ÄNDERN!
+                y_pred[i] = predict(sess, X, return_proba=False)
             test_acc = 100*np.sum((y_pred == y_data)/len(y_data))
             test_accuracy_plot.append(test_acc)
             print(' Test Acc: %7.3f%%' % test_acc)
