@@ -1,20 +1,37 @@
 import os
 import numpy as np
-os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
+# os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
 import tensorflow as tf
+from sklearn.utils import shuffle
+from PIL import Image
 
 ##############################################################################
 # GENERATE BATCH
-def batch_generator(X, y, random_seed, batch_size, shuffle=False):
-    
-    idx = np.arange(y.shape[0])
-    
-    if shuffle:
-        rng = np.random.RandomState(random_seed)
-        rng.shuffle(idx)
-        X = X[idx]
-        y = y[idx]
-    
+
+def batch_generator(X, y, batch_size):
+
+    row, col, _ = np.array(Image.open(str(X[0]))).shape
+
+    for i in range(0, int(np.floor(len(X) / batch_size)) + 1):
+        if i == (int(np.floor(len(X) / batch_size))):
+            batch_size = len(X) - (i * batch_size)
+
+        X_send = np.full((batch_size, row, col, 1), 0, dtype = np.uint8)
+        
+        for k in range(0, batch_size):
+            img = np.array(Image.open(str(X[k + i * batch_size])))
+            X_send[k, :, :, :] = img[:,:,0:1]                         # NUMERISCHER WERT - ÄNDERN!
+        y_send = y[i * batch_size:(i + 1) * batch_size]
+
+        (X_send, y_send) = shuffle(X_send, y_send)
+
+        yield(X_send, y_send)
+
+
+##############################################################################
+# GENERATE BATCH
+def batch_generator_V2(X, y, batch_size):
+       
     for i in range(0, X.shape[0], batch_size):
         yield (X[i:i+batch_size, :], y[i:i+batch_size])
 
@@ -32,8 +49,8 @@ def load(saver, sess, path, epoch):
     saver.restore(sess, os.path.join(path, 'cnn-model.ckpt-%d' % epoch))
 
 
-def train(sess, epochs, training_set, validation_set, test_set, random_seed,
-          batch_size, initialize=True, shuffle=True, dropout=0.5):
+def train(sess, epochs, training_set, validation_set, test_set,
+          batch_size, initialize=True, dropout=0.5):
 
     X_data = np.array(training_set[0])
     y_data = np.array(training_set[1])
@@ -41,13 +58,12 @@ def train(sess, epochs, training_set, validation_set, test_set, random_seed,
     if initialize:
         sess.run(tf.global_variables_initializer())
 
-    np.random.seed(random_seed) # for shufflling in batch_generator
     avg_loss_plot = []
     val_accuracy_plot = []
     test_accuracy_plot = []
     for epoch in range(1, epochs+1):
-        batch_gen = batch_generator(X_data, y_data, random_seed=random_seed, batch_size=batch_size, shuffle=shuffle)
         avg_loss = []
+        batch_gen = batch_generator(X_data, y_data, batch_size=batch_size)
         for i, (batch_x, batch_y) in enumerate(batch_gen):
             feed = {'tf_x:0': batch_x, 'tf_y:0': batch_y, 'fc_keep_prob:0': dropout}
             loss, _ = sess.run(['cross_entropy_loss:0', 'train_op'], feed_dict=feed)
@@ -57,25 +73,40 @@ def train(sess, epochs, training_set, validation_set, test_set, random_seed,
         print('Epoch %02d Training Avg. Loss: %7.3f' % (epoch, np.mean(avg_loss)), end=' ')
 
         if validation_set is not None:
-            feed = {'tf_x:0': validation_set[0], 'tf_y:0': validation_set[1], 'fc_keep_prob:0':1.0}
-            valid_acc = sess.run('accuracy:0', feed_dict=feed)
+            X_data = np.array(validation_set[0])
+            y_data = np.array(validation_set[1])
+            y_pred = np.full((len(X_data)),0)
+            X = np.full((1, 32, 32, 1), 0)                                    # NUMERISCHER WERT - ÄNDERN!
+
+            for i in range(len(X_data)):
+                X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:,:,0:1] # NUMERISCHER WERT - ÄNDERN!
+                y_pred[i] = predict(sess, X, return_proba=False)              # NUMERISCHER WERT - ÄNDERN!
+            valid_acc = 100*np.sum((y_pred == y_data)/len(y_data))
             val_accuracy_plot.append(valid_acc)
-            print(' Validation Acc: %7.3f' % valid_acc, end=' ')
+            print(' Validation Acc: %7.3f%%' % valid_acc, end=' ')
         else:
             print()
 
         if test_set is not None:
-            feed = {'tf_x:0': test_set[0], 'tf_y:0': test_set[1], 'fc_keep_prob:0':1.0}
-            test_acc = sess.run('accuracy:0', feed_dict=feed)
+            X_data = np.array(test_set[0])
+            y_data = np.array(test_set[1])
+            y_pred = np.full((len(X_data)),0)
+            X = np.full((1, 32, 32, 1), 0)                                    # NUMERISCHER WERT - ÄNDERN!
+
+            for i in range(len(X_data)):
+                X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:,:,0:1] # NUMERISCHER WERT - ÄNDERN!
+                y_pred[i] = predict(sess, X, return_proba=False)              # NUMERISCHER WERT - ÄNDERN!
+            test_acc = 100*np.sum((y_pred == y_data)/len(y_data))
             test_accuracy_plot.append(test_acc)
-            print(' Test Acc: %7.3f' % test_acc)
+            print(' Test Acc: %7.3f%%' % test_acc)
         else:
             print()
 
+
     return avg_loss_plot, val_accuracy_plot, test_accuracy_plot
 
-def predict(sess, X_test, return_proba=False):
-    feed = {'tf_x:0': X_test, 'fc_keep_prob:0': 1.0}
+def predict(sess, X, return_proba=False):
+    feed = {'tf_x:0': X, 'fc_keep_prob:0': 1.0}
     if return_proba:
         return sess.run('probabilities:0', feed_dict=feed)
     else:

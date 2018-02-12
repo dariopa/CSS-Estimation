@@ -8,8 +8,9 @@ import math
 import cv2
 
 ##############################################################################
-call_folder = '/home/dario/Documents/SemThes_Local/Images_RAD/'
-store_folder = '/home/dario/Documents/SemThes_Local/Data_32_32'
+call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
+# store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
+store_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
 
 # Batch size of images
 X_shape = 224
@@ -29,7 +30,7 @@ Green_boundaries = np.array([[0.5, 525, 28], [0.6, 540, 35]])
 Blue_boundaries = np.array([[0.5, 460, 28], [0.6, 475, 35]])
 
 # Calculate parameters for 3 channels:
-nr_images = 20; # for each image in dataset, it creates "nr_images"               ####################### TO CHANGE!
+nr_images = 150; # for each image in dataset, it creates "nr_images"
 ##############################################################################
 # CREATE CSS PARAMETERS
 
@@ -69,7 +70,6 @@ np.savetxt(os.path.join(store_folder, 'Parameters.csv'), (r_alpha, r_mean, r_sig
 # GENERATE RGB IMAGES
 nr_hyp_images = len(fnmatch.filter(os.listdir(call_folder), '*.mat'))
 batch_counter = 1
-nr_hyp_images = 5 ############################################################################################    TO DELETE!!!!!
 
 CSS_calc = np.full((3, 31), 0, dtype = np.float16)
 CSS = np.full((int(np.floor(1392/X_shape)) * int(np.floor(1300/Y_shape)) * nr_hyp_images * nr_images, 3, 3), 0, dtype = np.float16)
@@ -113,7 +113,7 @@ for i in range(0, nr_hyp_images):
                 I_image_batch = I_image[(0 + i * X_shape):(i * X_shape + X_shape), (0 + j * Y_shape):(j * Y_shape + Y_shape), :]
                 if resize == True:
                     I_image_batch = cv2.resize(I_image_batch, (X_shape_output, Y_shape_output))
-                scipy.misc.toimage(I_image_batch, cmin=0, cmax=1).save(os.path.join(store_folder + '/Images/', str(batch_counter) + '.jpg'))
+                scipy.misc.toimage(I_image_batch, cmin=0, cmax=1).save(os.path.join(store_folder, str(batch_counter) + '.jpg'))
 
                 # Fill CSS Array
                 CSS[batch_counter - 1, :, 0] = [r_alpha[counter], r_mean[counter], r_sigma[counter]]
@@ -124,75 +124,5 @@ for i in range(0, nr_hyp_images):
 batch_counter = batch_counter - 1
 CSS = CSS[0:batch_counter, :, :]
 np.save(os.path.join(store_folder, 'CSS.npy'), CSS)
-
-
-##############################################################################
-# IMPORT AND PROCESS Y
-print()
-print('Binning y Data...')
-nr_images = len(fnmatch.filter(os.listdir(store_folder + '/Images/'), '*.jpg'))
-
-y_binned = np.zeros([len(CSS), 3, 3])
-
-
-for i in range(0,len(CSS)):
-    # binning r_alpha values
-    class_r_alpha, bins_r_alpha = np.histogram(CSS[i, 0, 0], bins=10, range=[0.5, 0.6])
-    y_binned[i, 0, 0] = np.argmax(class_r_alpha)
-    # binning g_alpha values
-    class_g_alpha, bins_g_alpha = np.histogram(CSS[i, 0, 1], bins=10, range=[0.5, 0.6])
-    y_binned[i, 0, 1] = np.argmax(class_g_alpha)
-    # binning b_alpha values
-    class_b_alpha, bins_b_alpha = np.histogram(CSS[i, 0, 2], bins=10, range=[0.5, 0.6])
-    y_binned[i, 0, 2] = np.argmax(class_b_alpha)
-
-    # binning r_mean values
-    class_r_mean, bins_r_mean = np.histogram(CSS[i, 1, 0], bins=10, range=[600, 615])
-    y_binned[i, 1, 0] = np.argmax(class_r_mean)
-    # binning g_mean values
-    class_g_mean, bins_g_mean = np.histogram(CSS[i, 1, 1], bins=10, range=[525, 540])
-    y_binned[i, 1, 1] = np.argmax(class_g_mean)
-    # binning b_mean values
-    class_b_mean, bins_b_mean = np.histogram(CSS[i, 1, 2], bins=10, range=[460, 475])
-    y_binned[i, 1, 2] = np.argmax(class_b_mean)
-
-    # binning r_sigma values:
-    class_r_sigma, bins_r_sigma = np.histogram(CSS[i, 2, 0], bins=10, range=[28, 35])
-    y_binned[i, 2, 0] = np.argmax(class_r_sigma)
-    # binning g_sigma values
-    class_g_sigma, bins_g_sigma = np.histogram(CSS[i, 2, 1], bins=10, range=[28, 35])
-    y_binned[i, 2, 1] = np.argmax(class_g_sigma)
-    # binning b_sigma values
-    class_b_sigma, bins_b_sigma = np.histogram(CSS[i, 2, 2], bins=10, range=[28, 35])
-    y_binned[i, 2, 2] = np.argmax(class_b_sigma)
-
-
-np.savetxt(os.path.join(store_folder, 'Bins.csv'), (bins_r_alpha, bins_r_mean, bins_r_sigma, bins_g_alpha, bins_g_mean, bins_g_sigma, bins_b_alpha, bins_b_mean, bins_b_sigma), delimiter=',')
-
-print('Done!')
-
-##############################################################################
-# SAVE DATA IN BINARY FORMAT
-print()
-print('Saving y binned Data...')
-np.save(os.path.join(store_folder, 'CSS_binned.npy'), y_binned)
-
-print(CSS[:,1,0])
-print(y_binned[:,1,0])
-print()
-
-print('Done!')
-
-##############################################################################
-# STORE PATH OF IMAGES
-print()
-print('Saving datapath...')
-
-nr_images = len(fnmatch.filter(os.listdir(store_folder + '/Images/'), '*.jpg'))
-data = []
-for i in range(0, nr_images):
-    data.append(os.path.join(store_folder + '/Images/', str(i+1) + '.jpg'))
-print(data)
-np.save(store_folder + '/datapath.npy', data)
 
 print('Done!')
