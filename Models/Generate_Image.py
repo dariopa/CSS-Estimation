@@ -194,7 +194,7 @@ nr_images = len(fnmatch.filter(os.listdir(store_folder + '/Images/'), '*.jpg'))
 data = []
 for i in range(0, nr_images):
     data.append(os.path.join(store_folder + '/Images/', str(i+1) + '.jpg'))
-print(data)
+# print(data)
 np.save(store_folder + '/datapath.npy', data)
 
 print('Done!')
