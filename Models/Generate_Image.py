@@ -8,10 +8,14 @@ import math
 import cv2
 
 ##############################################################################
-# call_folder = '/home/dario/Documents/SemThes_Local/Images_RAD/'
-call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
-# store_folder = '/home/dario/Documents/SemThes_Local/Data_32_32'
-store_folder = '/scratch_net/biwidl102/dariopa/Data_32_32'
+call_folder = '/home/dario/Documents/SemThes_Local/Images_RAD/'
+# call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
+
+store_folder = '/home/dario/Documents/SemThes_Local/Data_32_32'
+# store_folder = '/home/dario/Documents/SemThes_Local/Data_224_224'
+
+# store_folder = '/scratch_net/biwidl102/dariopa/Data_32_32'
+# store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224'
 
 # Batch size of images
 X_shape = 224
@@ -71,7 +75,7 @@ np.savetxt(os.path.join(store_folder, 'Parameters.csv'), (r_alpha, r_mean, r_sig
 # GENERATE RGB IMAGES
 nr_hyp_images = len(fnmatch.filter(os.listdir(call_folder), '*.mat'))
 batch_counter = 1
-nr_hyp_images = 50 ############################################################################################    TO DELETE!!!!!
+nr_hyp_images = 5 ############################################################################################    TO DELETE!!!!!
 
 CSS_calc = np.full((3, 31), 0, dtype = np.float16)
 CSS = np.full((int(np.floor(1392/X_shape)) * int(np.floor(1300/Y_shape)) * nr_hyp_images * nr_images, 3, 3), 0, dtype = np.float16)

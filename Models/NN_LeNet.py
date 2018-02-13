@@ -1,6 +1,6 @@
 import os
 import numpy as np
-os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
+# os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
 import tensorflow as tf
 from tensorflow.contrib.layers import flatten
 
@@ -38,7 +38,7 @@ def CNN(x, classes):
     # SOLUTION: Flatten. Input = 5x5x64. Output = 1024.
     fc0 = flatten(conv2)
 
-    # SOLUTION: Layer 3: Fully Connected. Input = 1024. Output = 120.
+    # SOLUTION: Layer 3: Fully Connected. Input = 1600. Output = 120.
     fc3_W = tf.Variable(tf.truncated_normal(shape=(1600, 120), mean = mu, stddev = sigma))
     fc3_b = tf.Variable(tf.zeros(120))
     fc3 = tf.matmul(fc0, fc3_W) + fc3_b

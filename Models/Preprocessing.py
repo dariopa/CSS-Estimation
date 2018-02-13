@@ -7,8 +7,11 @@ import numpy as np
 
 ##############################################################################
 # Folder Path
+call_folder = '/home/dario/Documents/SemThes_Local/Data_32_32'
+# call_folder = '/home/dario/Documents/SemThes_Local/Data_224_224'
+
+# call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224'
-call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32'
 
 # How much data to use?
 use_data = 1

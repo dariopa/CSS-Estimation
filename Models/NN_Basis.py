@@ -1,6 +1,6 @@
 import os
 import numpy as np
-os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
+# os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
 import tensorflow as tf
 
 # IMPLEMENTATION OF NN
@@ -21,7 +21,6 @@ def conv_layer(input_tensor, name, kernel_size, n_output_channels, padding_mode=
         conv = tf.nn.bias_add(conv, biases, name='net_pre-activation')
         conv = tf.nn.relu(conv, name='activation')
         print(conv)
-        
         return conv
 
 def fc_layer(input_tensor, name, n_output_units, activation_fn=None):
