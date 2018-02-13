@@ -13,9 +13,6 @@ def batch_generator(X, y, batch_size):
     row, col, _ = np.array(Image.open(str(X[0]))).shape
 
     for i in range(0, int(np.floor(len(X) / batch_size))):
-        # if i == (int(np.floor(len(X) / batch_size))) - 1:
-        #     batch_size = len(X) - (i * batch_size)
-
         X_send = np.full((batch_size, row, col, 1), 0, dtype = np.uint8)
         
         for k in range(0, batch_size):

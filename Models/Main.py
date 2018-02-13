@@ -8,8 +8,8 @@ from PIL import Image
 
 ##############################################################################
 # Folder Path
-call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
+# call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
+call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_32_32/'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_224_224/'
@@ -18,9 +18,9 @@ store_folder = './model_r_alpha/'
 Name = 'r_alpha'
 
 # Select Net:
-# from NN_VGG_16 import CNN
+from NN_VGG_16 import CNN
 # from NN_VGG_19 import CNN
-from NN_LeNet import CNN
+# from NN_LeNet import CNN
 # from NN_Basis import CNN
 
 # Define hyperparameters
