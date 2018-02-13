@@ -4,8 +4,6 @@ os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
 import tensorflow as tf
 from utils import train, predict, save, load
 from PIL import Image
-import matplotlib.pyplot as plt
-from matplotlib.pyplot import imshow
 
 
 ##############################################################################
