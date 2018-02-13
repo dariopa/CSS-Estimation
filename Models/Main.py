@@ -23,7 +23,7 @@ from NN_LeNet import CNN
 # Define hyperparameters
 rate = 0.001
 batch_size = 64
-epochs = 2
+epochs = 20
 
 # Classes
 classes = 10
