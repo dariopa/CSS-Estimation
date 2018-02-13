@@ -1,6 +1,6 @@
 import os
 import numpy as np
-# os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
+os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
 import tensorflow as tf
 from utils import train, predict, save, load
 from PIL import Image
@@ -8,10 +8,10 @@ from PIL import Image
 
 ##############################################################################
 # Folder Path
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
+call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 
-call_folder = '/home/dario/Documents/SemThes_Local/Data_32_32/'
+# call_folder = '/home/dario/Documents/SemThes_Local/Data_32_32/'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_224_224/'
 
 store_folder = './model_r_alpha/' 

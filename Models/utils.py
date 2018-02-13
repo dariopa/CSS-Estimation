@@ -1,6 +1,6 @@
 import os
 import numpy as np
-# os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
+os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
 import tensorflow as tf
 from sklearn.utils import shuffle
 from PIL import Image
