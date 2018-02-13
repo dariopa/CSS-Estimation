@@ -13,7 +13,7 @@ qsub -cwd -l h_vmem=10G -R y Generate_Image.py
 
 % or better
 exec $SHELL
-qrsh -l gpu=1 -l h_vmem=40G -q gpu.middle.q@*
+qrsh -l gpu=1 -l h_vmem=80G -q gpu.middle.q@*
 % or
 exec $SHELL
 qrsh -l gpu=1 -l h_vmem=80G -l h_rt=12:00:00 -l hostname=biwirender08
