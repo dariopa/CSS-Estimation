@@ -4,6 +4,7 @@ ssh dariopa@biwidl102.ethz.ch
 %% Path to Folder with code
 cd '/media/dariopa/Semesterarbeit/Models'
 cd /scratch/dariopa
+exec $SHELL
 cd /scratch_net/biwidl102/dariopa/Models
 
 
