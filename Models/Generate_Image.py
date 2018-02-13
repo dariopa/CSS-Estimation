@@ -8,8 +8,10 @@ import math
 import cv2
 
 ##############################################################################
-call_folder = '/home/dario/Documents/SemThes_Local/Images_RAD/'
-store_folder = '/home/dario/Documents/SemThes_Local/Data_32_32'
+# call_folder = '/home/dario/Documents/SemThes_Local/Images_RAD/'
+call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
+# store_folder = '/home/dario/Documents/SemThes_Local/Data_32_32'
+store_folder = '/scratch_net/biwidl102/dariopa/Data_32_32'
 
 # Batch size of images
 X_shape = 224
