@@ -2,7 +2,7 @@ import os
 import numpy as np
 # os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
 import tensorflow as tf
-from utils_new import train, predict, save, load
+from utils import train, predict, save, load
 from PIL import Image
 
 
@@ -25,8 +25,8 @@ from NN_LeNet import CNN
 
 # Define hyperparameters
 rate = 0.001
-batch_size = 64
-epochs = 2
+batch_size = 32
+epochs = 10
 
 # Classes
 classes = 10
@@ -74,7 +74,7 @@ with g.as_default():
     cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_y_onehot), name='cross_entropy_loss')
 
     # Optimizer:
-    optimizer = tf.train.AdamOptimizer(learning_rate=rate).minimize(cross_entropy_loss, name='train_op')
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate=rate).minimize(cross_entropy_loss, name='train_op')
 
     # Computing the prediction accuracy
     correct_predictions = tf.equal(predictions['labels'], tf_y, name='correct_preds')
@@ -123,7 +123,7 @@ with g2.as_default():
     # Loss Function and Optimization
     cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_y_onehot), name='cross_entropy_loss')
     # Optimizer:
-    optimizer = tf.train.AdamOptimizer(learning_rate=rate).minimize(cross_entropy_loss, name='train_op')
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate=rate).minimize(cross_entropy_loss, name='train_op')
     # Computing the prediction accuracy
     correct_predictions = tf.equal(predictions['labels'], tf_y, name='correct_preds')
     accuracy = tf.reduce_mean(tf.cast(correct_predictions, tf.float32), name='accuracy')
