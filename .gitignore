@@ -5,9 +5,9 @@
 /Images
 /Images_RAD
 /Models/model_*
-/Models/Old
 /Models/Preprocessed_*
 /Models/__pycache__/
 /.DS_Store
 /.vscode/
+/Models/.vscode/
 /.pyenv/
