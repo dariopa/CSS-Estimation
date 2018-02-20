@@ -14,7 +14,7 @@ import numpy as np
 call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224'
 
 # How much data to use?
-use_data = 1
+use_data = 0.25
 
 # Divison factor for Training, Validation and Test data [0,1]:
 Train_split = 8./10
