@@ -74,7 +74,7 @@ with g.as_default():
     cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_y_onehot), name='cross_entropy_loss')
 
     # Optimizer:
-    optimizer = tf.train.GradientDescentOptimizer(learning_rate=rate).minimize(cross_entropy_loss, name='train_op')
+    optimizer = tf.train.AdamOptimizer(learning_rate=rate).minimize(cross_entropy_loss, name='train_op')
 
     # Computing the prediction accuracy
     correct_predictions = tf.equal(predictions['labels'], tf_y, name='correct_preds')
