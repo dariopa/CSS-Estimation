@@ -8,28 +8,18 @@ from PIL import Image
 ##############################################################################
 # GENERATE BATCH
 
-def batch_generator(X, y, batch_size):
+def batch_generator(X, y, i,row, col, batch):
 
-    row, col, _ = np.array(Image.open(str(X[0]))).shape
+    X_send = np.full((batch, row, col, 1), 0, dtype = np.uint8)
+    
+    for k in range(0, batch):
+        img = np.array(Image.open(str(X[k + i * batch])))
+        X_send[k, :, :, :] = img[:,:,0:1]                         # NUMERISCHER WERT - ÄNDERN!
+    y_send = y[i * batch:(i + 1) * batch]
 
-    for i in range(0, int(np.floor(len(X) / batch_size))):
-        X_send = np.full((batch_size, row, col, 1), 0, dtype = np.uint8)
-        
-        for k in range(0, batch_size):
-            img = np.array(Image.open(str(X[k + i * batch_size])))
-            X_send[k, :, :, :] = img[:,:,0:1]                         # NUMERISCHER WERT - ÄNDERN!
-        y_send = y[i * batch_size:(i + 1) * batch_size]
+    (X_send, y_send) = shuffle(X_send, y_send)
 
-        (X_send, y_send) = shuffle(X_send, y_send)
-        yield(X_send, y_send)
-
-
-##############################################################################
-# GENERATE BATCH
-def batch_generator_V2(X, y, batch_size):
-       
-    for i in range(0, X.shape[0], batch_size):
-        yield (X[i:i+batch_size, :], y[i:i+batch_size])
+    return(X_send, y_send)
 
 ##############################################################################
 # UTILITIES
@@ -57,16 +47,22 @@ def train(sess, epochs, training_set, validation_set, test_set,
     avg_loss_plot = []
     val_accuracy_plot = []
     test_accuracy_plot = []
+    row, col, _ = np.array(Image.open(str(X_data_test[0]))).shape
+
     for epoch in range(1, epochs+1):
         avg_loss = []
-        batch_gen = batch_generator(X_data_test, y_data_test, batch_size=batch_size)
-        for i, (batch_x, batch_y) in enumerate(batch_gen):
+        ##############################################################################
+        
+        for i in range(0, int(np.floor(len(X_data_test) / batch_size))):
 
+            batch_x, batch_y = batch_generator(X_data_test, y_data_test, i=i, row=row, col=col, batch=batch_size)
             feed = {'tf_x:0': batch_x, 'tf_y:0': batch_y, 'fc_keep_prob:0': dropout}
             loss, _ = sess.run(['cross_entropy_loss:0', 'train_op'], feed_dict=feed)
             avg_loss.append(loss)
+
         avg_loss_plot.append(np.mean(avg_loss))
         print('Epoch %02d Training Avg. Loss: %7.3f' % (epoch, np.mean(avg_loss)), end=' ')
+        del batch_x, batch_y
 
         if validation_set is not None:
             X_data = np.array(validation_set[0])
@@ -87,6 +83,7 @@ def train(sess, epochs, training_set, validation_set, test_set,
         if test_set is not None:
             X_data = np.array(test_set[0])
             y_data = np.array(test_set[1])
+            y_pred = np.full((len(X_data)),0)
             x_row, y_col, _ = np.array(Image.open(str(X_data[0]))).shape
             X = np.full((1, x_row, y_col, 1), 0)
 
@@ -98,6 +95,7 @@ def train(sess, epochs, training_set, validation_set, test_set,
             print(' Test Acc: %7.3f%%' % test_acc)
         else:
             print()
+        ##############################################################################
 
 
     return avg_loss_plot, val_accuracy_plot, test_accuracy_plot

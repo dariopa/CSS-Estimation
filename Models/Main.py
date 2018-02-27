@@ -2,7 +2,7 @@ import os
 import numpy as np
 os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
 import tensorflow as tf
-from utils_new import train, predict, save, load
+from utils import train, predict, save, load
 from PIL import Image
 
 config = tf.ConfigProto()
@@ -30,7 +30,7 @@ from NN_VGG_16 import CNN
 # Define hyperparameters
 rate = 0.001
 batch_size = 32
-epochs = 10
+epochs = 15
 
 # Classes
 classes = 10
