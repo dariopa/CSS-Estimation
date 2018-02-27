@@ -5,6 +5,10 @@ import tensorflow as tf
 from utils_new import train, predict, save, load
 from PIL import Image
 
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True #Do not assign whole gpu memory, just use it on the go
+config.allow_soft_placement = True #If a operation is not define it the default device, let it execute in another.
+
 
 ##############################################################################
 # Folder Path
@@ -88,7 +92,7 @@ with g.as_default():
 # TRAINING
 print()
 print('Training... ')
-with tf.Session(graph=g) as sess:
+with tf.Session(graph=g, config=config) as sess:
     [avg_loss_plot, val_accuracy_plot, test_accuracy_plot] = train(sess, epochs=epochs,
                                                                    training_set=(X_train, y_train),
                                                                    validation_set=(X_valid, y_valid),
@@ -134,7 +138,7 @@ with g2.as_default():
 # PREDICTION
 # create a new session and restore the model
 
-with tf.Session(graph=g2) as sess:
+with tf.Session(graph=g2, config=config) as sess:
     load(saver, sess, epoch=epochs, path=store_folder)
 
     # NO PROBABILITIES
