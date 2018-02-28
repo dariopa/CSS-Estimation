@@ -155,4 +155,3 @@ with tf.Session(graph=g2, config=config) as sess:
 
     np.save(os.path.join(store_folder, Name + '_avg_loss_plot.npy'), avg_loss_plot)
     np.save(os.path.join(store_folder, Name + '_val_accuracy_plot.npy'), val_accuracy_plot)
-    np.save(os.path.join(store_folder, Name + '_test_accuracy_plot.npy'), test_accuracy_plot)
