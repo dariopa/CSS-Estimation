@@ -35,7 +35,7 @@ def load(saver, sess, path, epoch):
     saver.restore(sess, os.path.join(path, 'cnn-model.ckpt-%d' % epoch))
 
 
-def train(sess, epochs, training_set, validation_set, test_set,
+def train(sess, epochs, training_set, validation_set,
           batch_size, initialize=True, dropout=0.5):
 
     X_data_test = np.array(training_set[0])
@@ -76,29 +76,13 @@ def train(sess, epochs, training_set, validation_set, test_set,
                 y_pred[i] = predict(sess, X, return_proba=False)
             valid_acc = 100*np.sum((y_pred == y_data)/len(y_data))
             val_accuracy_plot.append(valid_acc)
-            print(' Validation Acc: %7.3f%%' % valid_acc, end=' ')
+            print(' Validation Acc: %7.3f%%' % valid_acc)
         else:
             print()
 
-        if test_set is not None:
-            X_data = np.array(test_set[0])
-            y_data = np.array(test_set[1])
-            y_pred = np.full((len(X_data)),0)
-            x_row, y_col, _ = np.array(Image.open(str(X_data[0]))).shape
-            X = np.full((1, x_row, y_col, 1), 0)
-
-            for i in range(len(X_data)):
-                X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:,:,0:1] # NUMERISCHER WERT - ÄNDERN!
-                y_pred[i] = predict(sess, X, return_proba=False)
-            test_acc = 100*np.sum((y_pred == y_data)/len(y_data))
-            test_accuracy_plot.append(test_acc)
-            print(' Test Acc: %7.3f%%' % test_acc)
-        else:
-            print()
         ##############################################################################
 
-
-    return avg_loss_plot, val_accuracy_plot, test_accuracy_plot
+    return avg_loss_plot, val_accuracy_plot
 
 def predict(sess, X, return_proba=False):
     feed = {'tf_x:0': X, 'fc_keep_prob:0': 1.0}

@@ -35,6 +35,7 @@ epochs = 15
 # Classes
 classes = 10
 
+np.random.seed(123)
 ##############################################################################
 # IMPORT DATA
 
@@ -65,26 +66,17 @@ with g.as_default():
     tf_y = tf.placeholder(tf.int32, shape=[None], name='tf_y')
     # build the graph
     logits = CNN(tf_x, classes)
-
     # Prediction
     predictions = {
         'probabilities' : tf.nn.softmax(logits, name='probabilities'),
         'labels' : tf.cast(tf.argmax(logits, axis=1), tf.int32, name='labels')
     }
-
     # One-hot encoding:
     tf_y_onehot = tf.one_hot(indices=tf_y, depth=classes, dtype=tf.float32, name='tf_y_onehot')
     # Loss Function and Optimization
     cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_y_onehot), name='cross_entropy_loss')
-
     # Optimizer:
     optimizer = tf.train.AdamOptimizer(learning_rate=rate).minimize(cross_entropy_loss, name='train_op')
-
-    # Computing the prediction accuracy
-    correct_predictions = tf.equal(predictions['labels'], tf_y, name='correct_preds')
-
-    accuracy = tf.reduce_mean(tf.cast(correct_predictions, tf.float32), name='accuracy')
-
     # saver:
     saver = tf.train.Saver()
 
@@ -93,13 +85,11 @@ with g.as_default():
 print()
 print('Training... ')
 with tf.Session(graph=g, config=config) as sess:
-    [avg_loss_plot, val_accuracy_plot, test_accuracy_plot] = train(sess, epochs=epochs,
-                                                                   training_set=(X_train, y_train),
-                                                                   validation_set=(X_valid, y_valid),
-                                                                   test_set=(X_test, y_test),
-                                                                   batch_size=batch_size,
-                                                                   initialize=True)
-    
+    [avg_loss_plot, val_accuracy_plot] = train(sess, epochs=epochs,
+                                               training_set=(X_train, y_train),
+                                               validation_set=(X_valid, y_valid),
+                                               batch_size=batch_size,
+                                               initialize=True)
     save(saver, sess, epoch=epochs, path=store_folder)
 
 ##############################################################################
@@ -128,9 +118,6 @@ with g2.as_default():
     cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_y_onehot), name='cross_entropy_loss')
     # Optimizer:
     optimizer = tf.train.GradientDescentOptimizer(learning_rate=rate).minimize(cross_entropy_loss, name='train_op')
-    # Computing the prediction accuracy
-    correct_predictions = tf.equal(predictions['labels'], tf_y, name='correct_preds')
-    accuracy = tf.reduce_mean(tf.cast(correct_predictions, tf.float32), name='accuracy')
     # saver:
     saver = tf.train.Saver()
 
