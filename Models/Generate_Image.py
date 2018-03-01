@@ -49,7 +49,6 @@ _, nr_param = alpha.shape
 # GENERATE RGB IMAGES
 nr_hyp_images = len(fnmatch.filter(os.listdir(call_folder), '*.mat'))
 batch_counter = 1
-nr_hyp_images = 50 # HARD PARAMETER - DELETE AFTERWARDS!
 
 CSS_calc = np.full((3, 31), 0, dtype = np.float16)
 CSS = np.full((int(np.floor(1392/X_shape)) * int(np.floor(1300/Y_shape)) * nr_hyp_images * nr_param, 2), 0, dtype = np.float16)

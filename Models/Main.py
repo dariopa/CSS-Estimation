@@ -24,15 +24,15 @@ store_folder = './model_r_alpha/'
 Name = 'r_alpha'
 
 # Select Net:
-from NN_VGG_16 import CNN
+# from NN_VGG_16 import CNN
 # from NN_VGG_19 import CNN
-# from NN_LeNet import CNN
+from NN_LeNet import CNN
 # from NN_Basis import CNN
 
 # Define hyperparameters
 rate = 0.001
 batch_size = 64
-epochs = 30
+epochs = 50
 
 # Classes
 classes = 10
