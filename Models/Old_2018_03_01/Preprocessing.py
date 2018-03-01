@@ -9,10 +9,9 @@ import numpy as np
 # Folder Path
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_32_32'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_224_224'
-call_folder = '/home/dario/Documents/SemThes_Local/Data_150_150'
 
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32'
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224'
+call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224'
 
 # How much data to use?
 use_data = 1
@@ -46,16 +45,16 @@ print('Splitting Data...')
 nr_images = int(use_data * len(fnmatch.filter(os.listdir(call_folder + '/Images/'), '*.jpg')))
 
 X_train = X_addr[0:int(Train_split * nr_images)]
-y_train = y[0:int(Train_split * nr_images), :]
-y_binned_train = y_binned[0:int(Train_split * nr_images), :]
+y_train = y[0:int(Train_split * nr_images), :, :]
+y_binned_train = y_binned[0:int(Train_split * nr_images), :, :]
 
 X_validation = X_addr[int(Train_split * nr_images):int((Train_split + Val_split) * nr_images)]
-y_validation = y[int(Train_split * nr_images):int((Train_split + Val_split) * nr_images), :]
-y_binned_validation = y_binned[int(Train_split * nr_images):int((Train_split + Val_split) * nr_images), :]
+y_validation = y[int(Train_split * nr_images):int((Train_split + Val_split) * nr_images), :, :]
+y_binned_validation = y_binned[int(Train_split * nr_images):int((Train_split + Val_split) * nr_images), :, :]
 
 X_test = X_addr[int((Train_split + Val_split) * nr_images):nr_images]
-y_test = y[int((Train_split + Val_split) * nr_images):nr_images, :]
-y_binned_test = y_binned[int((Train_split + Val_split) * nr_images):nr_images, :]
+y_test = y[int((Train_split + Val_split) * nr_images):nr_images, :, :]
+y_binned_test = y_binned[int((Train_split + Val_split) * nr_images):nr_images, :, :]
 
 print('Shape of X_train: ' + str(X_train.shape))
 print('Shape of y_train: ' + str(y_train.shape))

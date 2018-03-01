@@ -7,16 +7,15 @@ from PIL import Image
 
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True #Do not assign whole gpu memory, just use it on the go
-config.allow_soft_placement = True #If an operation is not define it the default device, let it execute in another.
+config.allow_soft_placement = True #If a operation is not define it the default device, let it execute in another.
 
 
 ##############################################################################
 # Folder Path
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
+call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_32_32/'
-call_folder = '/home/dario/Documents/SemThes_Local/Data_150_150/'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_224_224/'
 
 store_folder = './model_r_alpha/' 
@@ -30,8 +29,8 @@ from NN_VGG_16 import CNN
 
 # Define hyperparameters
 rate = 0.001
-batch_size = 64
-epochs = 30
+batch_size = 32
+epochs = 50
 
 # Classes
 classes = 10
@@ -43,9 +42,9 @@ np.random.seed(123)
 X_train = np.load(call_folder + 'X_train.npy')
 X_valid = np.load(call_folder + 'X_validation.npy')
 X_test = np.load(call_folder + 'X_test.npy')
-y_train = np.load(call_folder + 'y_binned_train.npy')[:, 0]
-y_valid = np.load(call_folder + 'y_binned_validation.npy')[:, 0]
-y_test = np.load(call_folder + 'y_binned_test.npy')[:, 0]
+y_train = np.load(call_folder + 'y_binned_train.npy')[:, 0, 0]
+y_valid = np.load(call_folder + 'y_binned_validation.npy')[:, 0, 0]
+y_test = np.load(call_folder + 'y_binned_test.npy')[:, 0, 0]
 
 img = np.asarray(Image.open(X_train[0]), dtype=np.uint8)
 print(img.shape)
@@ -148,10 +147,11 @@ with tf.Session(graph=g2, config=config) as sess:
     X = np.full((1, x_row, y_col, 1), 0, dtype=np.uint8)
 
     for i in range(len(X_test)):
-        X[0, :, :, :] = np.array(Image.open(str(X_test[i])))[:, :, 0:1] # NUMERISCHER WERT - ÄNDERN!
+        X[0, :, :, :] = np.array(Image.open(str(X_test[i])))[:,:,0:1] # NUMERISCHER WERT - ÄNDERN!
         y_pred_proba[i] = predict(sess, X, return_proba=True)
     print(y_pred_proba)
     np.save(os.path.join(store_folder, Name + '_pred_proba.npy'), y_pred_proba)
+
 
     np.save(os.path.join(store_folder, Name + '_avg_loss_plot.npy'), avg_loss_plot)
     np.save(os.path.join(store_folder, Name + '_val_accuracy_plot.npy'), val_accuracy_plot)
