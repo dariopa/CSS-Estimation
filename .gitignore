@@ -1,7 +1,6 @@
 /cuda
 /cuda*
-/Data_224_224
-/Data_32_32
+/Data_*
 /Images
 /Images_RAD
 /Models/model_*
