@@ -14,7 +14,7 @@ qsub -cwd -l h_vmem=10G -R y Generate_Image.py
 
 % or better
 exec $SHELL
-qrsh -l gpu=1 -l h_vmem=30G -q gpu.middle.q@*
+qrsh -l gpu=1 -l h_vmem=20G -q gpu.middle.q@*
 % or
 exec $SHELL
 qrsh -l gpu=1 -l h_vmem=80G -l h_rt=12:00:00 -l hostname=biwirender08
@@ -22,5 +22,5 @@ qrsh -l gpu=1 -l h_vmem=80G -l h_rt=12:00:00 -l hostname=biwirender08
 cd /scratch_net/biwidl102/dariopa/Models
 exec $SHELL
 export SGE_GPU=`grep -h $(whoami) /tmp/lock-gpu*/info.txt | sed  's/^[^0-9]*//;s/[^0-9].*$//'`
-python Main.py
+python Mai n.py
 
