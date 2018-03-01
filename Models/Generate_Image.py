@@ -101,7 +101,7 @@ for i in range(0, nr_hyp_images):
 
 batch_counter = batch_counter - 1 # just to have right amount of images
 print(batch_counter)
-CSS = CSS[0:batch_counter, :]
+CSS = CSS[0:batch_counter, :]<
 np.save(os.path.join(store_folder, 'CSS.npy'), CSS)
 print(len(CSS))
 ##############################################################################
