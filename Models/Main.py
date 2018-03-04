@@ -32,7 +32,7 @@ from NN_VGG_16 import CNN
 # Define hyperparameters
 rate = 0.001
 batch_size = 64
-epochs = 50
+epochs = 30
 
 # Classes
 classes = 10
