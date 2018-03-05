@@ -8,14 +8,14 @@ generate = True
 preprocess = True
 #################################
 
-call_folder = '/home/dario/Documents/SemThes_Local/Images_RAD/'
-# call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
+# call_folder = '/home/dario/Documents/SemThes_Local/Images_RAD/'
+call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
 
 # store_folder = '/home/dario/Documents/SemThes_Local/Data_32_32'
-store_folder = '/home/dario/Documents/SemThes_Local/Data_150_150'
+# store_folder = '/home/dario/Documents/SemThes_Local/Data_150_150'
 
 # store_folder = '/scratch_net/biwidl102/dariopa/Data_32_32'
-# store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150'
+store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150'
 # store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224'
 
 # FOR IMAGE GENERATION ----------------------
@@ -30,7 +30,7 @@ Y_shape_output = 150
 # Want to resize image?
 resize = True
 
-alpha = np.array([[0.501, 0.51,0.52, 0.53, 0.54, 0.55, 0.56, 0.57, 0.58, 0.59, 0.599]])
+alpha = np.array([[0.501, 0.51, 0.52, 0.53, 0.54, 0.55, 0.56, 0.57, 0.58, 0.59, 0.599]])
 r_mean = 615
 g_mean = 530
 b_mean = 465
