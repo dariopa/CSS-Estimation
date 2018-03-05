@@ -16,11 +16,12 @@ config.allow_soft_placement = True #If an operation is not define it the default
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
+call_folder = '/scratch_net/biwidl102/dariopa/Data_MNIST'
 
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_32_32/'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_150_150/'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_224_224/'
-call_folder = '/home/dario/Documents/SemThes_Local/Data_MNIST/'
+# call_folder = '/home/dario/Documents/SemThes_Local/Data_MNIST/'
 
 store_folder = './model_r_alpha/' 
 Name = 'r_alpha'

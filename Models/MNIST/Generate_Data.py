@@ -5,7 +5,10 @@ import scipy.misc
 import fnmatch
 from PIL import Image
 
-store_folder = '/home/dario/Documents/SemThes_Local/Data_MNIST'
+# store_folder = '/home/dario/Documents/SemThes_Local/Data_MNIST'
+
+store_folder = '/scratch_net/biwidl102/dariopa/Data_MNIST'
+
 
 def load_mnist(path, kind='train'):
     """Load MNIST data from `path`"""
