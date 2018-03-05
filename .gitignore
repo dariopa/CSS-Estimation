@@ -11,3 +11,4 @@
 /Models/.vscode/
 /.pyenv/
 /SemThes_Local
+/Models/MNIST/__*
