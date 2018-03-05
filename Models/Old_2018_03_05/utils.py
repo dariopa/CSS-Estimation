@@ -1,22 +1,12 @@
 import os
 import numpy as np
-# os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
+os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
 import tensorflow as tf
 from sklearn.utils import shuffle
 from PIL import Image
 
-
-def save(saver, sess, epoch, path):
-    if not os.path.isdir(path):
-        os.makedirs(path)
-    print('Saving model in %s' % path)
-    saver.save(sess, os.path.join(path, 'cnn-model.ckpt'), global_step=epoch)
-
-
-def load(saver, sess, path, epoch):
-    print('Loading model from %s' % path)
-    saver.restore(sess, os.path.join(path, 'cnn-model.ckpt-%d' % epoch))
-
+##############################################################################
+# GENERATE BATCH
 
 def batch_generator(X, y, i,row, col, batch):
 
@@ -31,13 +21,25 @@ def batch_generator(X, y, i,row, col, batch):
 
     return(X_send, y_send)
 
+##############################################################################
+# UTILITIES
+def save(saver, sess, epoch, path):
+    if not os.path.isdir(path):
+        os.makedirs(path)
+    print('Saving model in %s' % path)
+    saver.save(sess, os.path.join(path, 'cnn-model.ckpt'), global_step=epoch)
+
+
+def load(saver, sess, path, epoch):
+    print('Loading model from %s' % path)
+    saver.restore(sess, os.path.join(path, 'cnn-model.ckpt-%d' % epoch))
+
+
 def train(sess, epochs, training_set, validation_set,
           batch_size, initialize=True, dropout=0.5):
 
     X_data_test = np.array(training_set[0])
     y_data_test = np.array(training_set[1])
-    training_loss = []
-
     # initialize variables
     if initialize:
         sess.run(tf.global_variables_initializer())
@@ -77,6 +79,8 @@ def train(sess, epochs, training_set, validation_set,
             print(' Validation Acc: %7.3f%%' % valid_acc)
         else:
             print()
+
+        ##############################################################################
 
     return avg_loss_plot, val_accuracy_plot
 
