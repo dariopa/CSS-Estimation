@@ -22,5 +22,5 @@ qrsh -l gpu=1 -l h_vmem=80G -l h_rt=12:00:00 -l hostname=biwirender08
 cd /scratch_net/biwidl102/dariopa/Models
 exec $SHELL
 export SGE_GPU=`grep -h $(whoami) /tmp/lock-gpu*/info.txt | sed  's/^[^0-9]*//;s/[^0-9].*$//'`
-python Mai n.py
+python Main.py
 
