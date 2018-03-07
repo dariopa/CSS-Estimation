@@ -21,7 +21,7 @@ call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150/'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_150_150/'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_224_224/'
 
-store_folder = './model_r_alpha/' 
+store_folder = './model_r_alpha_3_classes/' 
 Name = 'r_alpha'
 
 ## Define hyperparameters
