@@ -1,6 +1,6 @@
 import os
 import numpy as np
-os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
+# os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
 import tensorflow as tf
 from utils import train, predict, save, load
 from PIL import Image
@@ -22,6 +22,8 @@ call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150/'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_224_224/'
 
 store_folder = './model_r_alpha_3_classes_VGG16/' 
+if not os.path.isdir(store_folder):
+    os.makedirs(store_folder)
 Name = 'r_alpha'
 
 ## Define hyperparameters
@@ -29,7 +31,7 @@ learning_rate = 1e-4
 random_seed = 123
 np.random.seed(random_seed)
 batch_size = 64
-epochs = 60
+epochs = 10
 
 # Select Net
 # CNN = NeuralNetworks.build_LeNet_own
@@ -66,8 +68,6 @@ with g.as_default():
     tf.set_random_seed(random_seed)
     ## build the graph
     CNN(classes, x_row, y_col, learning_rate)
-    ## saver:
-    saver = tf.train.Saver()
 
 ##############################################################################
 # TRAINING
@@ -79,33 +79,12 @@ with tf.Session(graph=g, config=config) as sess:
                                                validation_set=(X_valid, y_valid),
                                                batch_size=batch_size,
                                                initialize=True)
-    save(saver, sess, epoch=epochs, path=store_folder)
-
-np.save(os.path.join(store_folder, Name + '_avg_loss_plot.npy'), avg_loss_plot)
-np.save(os.path.join(store_folder, Name + '_val_accuracy_plot.npy'), val_accuracy_plot)
-##############################################################################
-# GRAPH PREDICTION
-# Calculate prediction accuracy on test set restoring the saved model
-
-del g
-
-# create a new graph and build the model
-g2 = tf.Graph()
-with g2.as_default():
-    tf.set_random_seed(random_seed)
-    ## build the graph
-    CNN(classes, x_row, y_col, learning_rate)
-    ## saver:
-    saver = tf.train.Saver()
-
+    np.save(os.path.join(store_folder, Name + '_avg_loss_plot.npy'), avg_loss_plot)
+    np.save(os.path.join(store_folder, Name + '_val_accuracy_plot.npy'), val_accuracy_plot)
 ##############################################################################
 # PREDICTION
-# create a new session and restore the model
 
-with tf.Session(graph=g2, config=config) as sess:
-    load(saver, sess, epoch=epochs, path=store_folder)
-
-    # NO PROBABILITIES
+    # LABELS
     y_pred = np.full((len(X_test)),0)
     X = np.full((1, x_row, y_col, 1), 0)                              # NUMERISCHER WERT - ÄNDERN!
 
