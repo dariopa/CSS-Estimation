@@ -28,15 +28,15 @@ Name = 'r_alpha'
 learning_rate = 1e-4
 random_seed = 123
 np.random.seed(random_seed)
-batch_size = 128
-epochs = 60
+batch_size = 64
+epochs = 100
 
 # Select Net
 CNN = NeuralNetworks.build_LeNet
 # CNN = NeuralNetworks.build_VGG16
 
 # Classes
-classes = 3
+classes = 10
 
 ##############################################################################
 # IMPORT DATA
