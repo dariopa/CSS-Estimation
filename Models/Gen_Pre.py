@@ -14,6 +14,8 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
     nr_hyp_images = len(fnmatch.filter(os.listdir(call_folder), '*.mat'))
     batch_counter = 1
 
+    nr_hyp_images = 3
+
     CSS_calc = np.full((3, 31), 0, dtype = np.float16)
     CSS = np.full((int(np.floor(1392/X_shape)) * int(np.floor(1300/Y_shape)) * nr_hyp_images * nr_param, 2), 0, dtype = np.float16)
 
@@ -63,10 +65,10 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
                     batch_counter = batch_counter + 1
 
     batch_counter = batch_counter - 1 # just to have right amount of images
-    print(batch_counter)
+    print('batch_counter:   ', batch_counter)
     CSS = CSS[0:batch_counter, :]
     np.save(os.path.join(store_folder, 'CSS.npy'), CSS)
-    print(len(CSS))
+    print('CSS parameters:  ', len(CSS))
 
     # IMPORT AND PROCESS Y
     print()
