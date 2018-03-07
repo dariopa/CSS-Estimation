@@ -150,6 +150,78 @@ class NeuralNetworks():
         accuracy = tf.reduce_mean(tf.cast(correct_predictions, tf.float32), name='accuracy')
 
 ###############################################################################################
+
+    def build_LeNet_own(classes, x_row, y_col, learning_rate):   
+        # Placeholders for X and y:
+        tf_x = tf.placeholder(tf.float32, shape=[None, x_row, y_col, 1], name='tf_x')
+        tf_y = tf.placeholder(tf.int32, shape=[None], name='tf_y')
+
+        ## One-hot encoding:
+        tf_y_onehot = tf.one_hot(indices=tf_y, depth=classes,
+                                dtype=tf.float32,
+                                name='tf_y_onehot')
+
+        print('Building Neuronal Network...') 
+        # 1st layer: Conv_1
+        h1 = conv_layer(tf_x, name='conv_1',
+                        kernel_size=(5, 5),
+                        padding_mode='VALID',
+                        n_output_channels=32)
+        # MaxPooling
+        h1_pool = tf.nn.max_pool(h1,
+                                ksize=[1, 2, 2, 1],
+                                strides=[1, 2, 2, 1],
+                                padding='VALID')
+        
+        # 2nd layer: Conv_2
+        h2 = conv_layer(h1_pool, name='conv_2',
+                        kernel_size=(5, 5),
+                        padding_mode='VALID',
+                        n_output_channels=64)
+        # MaxPooling
+        h2_pool = tf.nn.max_pool(h2,
+                                ksize=[1, 2, 2, 1],
+                                strides=[1, 2, 2, 1],
+                                padding='VALID')
+
+        # 3th layer: FulCon_1
+        h3 = fc_layer(h2_pool, name='fc_14',
+                    n_output_units=120,
+                    activation_fn=tf.nn.relu)
+
+        # 4th layer: FulCon_1
+        h4 = fc_layer(h3, name='fc',
+                    n_output_units=84,
+                    activation_fn=tf.nn.relu)
+
+        ## Dropout
+        keep_prob = tf.placeholder(tf.float32, name='fc_keep_prob')
+        h_drop = tf.nn.dropout(h4, keep_prob=keep_prob, name='dropout_layer')
+
+        # 4th layer: FulCon_1
+        logits = fc_layer(h_drop, name='fc5',
+                    n_output_units=classes,
+                    activation_fn=tf.nn.relu)
+
+        ## Prediction
+        predictions = {
+            'probabilities' : tf.nn.softmax(logits, name='probabilities'),
+            'labels' : tf.cast(tf.argmax(logits, axis=1), tf.int32, name='labels')
+        }
+        
+        ## Loss Function and Optimization
+        cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_y_onehot), name='cross_entropy_loss')
+
+        ## Optimizer:
+        optimizer = tf.train.AdamOptimizer(learning_rate)
+        optimizer = optimizer.minimize(cross_entropy_loss, name='train_op')
+
+        ## Computing the prediction accuracy
+        correct_predictions = tf.equal(predictions['labels'], tf_y, name='correct_preds')
+
+        accuracy = tf.reduce_mean(tf.cast(correct_predictions, tf.float32), name='accuracy')
+
+###############################################################################################
      
     def build_VGG16(classes, x_row, y_col, learning_rate):
         # Placeholders for X and y:

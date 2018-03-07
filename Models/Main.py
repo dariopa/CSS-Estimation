@@ -32,7 +32,7 @@ batch_size = 64
 epochs = 60
 
 # Select Net
-CNN = NeuralNetworks.build_LeNet
+CNN = NeuralNetworks.build_LeNet_own
 # CNN = NeuralNetworks.build_VGG16
 
 # Classes
