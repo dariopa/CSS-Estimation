@@ -3,7 +3,7 @@ from Gen_Pre import Generate, Preprocess
 
 #################################
 # Generate images?
-generate = False
+generate = True
 # Preprocess data?
 preprocess = True
 #################################
