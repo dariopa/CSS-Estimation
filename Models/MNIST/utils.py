@@ -31,7 +31,7 @@ def batch_generator(X_train, y_train, batch, i, row, col, loops):
     for k in range(0, batch_size):
         X_send[k, :, :, 0] = np.array(Image.open(str(X_train[k + i * batch])))
     y_send = y_train[i * batch:(i + 1) * batch]
-    print(len(X_send), len(y_send))
+    # print(len(X_send), len(y_send))
     
     (X_send, y_send) = shuffle(X_send, y_send)
     return(X_send, y_send) 
@@ -73,12 +73,12 @@ def train(sess, epochs, training_set, validation_set,
         if validation_set is not None:
             X_data = np.array(validation_set[0])
             y_data = np.array(validation_set[1])
-            y_pred = np.full((len(X_data)),0)
+            y_pred = np.full((len(X_data)), 0)
             x_row, y_col = np.array(Image.open(str(X_data[0]))).shape
             X = np.full((1, x_row, y_col, 1), 0)
 
             for i in range(len(X_data)):
-                X[0, :, :, 0] = np.array(Image.open(str(X_data[i])))[:,:] # NUMERISCHER WERT - ÄNDERN!
+                X[0, :, :, 0] = np.array(Image.open(str(X_data[i])))[:, :] # NUMERISCHER WERT - ÄNDERN!
                 y_pred[i] = predict(sess, X, return_proba=False)
             valid_acc = 100*np.sum((y_pred == y_data)/len(y_data))
             val_accuracy_plot.append(valid_acc)

@@ -21,19 +21,15 @@ def conv_layer(input_tensor, name,
 
         weights = tf.get_variable(name='_weights',
                                   shape=weights_shape)
-        print(weights)
         biases = tf.get_variable(name='_biases',
                                  initializer=tf.zeros(
                                      shape=[n_output_channels]))
-        print(biases)
         conv = tf.nn.conv2d(input=input_tensor, 
                             filter=weights,
                             strides=strides, 
                             padding=padding_mode)
-        print(conv)
         conv = tf.nn.bias_add(conv, biases, 
                               name='net_pre-activation')
-        print(conv)
         conv = tf.nn.relu(conv, name='activation')
         print(conv)
         
@@ -52,16 +48,12 @@ def fc_layer(input_tensor, name,
 
         weights = tf.get_variable(name='_weights',
                                   shape=weights_shape)
-        print(weights)
         biases = tf.get_variable(name='_biases',
                                  initializer=tf.zeros(
                                      shape=[n_output_units]))
-        print(biases)
         layer = tf.matmul(input_tensor, weights)
-        print(layer)
         layer = tf.nn.bias_add(layer, biases,
                               name='net_pre-activation')
-        print(layer)
         if activation_fn is None:
             return layer
         
