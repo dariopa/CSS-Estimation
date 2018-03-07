@@ -14,8 +14,6 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
     nr_hyp_images = len(fnmatch.filter(os.listdir(call_folder), '*.mat'))
     batch_counter = 1
 
-    nr_hyp_images = 3
-
     CSS_calc = np.full((3, 31), 0, dtype = np.float16)
     CSS = np.full((int(np.floor(1392/X_shape)) * int(np.floor(1300/Y_shape)) * nr_hyp_images * nr_param, 2), 0, dtype = np.float16)
 
@@ -70,7 +68,6 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
     np.save(os.path.join(store_folder, 'CSS.npy'), CSS)
     print(len(CSS))
 
-    ##############################################################################
     # IMPORT AND PROCESS Y
     print()
     print('Binning y Data...')
@@ -80,7 +77,7 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
 
     for i in range(0,len(CSS)):
         # binning r_alpha values
-        class_alpha, bins_alpha = np.histogram(CSS[i, 0], bins=10, range=[0.5, 0.6])
+        class_alpha, bins_alpha = np.histogram(CSS[i, 0], bins=3, range=[0.5, 0.6])
         y_binned[i, 0] = np.argmax(class_alpha)
 
         # binning r_sigma values:
@@ -92,7 +89,6 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
 
     print('Done!')
 
-    ##############################################################################
     # SAVE DATA IN BINARY FORMAT
     print()
     print('Saving y binned Data...')
@@ -100,7 +96,6 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
 
     print('Done!')
 
-    ##############################################################################
     # STORE PATH OF IMAGES
     print()
     print('Saving datapath...')
@@ -114,6 +109,7 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
 
     print('Done!')
 
+    ##############################################################################
 def Preprocess(store_folder, use_data, Train_split, Val_split, Test_split):
 
     # LOAD DATA
@@ -124,7 +120,6 @@ def Preprocess(store_folder, use_data, Train_split, Val_split, Test_split):
     y_binned = np.load(os.path.join(store_folder, 'CSS_binned.npy'))
     print('Done!')
 
-    ##############################################################################
     # SHUFFLE DATA
     print()
     print('Shuffling Data...')
@@ -132,7 +127,6 @@ def Preprocess(store_folder, use_data, Train_split, Val_split, Test_split):
         (X_addr, y, y_binned) = shuffle(X_addr, y, y_binned)
     print('Done!')
 
-    ##############################################################################
     # SPLIT DATA
     print()
     print('Splitting Data...')
@@ -161,7 +155,6 @@ def Preprocess(store_folder, use_data, Train_split, Val_split, Test_split):
     print('Shape of y_binned_test: ' + str(y_binned_test.shape) + '\n')
     print('Done!')
 
-    ##############################################################################
     # SAVE DATA IN BINARY FORMAT
     print()
     print('Saving Data...')
