@@ -19,22 +19,28 @@ def load(saver, sess, path, epoch):
     saver.restore(sess, os.path.join(path, 'cnn-model.ckpt-%d' % epoch))
 
 
-def batch_generator(X, y, i,row, col, batch):
-    X_send = np.full((batch, row, col, 1), 0, dtype = np.uint8)
-    
-    for k in range(0, batch):
-        img = np.array(Image.open(str(X[k + i * batch])))
-        X_send[k, :, :, 0] = img[:, :]                         # NUMERISCHER WERT - ÄNDERN!
-    y_send = y[i * batch:(i + 1) * batch]
+def batch_generator(X_train, y_train, batch, i, row, col, loops):
 
+    if i == (loops-1):
+        batch_size = len(X_train) - (i * batch)
+    else:
+        batch_size = batch
+
+    X_send = np.full((batch_size, row, col, 1), 0, dtype = np.uint8)
+    
+    for k in range(0, batch_size):
+        X_send[k, :, :, 0] = np.array(Image.open(str(X_train[k + i * batch])))
+    y_send = y_train[i * batch:(i + 1) * batch]
+    print(len(X_send), len(y_send))
+    
     (X_send, y_send) = shuffle(X_send, y_send)
-    return(X_send, y_send)
+    return(X_send, y_send) 
 
 def train(sess, epochs, training_set, validation_set,
           batch_size, initialize=True, dropout=0.5):
 
-    X_data_test = np.array(training_set[0])
-    y_data_test = np.array(training_set[1])
+    X_data_train = np.array(training_set[0])
+    y_data_train = np.array(training_set[1])
     training_loss = []
 
     # initialize variables
@@ -44,15 +50,15 @@ def train(sess, epochs, training_set, validation_set,
     avg_loss_plot = []
     val_accuracy_plot = []
     test_accuracy_plot = []
-    row, col = np.array(Image.open(str(X_data_test[0]))).shape
+    row, col = np.array(Image.open(str(X_data_train[0]))).shape
+    loops = int(np.floor(len(X_data_train) / batch_size)) + 1
+    print('Loops:', loops)
 
     for epoch in range(1, epochs+1):
         avg_loss = 0.0
-        ##############################################################################
         start_time =time.time()
-        for i in range(0, int(np.floor(len(X_data_test) / batch_size))):
-
-            batch_x, batch_y = batch_generator(X_data_test, y_data_test, i=i, row=row, col=col, batch=batch_size)
+        for i in range(0, loops):
+            batch_x, batch_y = batch_generator(X_data_train, y_data_train, batch=batch_size, i=i, row=row, col=col, loops=loops)
             feed = {'tf_x:0': batch_x, 'tf_y:0': batch_y, 'fc_keep_prob:0': dropout}
             loss, _ = sess.run(['cross_entropy_loss:0', 'train_op'], feed_dict=feed)
             avg_loss += loss

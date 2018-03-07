@@ -23,4 +23,3 @@ cd /scratch_net/biwidl102/dariopa/Models
 exec $SHELL
 export SGE_GPU=`grep -h $(whoami) /tmp/lock-gpu*/info.txt | sed  's/^[^0-9]*//;s/[^0-9].*$//'`
 python Main.py
-
