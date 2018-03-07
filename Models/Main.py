@@ -29,7 +29,7 @@ learning_rate = 1e-4
 random_seed = 123
 np.random.seed(random_seed)
 batch_size = 64
-epochs = 60
+epochs = 30
 
 # Select Net
 CNN = NeuralNetworks.build_LeNet_own
@@ -120,7 +120,7 @@ with tf.Session(graph=g2, config=config) as sess:
     # PROBABILITIES
     np.set_printoptions(precision=3, suppress=True)
 
-    y_pred_proba = np.full((len(X_test), 10), 0, dtype=np.float16)     # NUMERISCHER WERT - ÄNDERN!
+    y_pred_proba = np.full((len(X_test), classes), 0, dtype=np.float16)     # NUMERISCHER WERT - ÄNDERN!
     X = np.full((1, x_row, y_col, 1), 0, dtype=np.uint8)
 
     for i in range(len(X_test)):
