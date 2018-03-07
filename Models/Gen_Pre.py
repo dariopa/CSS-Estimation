@@ -84,9 +84,6 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
         class_sigma, bins_sigma = np.histogram(CSS[i, 1], bins=10, range=[28, 33])
         y_binned[i, 1] = np.argmax(class_sigma)
 
-
-    np.savetxt(os.path.join(store_folder, 'Bins.csv'), (bins_alpha, bins_sigma), delimiter=',')
-
     print('Done!')
 
     # SAVE DATA IN BINARY FORMAT
