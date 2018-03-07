@@ -37,6 +37,10 @@ g_mean = 530
 b_mean = 465
 sigma = np.array([[28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28.]])
 
+# classes
+classes = 10
+
+
 # FOR PREPROCESSING ----------------------
 # How much data to use?
 use_data = 1
@@ -46,10 +50,9 @@ Train_split = 7./10
 Val_split = 1./10
 Test_split = 2./10
 
-
 if generate == True:
     print('Generating images')
-    Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shape_output, resize, alpha, r_mean, g_mean, b_mean, sigma)
+    Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shape_output, resize, alpha, r_mean, g_mean, b_mean, sigma, classes)
 if preprocess == True:
     print('\nPreprocess Data')
     Preprocess(store_folder, use_data, Train_split, Val_split, Test_split)
