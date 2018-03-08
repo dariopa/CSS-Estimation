@@ -21,7 +21,7 @@ call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_150_150/'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_224_224/'
 
-store_folder = './model_r_alpha_10_classes_VGG16/' 
+store_folder = './model_r_alpha_10_classes_VGG16_60_epochs/' 
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 Name = 'r_alpha'
@@ -31,7 +31,7 @@ learning_rate = 1e-4
 random_seed = 123
 np.random.seed(random_seed)
 batch_size = 64
-epochs = 30
+epochs = 60
 
 # Select Net
 # CNN = NeuralNetworks.build_LeNet_own
