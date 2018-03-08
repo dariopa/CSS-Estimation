@@ -9,7 +9,7 @@ import cv2
 from PIL import Image
 from sklearn.utils import shuffle
 
-def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shape_output, resize, alpha, r_mean, g_mean, b_mean, sigma):
+def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shape_output, resize, alpha, r_mean, g_mean, b_mean, sigma, classes):
     _, nr_param = alpha.shape
     nr_hyp_images = len(fnmatch.filter(os.listdir(call_folder), '*.mat'))
     batch_counter = 1
@@ -77,11 +77,11 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
 
     for i in range(0,len(CSS)):
         # binning r_alpha values
-        class_alpha, bins_alpha = np.histogram(CSS[i, 0], bins=3, range=[0.5, 0.6])
+        class_alpha, bins_alpha = np.histogram(CSS[i, 0], bins=classes, range=[0.5, 0.6])
         y_binned[i, 0] = np.argmax(class_alpha)
 
         # binning r_sigma values:
-        class_sigma, bins_sigma = np.histogram(CSS[i, 1], bins=10, range=[28, 33])
+        class_sigma, bins_sigma = np.histogram(CSS[i, 1], bins=classes, range=[28, 33])
         y_binned[i, 1] = np.argmax(class_sigma)
 
     print('Done!')
