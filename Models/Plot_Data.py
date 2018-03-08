@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 
 ##############################################################################
 Name = 'r_alpha'
-# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_3_classes/'
-# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_3_classes_VGG16/'
-# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes/'
-call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_VGG16/'
+# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_3_classes_LeNet_150/'
+# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_3_classes_VGG16_150/'
+# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_LeNet_150/'
+call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_VGG16_224/'
 ##############################################################################
 
 avg_loss_plot = np.load(call_folder + Name + '_avg_loss_plot.npy')
