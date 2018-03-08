@@ -29,7 +29,7 @@ X_shape_output = 150
 Y_shape_output = 150
 
 # Want to resize image?
-resize = True
+resize = False
 
 alpha = np.array([[0.501, 0.51, 0.52, 0.53, 0.54, 0.55, 0.56, 0.57, 0.58, 0.59, 0.599]])
 # alpha = np.array([[0.51, 0.55, 0.599]])
