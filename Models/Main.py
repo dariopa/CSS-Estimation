@@ -32,7 +32,7 @@ learning_rate = 1e-4
 random_seed = 123
 np.random.seed(random_seed)
 batch_size = 64
-epochs = 60
+epochs = 90
 
 # Select Net
 # CNN = NeuralNetworks.build_LeNet_own
