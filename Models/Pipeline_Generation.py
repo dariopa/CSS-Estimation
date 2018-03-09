@@ -17,7 +17,8 @@ call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
 # store_folder = '/scratch_net/biwidl102/dariopa/Data_32_32'
 # store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150'
 # store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224'
-store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_5_classes'
+# store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_5_classes'
+store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes'
 
 # FOR IMAGE GENERATION ----------------------
 # Batch size of images
@@ -29,14 +30,14 @@ X_shape_output = 150
 Y_shape_output = 150
 
 # Want to resize image?
-resize = False
+resize = True
 
-alpha = np.array([[0.501, 0.51, 0.52, 0.53, 0.54, 0.55, 0.56, 0.57, 0.58, 0.59, 0.599]])
+alpha = np.array([[0.501, 0.505, 0.51, 0.515, 0.52, 0.525, 0.53, 0.535, 0.54, 0.545, 0.55, 0.555, 0.56, 0.565, 0.57, 0.575, 0.58, 0.585, 0.59, 0.595, 0.599]])
 # alpha = np.array([[0.51, 0.55, 0.599]])
 r_mean = 615
 g_mean = 530
 b_mean = 465
-sigma = np.array([[28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28.]])
+sigma = np.array([[28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28.]])
 
 # classes
 classes = 5

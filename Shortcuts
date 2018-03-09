@@ -17,7 +17,7 @@ exec $SHELL
 qrsh -l gpu=1 -l h_vmem=20G -q gpu.middle.q@*
 % or
 exec $SHELL
-qrsh -l gpu=1 -l h_vmem=20G -l h_rt=12:00:00 -l hostname=biwirender05
+qrsh -l gpu=1 -l h_vmem=40G -l h_rt=24:00:00 -l hostname=bmicgpu02
 % with
 cd /scratch_net/biwidl102/dariopa/Models
 exec $SHELL
