@@ -39,14 +39,14 @@ def train(sess, epochs, training_set, validation_set, test_set,
     test_accuracy_plot = []
     for epoch in range(1, epochs+1):
         batch_gen = batch_generator(X_data, y_data, batch_size=batch_size)
-        avg_loss = []
+        avg_loss = 0.0
         for i, (batch_x, batch_y) in enumerate(batch_gen):
             feed = {'tf_x:0': batch_x, 'tf_y:0': batch_y, 'fc_keep_prob:0': dropout}
             loss, _ = sess.run(['cross_entropy_loss:0', 'train_op'], feed_dict=feed)
-            avg_loss.append(loss)
+            avg_loss += loss
 
-        avg_loss_plot.append(np.mean(avg_loss))
-        print('Epoch %02d Training Avg. Loss: %7.3f' % (epoch, np.mean(avg_loss)), end=' ')
+        avg_loss_plot.append(avg_loss)
+        print('Epoch %02d Training Avg. Loss: %7.3f' % (epoch, avg_loss), end=' ')
 
         if validation_set is not None:
             feed = {'tf_x:0': validation_set[0], 'tf_y:0': validation_set[1], 'fc_keep_prob:0':1.0}
