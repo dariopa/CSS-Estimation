@@ -30,7 +30,7 @@ X_shape_output = 150
 Y_shape_output = 150
 
 # Want to resize image?
-resize = True
+resize = False
 
 alpha = np.array([[0.501, 0.505, 0.51, 0.515, 0.52, 0.525, 0.53, 0.535, 0.54, 0.545, 0.55, 0.555, 0.56, 0.565, 0.57, 0.575, 0.58, 0.585, 0.59, 0.595, 0.599]])
 # alpha = np.array([[0.51, 0.55, 0.599]])
@@ -40,7 +40,7 @@ b_mean = 465
 sigma = np.array([[28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28., 28.]])
 
 # classes
-classes = 5
+classes = 10
 
 
 # FOR PREPROCESSING ----------------------

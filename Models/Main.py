@@ -15,32 +15,32 @@ config.allow_soft_placement = True #If an operation is not define it the default
 # Folder Path
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150/'
-call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes/'
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
+# call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes/'
+call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_5_classes/'
 
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_32_32/'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_150_150/'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_224_224/'
 
-store_folder = './model_r_alpha_5_classes_VGG16_150/' 
+store_folder = './model_r_alpha_5_classes_VGG16_224_200_epochs/' 
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 Name = 'r_alpha'
 
 ## Define hyperparameters
-learning_rate = 1e-4
+learning_rate = 2e-4
 random_seed = 123
 np.random.seed(random_seed)
 batch_size = 64
-epochs = 120
+epochs = 200
 
 # Select Net
 # CNN = NeuralNetworks.build_LeNet_own
 CNN = NeuralNetworks.build_VGG16
 
 # Classes
-classes = 5
+classes = 10
 
 ##############################################################################
 # IMPORT DATA
