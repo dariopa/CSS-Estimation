@@ -8,14 +8,18 @@ import math
 import cv2
 from PIL import Image
 from sklearn.utils import shuffle
+import matplotlib.pyplot as plt
 
 def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shape_output, resize, alpha, r_mean, g_mean, b_mean, sigma, classes):
     _, nr_param = alpha.shape
     nr_hyp_images = len(fnmatch.filter(os.listdir(call_folder), '*.mat'))
     batch_counter = 1
 
+    nr_hyp_images = 1
+
+    X_data = np.full((nr_param * nr_hyp_images, 255, 3), 0, dtype = np.float16)
     CSS_calc = np.full((3, 31), 0, dtype = np.float16)
-    CSS = np.full((int(np.floor(1392/X_shape)) * int(np.floor(1300/Y_shape)) * nr_hyp_images * nr_param, 2), 0, dtype = np.float16)
+    CSS = np.full((nr_hyp_images * nr_param, 2), 0, dtype = np.float16)
 
     for i in range(0, nr_hyp_images):
         print('Evaluating Image ' + str(i+1))
@@ -39,9 +43,15 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
 
             # I = [3 x m] || CSS_new = [3 x 33] || rad_reshaped = [33 x m]
             I = np.matmul(CSS_calc, rad_reshaped) / 4095
+            I[I > 1] = 1
+            red_distr, red_bins = np.histogram(I[0, :], bins=255, range=[0, 1])
+            green_distr, green_bins = np.histogram(I[1, :], bins=255, range=[0, 1])
+            blue_distr, blue_bins = np.histogram(I[2, :], bins=255, range=[0, 1])
             
-            class_alpha, bins_alpha = np.histogram(I[i, 0], bins=classes, range=[0.5, 0.6])
-            y_binned[i, 0] = np.argmax(class_alpha)           
+            X_data[batch_counter -1, :, 0] = red_distr
+            X_data[batch_counter -1, :, 1] = green_distr
+            X_data[batch_counter -1, :, 2] = blue_distr
+
             # Fill CSS Array
             CSS[batch_counter - 1, :] = [alpha[0, counter], sigma[0, counter]]
             batch_counter = batch_counter + 1
@@ -51,15 +61,18 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
     CSS = CSS[0:batch_counter, :]
     np.save(os.path.join(store_folder, 'CSS.npy'), CSS)
     print('CSS parameters:  ', len(CSS))
+    np.save(os.path.join(store_folder, 'X_data.npy'), X_data)
+    print('X_data parameters:  ', len(X_data))
 
-    # IMPORT AND PROCESS Y
+    # PROCESS Y
     print()
     print('Binning y Data...')
-    nr_images = len(fnmatch.filter(os.listdir(store_folder + '/Images/'), '*.jpg'))
 
-    y_binned = np.zeros([len(CSS), 2])
+    nr_images = len(CSS)
 
-    for i in range(0,len(CSS)):
+    y_binned = np.zeros([nr_images, 2])
+
+    for i in range(0,nr_images):
         # binning r_alpha values
         class_alpha, bins_alpha = np.histogram(CSS[i, 0], bins=classes, range=[0.5, 0.6])
         y_binned[i, 0] = np.argmax(class_alpha)
@@ -77,18 +90,6 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
 
     print('Done!')
 
-    # STORE PATH OF IMAGES
-    print()
-    print('Saving datapath...')
-
-    nr_images = len(fnmatch.filter(os.listdir(store_folder + '/Images/'), '*.jpg'))
-    data = []
-    for i in range(0, nr_images):
-        data.append(os.path.join(store_folder + '/Images/', str(i+1) + '.jpg'))
-    # print(data)
-    np.save(store_folder + '/datapath.npy', data)
-
-    print('Done!')
 
     ##############################################################################
 def Preprocess(store_folder, use_data, Train_split, Val_split, Test_split):
@@ -96,32 +97,33 @@ def Preprocess(store_folder, use_data, Train_split, Val_split, Test_split):
     # LOAD DATA
     print()
     print('Loading Data...')
-    X_addr = np.load(os.path.join(store_folder, 'datapath.npy'))
+    X_data = np.load(os.path.join(store_folder, 'X_data.npy'))
     y = np.load(os.path.join(store_folder, 'CSS.npy'))
     y_binned = np.load(os.path.join(store_folder, 'CSS_binned.npy'))
+
     print('Done!')
 
     # SHUFFLE DATA
     print()
     print('Shuffling Data...')
     for i in range(1,5):
-        (X_addr, y, y_binned) = shuffle(X_addr, y, y_binned)
+        (X_data, y, y_binned) = shuffle(X_data, y, y_binned)
     print('Done!')
 
     # SPLIT DATA
     print()
     print('Splitting Data...')
-    nr_images = int(use_data * len(fnmatch.filter(os.listdir(store_folder + '/Images/'), '*.jpg')))
+    nr_images = int(use_data * len(X_data))
 
-    X_train = X_addr[0:int(Train_split * nr_images)]
+    X_train = X_data[0:int(Train_split * nr_images)]
     y_train = y[0:int(Train_split * nr_images), :]
     y_binned_train = y_binned[0:int(Train_split * nr_images), :]
 
-    X_validation = X_addr[int(Train_split * nr_images):int((Train_split + Val_split) * nr_images)]
+    X_validation = X_data[int(Train_split * nr_images):int((Train_split + Val_split) * nr_images)]
     y_validation = y[int(Train_split * nr_images):int((Train_split + Val_split) * nr_images), :]
     y_binned_validation = y_binned[int(Train_split * nr_images):int((Train_split + Val_split) * nr_images), :]
 
-    X_test = X_addr[int((Train_split + Val_split) * nr_images):nr_images]
+    X_test = X_data[int((Train_split + Val_split) * nr_images):nr_images]
     y_test = y[int((Train_split + Val_split) * nr_images):nr_images, :]
     y_binned_test = y_binned[int((Train_split + Val_split) * nr_images):nr_images, :]
 
