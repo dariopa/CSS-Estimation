@@ -15,15 +15,15 @@ call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
 # store_folder = '/home/dario/Documents/SemThes_Local/Data_150_150'
 
 # store_folder = '/scratch_net/biwidl102/dariopa/Data_32_32'
-# store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150'
+store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150'
 # store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224'
 # store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_5_classes'
-store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes'
+# store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes'
 
 # FOR IMAGE GENERATION ----------------------
 # Batch size of images
-X_shape = 224
-Y_shape = 224
+X_shape = 150
+Y_shape = 150
 
 # Downscaling of images
 X_shape_output = 150
