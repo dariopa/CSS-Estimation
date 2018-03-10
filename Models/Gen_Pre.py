@@ -23,11 +23,6 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
         rad =mat_contents['rad_new']
 
         x_row, y_col, spect = rad.shape
-        X_window = int(np.floor(x_row / X_shape))
-        Y_window = int(np.floor(y_col / Y_shape))
-
-        rad = rad[0:X_window * X_shape, 0:Y_window * Y_shape, :]
-        x_row, y_col, spect = rad.shape
         n_features = x_row * y_col
 
         rad_reshaped = np.reshape(rad, (1, n_features, spect))[0]
@@ -44,23 +39,12 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
 
             # I = [3 x m] || CSS_new = [3 x 33] || rad_reshaped = [33 x m]
             I = np.matmul(CSS_calc, rad_reshaped) / 4095
-
-            I_image = np.reshape(I, (3, x_row, y_col))
-            I_image = np.swapaxes(I_image, 0, 1)
-            I_image = np.swapaxes(I_image, 1, 2)
-            I_image[I_image > 1] = 1
-
-            # Now store batches of Image!
-            for i in range(0,X_window):
-                for j in range (0,Y_window):
-                    I_image_batch = I_image[(0 + i * X_shape):(i * X_shape + X_shape), (0 + j * Y_shape):(j * Y_shape + Y_shape), :]
-                    if resize == True:
-                        I_image_batch = cv2.resize(I_image_batch, (X_shape_output, Y_shape_output))
-                    scipy.misc.toimage(I_image_batch, cmin=0, cmax=1).save(os.path.join(store_folder + '/Images/', str(batch_counter) + '.jpg'))
-
-                    # Fill CSS Array
-                    CSS[batch_counter - 1, :] = [alpha[0, counter], sigma[0, counter]]
-                    batch_counter = batch_counter + 1
+            
+            class_alpha, bins_alpha = np.histogram(I[i, 0], bins=classes, range=[0.5, 0.6])
+            y_binned[i, 0] = np.argmax(class_alpha)           
+            # Fill CSS Array
+            CSS[batch_counter - 1, :] = [alpha[0, counter], sigma[0, counter]]
+            batch_counter = batch_counter + 1
 
     batch_counter = batch_counter - 1 # just to have right amount of images
     print('batch_counter:   ', batch_counter)
