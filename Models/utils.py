@@ -66,7 +66,7 @@ def train(sess, epochs, training_set, validation_set,
 
         end_time = time.time()
         print("\nTotal time taken this loop [s]: ", end_time - start_time)
-        if epoch == 1:
+        if epoch == 2:
             print('Termination time will be:  ', time.ctime(start_time + (end_time - start_time)*epochs))
 
         avg_loss_plot.append(np.mean(avg_loss))

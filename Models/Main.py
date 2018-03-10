@@ -1,6 +1,6 @@
 import os
 import numpy as np
-# os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
+os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
 import tensorflow as tf
 from utils import train, predict, save, load
 from PIL import Image
@@ -8,7 +8,7 @@ from Neural_Networks import NeuralNetworks
 
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True #Do not assign whole gpu memory, just use it on the go
-config.allow_soft_placement = True #If an operation is not define it the default device, let it execute in another.
+config.allow_soft_placement = True #If an operation is not defined it the default device, let it execute in another.
 
 
 ##############################################################################
@@ -29,7 +29,7 @@ if not os.path.isdir(store_folder):
 Name = 'r_alpha'
 
 ## Define hyperparameters
-learning_rate = 2e-4
+learning_rate = 1e-4
 random_seed = 123
 np.random.seed(random_seed)
 batch_size = 64
