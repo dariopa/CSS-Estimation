@@ -23,7 +23,7 @@ call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150/'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_150_150/'
 # call_folder = '/home/dario/Documents/SemThes_Local/Data_224_224/'
 
-store_folder = './model_r_alpha_10_classes_VGG16_150/' 
+store_folder = './model_r_alpha_10_classes_VGG16_150_sgd/' 
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 Name = 'r_alpha'
