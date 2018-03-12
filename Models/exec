@@ -1,0 +1,17 @@
+Usage: grep [OPTION]... PATTERN [FILE]...
+Try 'grep --help' for more information.
+Linux 3.16.0-5-amd64 x86_64
+
+## The acceptable usage policy for this system is available here: ##
+## https://computing.ee.ethz.ch/UsageRules                        ##
+
+All The News That's New  --  8474
+
+* No new messages
+* Type "atntn --old" to review previous messages
+* For other helpful informations check http://computing.ee.ethz.ch/
+* System Status Information: http://computing.ee.ethz.ch/Status
+
+dariopa@bmicgpu01:~ $ No Sockets found in /var/run/screen/S-dariopa.
+
+There is no screen to be resumed.
