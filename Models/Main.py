@@ -111,7 +111,7 @@ with tf.Session(graph=g, config=config) as sess:
         y_pred[i] = predict(sess, X, return_proba=False)
     test_acc = 100*np.sum((y_pred == y_test)/len(y_test))
     print(' Test Acc: %7.3f%%' % test_acc)
-    with open(os.path.join(store_folder, Name + '_AccuracyTest.txt'), 'w') as f:
+    with open(os.path.join(store_folder, channel + '_' + name + '_AccuracyTest.txt'), 'w') as f:
         f.write('%.3f%%' % (test_acc))
 
     # PROBABILITIES
@@ -125,4 +125,4 @@ with tf.Session(graph=g, config=config) as sess:
         X = standardize(X)
         y_pred_proba[i] = predict(sess, X, return_proba=True)
     print(y_pred_proba)
-    np.save(os.path.join(store_folder, Name + '_pred_proba.npy'), y_pred_proba)
+    np.save(os.path.join(store_folder, channel + '_' + name + '_pred_proba.npy'), y_pred_proba)

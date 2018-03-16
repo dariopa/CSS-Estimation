@@ -102,6 +102,7 @@ def train(sess, epochs, channel, training_set, validation_set, test_set,
             print(' Test Acc: %7.3f%%' % test_acc)
         else:
             print()
+            
         end_time = time.time()
         print("Total time taken this loop [s]: ", end_time - start_time)
         if epoch == 2:
