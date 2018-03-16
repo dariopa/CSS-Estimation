@@ -72,17 +72,13 @@ def train(sess, epochs, channel, training_set, validation_set, test_set,
         if validation_set is not None:
             X_data = np.array(validation_set[0])
             y_data = np.array(validation_set[1])
-            y_pred = np.full((len(X_data)), 0.)
+            y_pred = np.full((len(X_data)), 0)
             x_row, y_col, _ = np.array(Image.open(str(X_data[0]))).shape
             X = np.full((1, x_row, y_col, 1), 0.)
 
             for i in range(len(X_data)):
                 X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:, :, channel:(channel+1)]
-                print(X)
-                print(X.shape)
                 X = standardize(X)
-                print(X)
-                print(X.shape)
                 y_pred[i] = predict(sess, X, return_proba=False)
             valid_acc = 100*np.sum((y_pred == y_data)/len(y_data))
             val_accuracy_plot.append(valid_acc)
@@ -93,7 +89,7 @@ def train(sess, epochs, channel, training_set, validation_set, test_set,
         if test_set is not None:
             X_data = np.array(test_set[0])
             y_data = np.array(test_set[1])
-            y_pred = np.full((len(X_data)), 0.)
+            y_pred = np.full((len(X_data)), 0)
             x_row, y_col, _ = np.array(Image.open(str(X_data[0]))).shape
             X = np.full((1, x_row, y_col, 1), 0.)
 

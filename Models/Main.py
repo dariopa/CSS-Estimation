@@ -45,11 +45,11 @@ learning_rate = 1e-4
 random_seed = 123
 np.random.seed(random_seed)
 batch_size = 64
-epochs = 1
+epochs = 50
 
 # Select Net
-CNN = NeuralNetworks.build_LeNet_own
-# CNN = NeuralNetworks.build_VGG16
+# CNN = NeuralNetworks.build_LeNet_own
+CNN = NeuralNetworks.build_VGG16
 
 # Classes
 classes = 10
@@ -102,16 +102,12 @@ with tf.Session(graph=g, config=config) as sess:
 # PREDICTION
 
     # LABELS
-    y_pred = np.full((len(X_test)), 0.)
+    y_pred = np.full((len(X_test)), 0)
     X = np.full((1, x_row, y_col, 1), 0.)
 
     for i in range(len(X_test)):
         X[0, :, :, :] = np.array(Image.open(str(X_test[i])))[:, :, k:(k+1)]
-        if i == 1:
-            print(X.shape)
         X = standardize(X)
-        if i == 1:
-            print(X.shape)
         y_pred[i] = predict(sess, X, return_proba=False)
     test_acc = 100*np.sum((y_pred == y_test)/len(y_test))
     print('Test Acc: %7.3f%%' % test_acc)
