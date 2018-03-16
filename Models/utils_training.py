@@ -30,9 +30,7 @@ def batch_generator(X_train, y_train, batch, i, row, col, channel, loops):
     
     for k in range(0, batch_size):
         img = np.array(Image.open(str(X_train[k + i * batch])))[:, :, channel:(channel+1)]
-        print(img.shape)
         img = standardize(img)
-        print(img.shape)
         X_send[k, :, :, :] = img
     y_send = y_train[i * batch:(i + 1) * batch]
 
