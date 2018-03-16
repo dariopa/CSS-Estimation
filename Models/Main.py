@@ -107,10 +107,14 @@ with tf.Session(graph=g, config=config) as sess:
 
     for i in range(len(X_test)):
         X[0, :, :, :] = np.array(Image.open(str(X_test[i])))[:, :, k:(k+1)]
+        if i == 1:
+            print(X.shape)
         X = standardize(X)
+        if i == 1:
+            print(X.shape)
         y_pred[i] = predict(sess, X, return_proba=False)
     test_acc = 100*np.sum((y_pred == y_test)/len(y_test))
-    print(' Test Acc: %7.3f%%' % test_acc)
+    print('Test Acc: %7.3f%%' % test_acc)
     with open(os.path.join(store_folder, channel + '_' + name + '_AccuracyTest.txt'), 'w') as f:
         f.write('%.3f%%' % (test_acc))
 

@@ -78,7 +78,11 @@ def train(sess, epochs, channel, training_set, validation_set, test_set,
 
             for i in range(len(X_data)):
                 X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:, :, channel:(channel+1)]
+                print(X)
+                print(X.shape)
                 X = standardize(X)
+                print(X)
+                print(X.shape)
                 y_pred[i] = predict(sess, X, return_proba=False)
             valid_acc = 100*np.sum((y_pred == y_data)/len(y_data))
             val_accuracy_plot.append(valid_acc)
