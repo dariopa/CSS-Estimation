@@ -105,7 +105,7 @@ def train(sess, epochs, channel, training_set, validation_set, test_set,
             
         end_time = time.time()
         print("Total time taken this loop [s]: ", end_time - start_time)
-        if epoch == 2:
+        if epoch == 1:
             print('Termination time will be:  ', time.ctime(start_time + (end_time - start_time)*epochs))
 
     return avg_loss_plot, val_accuracy_plot, test_accuracy_plot
