@@ -9,10 +9,15 @@ import cv2
 from PIL import Image
 from sklearn.utils import shuffle
 
+def standardize(X_data):
+    return (X_data - np.mean(X_data)) / np.std(X_data)
+
 def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shape_output, resize, alpha, r_mean, g_mean, b_mean, sigma, classes):
     _, nr_param = alpha.shape
     nr_hyp_images = len(fnmatch.filter(os.listdir(call_folder), '*.mat'))
     batch_counter = 1
+    
+    nr_hyp_images = 1
 
     CSS_calc = np.full((3, 31), 0, dtype = np.float16)
     CSS = np.full((int(np.floor(1392/X_shape)) * int(np.floor(1300/Y_shape)) * nr_hyp_images * nr_param, 2), 0, dtype = np.float16)
@@ -50,13 +55,17 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
             I_image = np.swapaxes(I_image, 1, 2)
             I_image[I_image > 1] = 1
 
+            # Preprocessing, namely standardization
+            I_image = standardize(I_image)
+
             # Now store batches of Image!
             for i in range(0,X_window):
                 for j in range (0,Y_window):
                     I_image_batch = I_image[(0 + i * X_shape):(i * X_shape + X_shape), (0 + j * Y_shape):(j * Y_shape + Y_shape), :]
                     if resize == True:
                         I_image_batch = cv2.resize(I_image_batch, (X_shape_output, Y_shape_output))
-                    scipy.misc.toimage(I_image_batch, cmin=0, cmax=1).save(os.path.join(store_folder + '/Images/', str(batch_counter) + '.jpg'))
+                    # scipy.misc.toimage(I_image_batch, cmin=0, cmax=1).save(os.path.join(store_folder + '/Images/', str(batch_counter) + '.jpg'))
+                    cv2.imwrite(os.path.join(store_folder + '/Images/', str(batch_counter) + '.jpg'), I_image_batch)
 
                     # Fill CSS Array
                     CSS[batch_counter - 1, :] = [alpha[0, counter], sigma]
@@ -103,7 +112,7 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shap
     print('Done!')
 
     ##############################################################################
-def Preprocess(store_folder, use_data, Train_split, Val_split, Test_split):
+def Split(store_folder, use_data, Train_split, Val_split, Test_split):
 
     # LOAD DATA
     print()
@@ -167,20 +176,18 @@ def Preprocess(store_folder, use_data, Train_split, Val_split, Test_split):
 # Generate images?
 generate = True
 # Preprocess data?
-preprocess = True
+split = True
 
 
-# call_folder = '/home/dario/Documents/SemThes_Local/Images_RAD/'
-call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
+call_folder = '/home/dario/Documents/SemThes_Local/Images_RAD/'
+# call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
 
 # store_folder = '/home/dario/Documents/SemThes_Local/Data_32_32'
-# store_folder = '/home/dario/Documents/SemThes_Local/Data_150_150'
+store_folder = '/home/dario/Documents/SemThes_Local/Data_150_150'
 
-# store_folder = '/scratch_net/biwidl102/dariopa/Data_32_32'
-store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150'
+# store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150'
 # store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224'
-# store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_5_classes'
-# store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes'
+
 
 # FOR IMAGE GENERATION ----------------------
 # Batch size of images
@@ -195,7 +202,6 @@ Y_shape_output = 150
 resize = False
 
 alpha = np.array([[0.501, 0.51, 0.52, 0.53, 0.54, 0.55, 0.56, 0.57, 0.58, 0.59, 0.599]])
-# alpha = np.array([[0.51, 0.55, 0.599]])
 r_mean = 615
 g_mean = 530
 b_mean = 465
@@ -207,18 +213,16 @@ classes = 10
 
 # FOR PREPROCESSING ----------------------
 # How much data to use?
-use_data = 1
+use_data = 1.
 
 # Divison factor for Training, Validation and Test data [0,1]:
-Train_split = 7./10
+Train_split = 8./10
 Val_split = 1./10
-Test_split = 2./10
+Test_split = 1./10
 
 if generate == True:
     print('Generating images')
     Generate(call_folder, store_folder, X_shape, Y_shape, X_shape_output, Y_shape_output, resize, alpha, r_mean, g_mean, b_mean, sigma, classes)
-if preprocess == True:
+if split == True:
     print('\nPreprocess Data')
-    Preprocess(store_folder, use_data, Train_split, Val_split, Test_split)
-
-
+    Split(store_folder, use_data, Train_split, Val_split, Test_split)

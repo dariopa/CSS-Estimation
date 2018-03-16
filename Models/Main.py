@@ -33,7 +33,7 @@ learning_rate = 1e-4
 random_seed = 123
 np.random.seed(random_seed)
 batch_size = 64
-epochs = 600
+epochs = 50
 
 # Select Net
 CNN = NeuralNetworks.build_LeNet_own
@@ -87,12 +87,12 @@ with tf.Session(graph=g, config=config) as sess:
 # PREDICTION
 
     # LABELS
-    y_pred = np.full((len(X_test)),0)
+    y_pred = np.full((len(X_test)), 0, dtype=np.uint8)
     X = np.full((1, x_row, y_col, 1), 0)                              # NUMERISCHER WERT - ÄNDERN!
 
     for i in range(len(X_test)):
         X[0, :, :, :] = np.array(Image.open(str(X_test[i])))[:,:,0:1] # NUMERISCHER WERT - ÄNDERN!
-        y_pred[i] = predict(sess, X, return_proba=False)              # NUMERISCHER WERT - ÄNDERN!
+        y_pred[i] = predict(sess, X, return_proba=False)
     test_acc = 100*np.sum((y_pred == y_test)/len(y_test))
     print(' Test Acc: %7.3f%%' % test_acc)
     with open(os.path.join(store_folder, Name + '_AccuracyTest.txt'), 'w') as f:
@@ -101,7 +101,7 @@ with tf.Session(graph=g, config=config) as sess:
     # PROBABILITIES
     np.set_printoptions(precision=3, suppress=True)
 
-    y_pred_proba = np.full((len(X_test), classes), 0, dtype=np.float16)     # NUMERISCHER WERT - ÄNDERN!
+    y_pred_proba = np.full((len(X_test), classes), 0, dtype=np.float16)
     X = np.full((1, x_row, y_col, 1), 0, dtype=np.uint8)
 
     for i in range(len(X_test)):

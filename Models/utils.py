@@ -6,7 +6,6 @@ from sklearn.utils import shuffle
 from PIL import Image
 import time
 
-
 def save(saver, sess, epoch, path):
     if not os.path.isdir(path):
         os.makedirs(path)
