@@ -65,12 +65,8 @@ def train(sess, epochs, channel, training_set, validation_set, test_set,
             loss, _ = sess.run(['cross_entropy_loss:0', 'train_op'], feed_dict=feed)
             avg_loss += loss
 
-        print("\nTotal time taken this loop [s]: ", end_time - start_time)
-        if epoch == 2:
-            print('Termination time will be:  ', time.ctime(start_time + (end_time - start_time)*epochs))
-
         avg_loss_plot.append(np.mean(avg_loss))
-        print('Epoch %02d Training Avg. Loss: %7.4f' % (epoch, avg_loss), end=' ')
+        print('\nEpoch %02d Training Avg. Loss: %7.4f' % (epoch, avg_loss), end=' ')
         del batch_x, batch_y
 
         if validation_set is not None:
@@ -107,6 +103,10 @@ def train(sess, epochs, channel, training_set, validation_set, test_set,
         else:
             print()
         end_time = time.time()
+        print("Total time taken this loop [s]: ", end_time - start_time)
+        if epoch == 2:
+            print('Termination time will be:  ', time.ctime(start_time + (end_time - start_time)*epochs))
+
     return avg_loss_plot, val_accuracy_plot, test_accuracy_plot
 
 def predict(sess, X, return_proba=False):
