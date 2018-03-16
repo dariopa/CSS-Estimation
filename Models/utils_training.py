@@ -29,15 +29,16 @@ def batch_generator(X_train, y_train, batch, i, row, col, loops):
     
     for k in range(0, batch_size):
         img = np.array(Image.open(str(X_train[k + i * batch])))
+        # Preprocessing / Standardize
+        img = standardize(img, 1)                                 # NUMERISCHER WERT - ÄNDERN!
         X_send[k, :, :, :] = img[:,:,0:1]                         # NUMERISCHER WERT - ÄNDERN!
     y_send = y_train[i * batch:(i + 1) * batch]
-    # print(len(X_send), len(y_send))
 
     (X_send, y_send) = shuffle(X_send, y_send)
 
     return(X_send, y_send)
 
-def train(sess, epochs, training_set, validation_set,
+def train(sess, epochs, training_set, validation_set, test_set, 
           batch_size, initialize=True, dropout=0.5):
 
     X_data_train = np.array(training_set[0])
@@ -50,6 +51,7 @@ def train(sess, epochs, training_set, validation_set,
 
     avg_loss_plot = []
     val_accuracy_plot = []
+    test_accuracy_plot = []
     row, col, _ = np.array(Image.open(str(X_data_train[0]))).shape
     
     loops = int(np.floor(len(X_data_train) / batch_size)) + 1
@@ -81,14 +83,32 @@ def train(sess, epochs, training_set, validation_set,
 
             for i in range(len(X_data)):
                 X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:, :, 0:1] # NUMERISCHER WERT - ÄNDERN!
+                X = standardize(X, 1)                                           # NUMERISCHER WERT - ÄNDERN!
                 y_pred[i] = predict(sess, X, return_proba=False)
             valid_acc = 100*np.sum((y_pred == y_data)/len(y_data))
             val_accuracy_plot.append(valid_acc)
-            print(' Validation Acc: %7.3f%%' % valid_acc)
+            print(' Validation Acc: %7.3f%%' % valid_acc, end=' ')
         else:
             print()
 
-    return avg_loss_plot, val_accuracy_plot
+        if test_set is not None:
+            X_data = np.array(test_set[0])
+            y_data = np.array(test_set[1])
+            y_pred = np.full((len(X_data)), 0)
+            x_row, y_col, _ = np.array(Image.open(str(X_data[0]))).shape
+            X = np.full((1, x_row, y_col, 1), 0)
+
+            for i in range(len(X_data)):
+                X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:, :, 0:1] # NUMERISCHER WERT - ÄNDERN!
+                X = standardize(X, 1)                                           # NUMERISCHER WERT - ÄNDERN!
+                y_pred[i] = predict(sess, X, return_proba=False)
+            test_acc = 100*np.sum((y_pred == y_data)/len(y_data))
+            test_accuracy_plot.append(test_acc)
+            print(' Test Acc: %7.3f%%' % test_acc)
+        else:
+            print()
+
+    return avg_loss_plot, val_accuracy_plot, test_accuracy_plot
 
 def predict(sess, X, return_proba=False):
     feed = {'tf_x:0': X, 'fc_keep_prob:0': 1.0}
