@@ -121,7 +121,7 @@ with tf.Session(graph=g, config=config) as sess:
     X = np.full((1, x_row, y_col, 1), 0.)
 
     for i in range(len(X_test)):
-        X[0, :, :, :] = np.array(Image.open(str(X_test[i])))[:, :, k:(K+1)]
+        X[0, :, :, :] = np.array(Image.open(str(X_test[i])))[:, :, k:(k+1)]
         X = standardize(X)
         y_pred_proba[i] = predict(sess, X, return_proba=True)
     print(y_pred_proba)

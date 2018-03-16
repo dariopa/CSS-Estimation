@@ -29,7 +29,7 @@ def batch_generator(X_train, y_train, batch, i, row, col, channel, loops):
     X_send = np.full((batch_size, row, col, 1), 0., dtype = np.float32)
     
     for k in range(0, batch_size):
-        img = np.array(Image.open(str(X_train[k + i * batch])))[:, :, k:(k+1)]
+        img = np.array(Image.open(str(X_train[k + i * batch])))[:, :, channel:(channel+1)]
         print(img.shape)
         img = standardize(img)
         print(img.shape)
@@ -83,7 +83,7 @@ def train(sess, epochs, channel, training_set, validation_set, test_set,
             X = np.full((1, x_row, y_col, 1), 0.)
 
             for i in range(len(X_data)):
-                X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:, :, k:(k+1)]
+                X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:, :, channel:(channel+1)]
                 X = standardize(X)
                 y_pred[i] = predict(sess, X, return_proba=False)
             valid_acc = 100*np.sum((y_pred == y_data)/len(y_data))
@@ -100,7 +100,7 @@ def train(sess, epochs, channel, training_set, validation_set, test_set,
             X = np.full((1, x_row, y_col, 1), 0.)
 
             for i in range(len(X_data)):
-                X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:, :, k:(k+1)]
+                X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:, :, channel:(channel+1)]
                 X = standardize(X)
                 y_pred[i] = predict(sess, X, return_proba=False)
             test_acc = 100*np.sum((y_pred == y_data)/len(y_data))
