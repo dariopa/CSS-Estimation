@@ -13,29 +13,44 @@ config.allow_soft_placement = True #If an operation is not defined in the defaul
 
 
 ##############################################################################
-# Folder Path
+# Which dataset to use?
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes/'
 call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_5_classes/'
 
+# In which folder to store images?
 store_folder = './model_r_alpha_10_classes_VGG16_224/' 
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 
-Name = 'r_alpha'
+# Name of analysed channel
+channel = 'red'
+
+if channel = 'red':
+    k = 0
+elif channel = 'green':
+    k = 1
+elif channel = 'blue':
+    k = 2
+else:
+    k = None
+print(k)
+
+# Name of analysed parameter:
+name = 'alpha'
 
 ## Define hyperparameters
 learning_rate = 1e-4
 random_seed = 123
 np.random.seed(random_seed)
 batch_size = 64
-epochs = 50
+epochs = 1
 
 # Select Net
-# CNN = NeuralNetworks.build_LeNet_own
-CNN = NeuralNetworks.build_VGG16
+CNN = NeuralNetworks.build_LeNet_own
+# CNN = NeuralNetworks.build_VGG16
 
 # Classes
 classes = 10
@@ -74,26 +89,26 @@ with g.as_default():
 print()
 print('Training... ')
 with tf.Session(graph=g, config=config) as sess:
-    [avg_loss_plot, val_accuracy_plot, test_accuracy_plot] = train(sess, epochs=epochs,
+    [avg_loss_plot, val_accuracy_plot, test_accuracy_plot] = train(sess, epochs=epochs, channel=k,
                                                                    training_set=(X_train, y_train),
                                                                    validation_set=(X_valid, y_valid),
-                                                                   test_set=(X_test, y_test),
+                                                                   test_set=None,
                                                                    batch_size=batch_size,
                                                                    initialize=True)
 
-    np.save(os.path.join(store_folder, Name + '_avg_loss_plot.npy'), avg_loss_plot)
-    np.save(os.path.join(store_folder, Name + '_val_accuracy_plot.npy'), val_accuracy_plot)
-    np.save(os.path.join(store_folder, Name + '_test_accuracy_plot.npy'), test_accuracy_plot)
+    np.save(os.path.join(store_folder, channel + '_' + name + '_avg_loss_plot.npy'), avg_loss_plot)
+    np.save(os.path.join(store_folder, channel + '_' + name + '_val_accuracy_plot.npy'), val_accuracy_plot)
+    # np.save(os.path.join(store_folder, channel + '_' + name + '_test_accuracy_plot.npy'), test_accuracy_plot)
 ##############################################################################
 # PREDICTION
 
     # LABELS
-    y_pred = np.full((len(X_test)), 0, dtype=np.uint8)
-    X = np.full((1, x_row, y_col, 1), 0)                              # NUMERISCHER WERT - ÄNDERN!
+    y_pred = np.full((len(X_test)), 0.)
+    X = np.full((1, x_row, y_col, 1), 0.)
 
     for i in range(len(X_test)):
-        X[0, :, :, :] = np.array(Image.open(str(X_test[i])))[:,:,0:1] # NUMERISCHER WERT - ÄNDERN!
-        X = standardize(X, 1)                                         # NUMERISCHER WERT - ÄNDERN!
+        X[0, :, :, :] = np.array(Image.open(str(X_test[i])))[:, :, k:(k+1)]
+        X = standardize(X)
         y_pred[i] = predict(sess, X, return_proba=False)
     test_acc = 100*np.sum((y_pred == y_test)/len(y_test))
     print(' Test Acc: %7.3f%%' % test_acc)
@@ -103,12 +118,12 @@ with tf.Session(graph=g, config=config) as sess:
     # PROBABILITIES
     np.set_printoptions(precision=3, suppress=True)
 
-    y_pred_proba = np.full((len(X_test), classes), 0, dtype=np.float16)
-    X = np.full((1, x_row, y_col, 1), 0, dtype=np.uint8)
+    y_pred_proba = np.full((len(X_test), classes), 0.)
+    X = np.full((1, x_row, y_col, 1), 0.)
 
     for i in range(len(X_test)):
-        X[0, :, :, :] = np.array(Image.open(str(X_test[i])))[:, :, 0:1] # NUMERISCHER WERT - ÄNDERN!
-        X = standardize(X, 1)                                           # NUMERISCHER WERT - ÄNDERN!
+        X[0, :, :, :] = np.array(Image.open(str(X_test[i])))[:, :, k:(K+1)]
+        X = standardize(X)
         y_pred_proba[i] = predict(sess, X, return_proba=True)
     print(y_pred_proba)
     np.save(os.path.join(store_folder, Name + '_pred_proba.npy'), y_pred_proba)
