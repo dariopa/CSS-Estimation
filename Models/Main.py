@@ -38,7 +38,16 @@ else:
     k = None
 
 # Name of analysed parameter:
-name = 'alpha'
+parameter = 'alpha'
+
+if parameter == 'alpha':
+    j = 0
+elif parameter == 'mean':
+    j = 1
+elif parameter == 'sigma':
+    j = 2
+else:
+    j = None
 
 ## Define hyperparameters
 learning_rate = 1e-4
@@ -60,18 +69,27 @@ classes = 10
 X_train = np.load(call_folder + 'X_train.npy')
 X_valid = np.load(call_folder + 'X_validation.npy')
 X_test = np.load(call_folder + 'X_test.npy')
-y_train = np.load(call_folder + 'y_binned_train.npy')[:, 0]
-y_valid = np.load(call_folder + 'y_binned_validation.npy')[:, 0]
-y_test = np.load(call_folder + 'y_binned_test.npy')[:, 0]
+y_train = np.load(call_folder + 'y_binned_train.npy')[:, j]
+y_valid = np.load(call_folder + 'y_binned_validation.npy')[:, j]
+y_test = np.load(call_folder + 'y_binned_test.npy')[:, j]
 
 img = np.asarray(Image.open(X_train[0]), dtype=np.uint8)
 print(img.shape)
 x_row, y_col,_ = img.shape
 del img
 
-print('Training:   ', X_train.shape, y_train.shape)
-print('Validation: ', X_valid.shape, y_valid.shape)
+print('Training Set:   ', X_train.shape, y_train.shape)
+print('Validation Set: ', X_valid.shape, y_valid.shape)
 print('Test Set:   ', X_test.shape, y_test.shape)
+
+with open(os.path.join(store_folder, 'Dataset_size.csv'), 'w+') as fp:
+    fp.write("Set,X_data,y_data\n")
+    line = "Training Set:" + "," + str(X_train.shape) + "," + str(y_train.shape) + "\n"
+    fp.write(line)
+    line = "Validation Set:" + "," + str(X_valid.shape) + "," + str(y_valid.shape) + "\n"
+    fp.write(line)
+    line = "Test Set:" + "," + str(X_test.shape) + "," + str(y_test.shape) + "\n"
+    fp.write(line)
 
 ##############################################################################
 # GRAPH TRAINING
@@ -95,9 +113,9 @@ with tf.Session(graph=g, config=config) as sess:
                                                                    batch_size=batch_size,
                                                                    initialize=True)
 
-    np.save(os.path.join(store_folder, channel + '_' + name + '_avg_loss_plot.npy'), avg_loss_plot)
-    np.save(os.path.join(store_folder, channel + '_' + name + '_val_accuracy_plot.npy'), val_accuracy_plot)
-    # np.save(os.path.join(store_folder, channel + '_' + name + '_test_accuracy_plot.npy'), test_accuracy_plot)
+    np.save(os.path.join(store_folder, channel + '_' + parameter + '_avg_loss_plot.npy'), avg_loss_plot)
+    np.save(os.path.join(store_folder, channel + '_' + parameter + '_val_accuracy_plot.npy'), val_accuracy_plot)
+    # np.save(os.path.join(store_folder, channel + '_' + parameter + '_test_accuracy_plot.npy'), test_accuracy_plot)
 ##############################################################################
 # PREDICTION
 
@@ -111,8 +129,8 @@ with tf.Session(graph=g, config=config) as sess:
         y_pred[i] = predict(sess, X, return_proba=False)
     test_acc = 100*np.sum((y_pred == y_test)/len(y_test))
     print('Test Acc: %7.3f%%' % test_acc)
-    with open(os.path.join(store_folder, channel + '_' + name + '_AccuracyTest.txt'), 'w') as f:
-        f.write('%.3f%%' % (test_acc))
+    with open(os.path.join(store_folder, channel + '_' + parameter + '_AccuracyTest.txt'), 'w') as fp:
+        fp.write('%.3f%%' % (test_acc))
 
     # PROBABILITIES
     np.set_printoptions(precision=3, suppress=True)
@@ -125,4 +143,4 @@ with tf.Session(graph=g, config=config) as sess:
         X = standardize(X)
         y_pred_proba[i] = predict(sess, X, return_proba=True)
     print(y_pred_proba)
-    np.save(os.path.join(store_folder, channel + '_' + name + '_pred_proba.npy'), y_pred_proba)
+    np.save(os.path.join(store_folder, channel + '_' + parameter + '_pred_proba.npy'), y_pred_proba)

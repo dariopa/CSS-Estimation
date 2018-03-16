@@ -100,7 +100,7 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean,
 
     print('Done!')
 
-    ##############################################################################
+##############################################################################
 def Split(store_folder, use_data, Train_split, Val_split, Test_split):
 
     # LOAD DATA
@@ -114,8 +114,7 @@ def Split(store_folder, use_data, Train_split, Val_split, Test_split):
     # SHUFFLE DATA
     print()
     print('Shuffling Data...')
-    for i in range(1,5):
-        (X_addr, y, y_binned) = shuffle(X_addr, y, y_binned)
+    (X_addr, y, y_binned) = shuffle(X_addr, y, y_binned)
     print('Done!')
 
     # SPLIT DATA
