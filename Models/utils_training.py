@@ -19,7 +19,7 @@ def load(saver, sess, path, epoch):
     saver.restore(sess, os.path.join(path, 'cnn-model.ckpt-%d' % epoch))
 
 
-def batch_generator(X_train, y_train, batch, i, row, col, k, loops):
+def batch_generator(X_train, y_train, batch, i, row, col, channel, loops):
     
     if i == (loops-1):
         batch_size = len(X_train) - (i * batch)
@@ -38,7 +38,7 @@ def batch_generator(X_train, y_train, batch, i, row, col, k, loops):
 
     return(X_send, y_send)
 
-def train(sess, epochs, k, training_set, validation_set, test_set, 
+def train(sess, epochs, channel, training_set, validation_set, test_set, 
           batch_size, initialize=True, dropout=0.5):
 
     X_data_train = np.array(training_set[0])
@@ -60,7 +60,7 @@ def train(sess, epochs, k, training_set, validation_set, test_set,
         avg_loss = 0.0   
         start_time = time.time()
         for i in range(0, loops):
-            batch_x, batch_y = batch_generator(X_data_train, y_data_train, batch=batch_size, i=i, row=row, col=col, k=k, loops=loops)
+            batch_x, batch_y = batch_generator(X_data_train, y_data_train, batch=batch_size, i=i, row=row, col=col, channel=channel, loops=loops)
             feed = {'tf_x:0': batch_x, 'tf_y:0': batch_y, 'fc_keep_prob:0': dropout}
             loss, _ = sess.run(['cross_entropy_loss:0', 'train_op'], feed_dict=feed)
             avg_loss += loss
