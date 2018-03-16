@@ -28,11 +28,11 @@ if not os.path.isdir(store_folder):
 # Name of analysed channel
 channel = 'red'
 
-if channel = 'red':
+if channel == 'red':
     k = 0
-elif channel = 'green':
+elif channel == 'green':
     k = 1
-elif channel = 'blue':
+elif channel == 'blue':
     k = 2
 else:
     k = None
