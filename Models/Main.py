@@ -36,7 +36,7 @@ elif channel == 'blue':
     k = 2
 else:
     k = None
-print(k)
+print('\n\n\n', k, '\n\n\n')
 
 # Name of analysed parameter:
 name = 'alpha'
