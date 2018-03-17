@@ -14,14 +14,15 @@ config.allow_soft_placement = True #If an operation is not defined in the defaul
 
 ##############################################################################
 # Which dataset to use?
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
+call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes/'
-call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
+# call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_5_classes/'
 
 # In which folder to store images?
 store_folder = './model_r_alpha_10_classes_VGG16_224_preprocessed/' 
+store_folder = './model_test/'
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 
@@ -54,11 +55,11 @@ learning_rate = 1e-4
 random_seed = 123
 np.random.seed(random_seed)
 batch_size = 64
-epochs = 50
+epochs = 3
 
 # Select Net
-# CNN = NeuralNetworks.build_LeNet_own
-CNN = NeuralNetworks.build_VGG16
+CNN = NeuralNetworks.build_LeNet_own
+# CNN = NeuralNetworks.build_VGG16
 
 # Classes
 classes = 10
@@ -111,13 +112,34 @@ with tf.Session(graph=g, config=config) as sess:
                                                                    validation_set=(X_valid, y_valid),
                                                                    test_set=None,
                                                                    batch_size=batch_size,
-                                                                   initialize=True)
+                                                                   initialize=True,
+                                                                   path=store_folder)
 
     np.save(os.path.join(store_folder, channel + '_' + parameter + '_avg_loss_plot.npy'), avg_loss_plot)
     np.save(os.path.join(store_folder, channel + '_' + parameter + '_val_accuracy_plot.npy'), val_accuracy_plot)
-    # np.save(os.path.join(store_folder, channel + '_' + parameter + '_test_accuracy_plot.npy'), test_accuracy_plot)
+    np.save(os.path.join(store_folder, channel + '_' + parameter + '_test_accuracy_plot.npy'), test_accuracy_plot)
+
+del g
+##############################################################################
+# GRAPH PREDICTION
+
+## create a graph
+g2 = tf.Graph()
+with g2.as_default():
+    tf.set_random_seed(random_seed)
+    ## build the graph
+    CNN(classes, x_row, y_col, learning_rate)
+
+    ## Saver
+    saver = tf.train.Saver()
 ##############################################################################
 # PREDICTION
+print()
+print('Prediction... ')
+with tf.Session(graph=g2, config=config) as sess:
+    epoch = np.argmax(val_accuracy_plot) + 1
+    print(epoch)
+    load(saver=saver, sess=sess, epoch=epoch, path=store_folder)
 
     # LABELS
     y_pred = np.full((len(X_test)), 0)

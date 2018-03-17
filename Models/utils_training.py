@@ -7,14 +7,16 @@ from PIL import Image
 import time
 from utils_preprocessing import standardize
 
-def save(saver, sess, epoch, path):
-    if not os.path.isdir(path):
-        os.makedirs(path)
-    print('Saving model in %s' % path)
-    saver.save(sess, os.path.join(path, 'cnn-model.ckpt'), global_step=epoch)
+def save(saver, sess, epoch, path, accuracy):
+    if epoch == 1:
+        print('Saving model in %s' % path)
+        saver.save(sess, os.path.join(path, 'cnn-model.ckpt'), global_step=epoch)
+    else:
+        if np.argmax(accuracy) == (epoch-1):
+            print('Saving model in %s' % path)
+            saver.save(sess, os.path.join(path, 'cnn-model.ckpt'), global_step=epoch)
 
-
-def load(saver, sess, path, epoch):
+def load(saver, sess, epoch, path):
     print('Loading model from %s' % path)
     saver.restore(sess, os.path.join(path, 'cnn-model.ckpt-%d' % epoch))
 
@@ -39,11 +41,12 @@ def batch_generator(X_train, y_train, batch, i, row, col, channel, loops):
     return(X_send, y_send)
 
 def train(sess, epochs, channel, training_set, validation_set, test_set, 
-          batch_size, initialize=True, dropout=0.5):
+          batch_size, initialize=True, dropout=0.5, path):
 
     X_data_train = np.array(training_set[0])
     y_data_train = np.array(training_set[1])
-    training_loss = []
+
+    saver = tf.train.Saver()
 
     # initialize variables
     if initialize:
@@ -103,6 +106,8 @@ def train(sess, epochs, channel, training_set, validation_set, test_set,
         else:
             print()
             
+        save(saver, sess, epoch=epoch, path=path, accuracy=val_accuracy_plot)
+
         end_time = time.time()
         print("Total time taken this loop [s]: ", end_time - start_time)
         if epoch == 1:
