@@ -74,7 +74,7 @@ class NeuralNetworks():
                                 dtype=tf.float32,
                                 name='tf_y_onehot')
 
-        print('Building Neuronal Network...') 
+        print('\nBuilding Neuronal Network...') 
         # Arguments used for tf.truncated_normal, randomly defines variables for the weights and biases for each layer
         mu = 0
         sigma = 0.01
@@ -153,7 +153,7 @@ class NeuralNetworks():
                                 dtype=tf.float32,
                                 name='tf_y_onehot')
 
-        print('Building Neuronal Network...') 
+        print('\nBuilding Neuronal Network...') 
         # 1st layer: Conv_1
         h1 = conv_layer(tf_x, name='conv_1',
                         kernel_size=(5, 5),
@@ -226,7 +226,7 @@ class NeuralNetworks():
                                 name='tf_y_onehot')
 
 
-        print('Building Neuronal Network...')
+        print('\nBuilding Neuronal Network...')
         # 1st layer: Conv_1
         h1 = conv_layer(tf_x, name='conv_1',
                         kernel_size=(3, 3),
@@ -365,7 +365,7 @@ class NeuralNetworks():
                                 name='tf_y_onehot')
 
 
-        print('Building Neuronal Network...')
+        print('\nBuilding Neuronal Network...')
         # 1st layer: Conv_1
         h1 = conv_layer(tf_x, name='conv_1',
                         kernel_size=(3, 3),

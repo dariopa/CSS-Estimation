@@ -22,7 +22,6 @@ call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 
 # In which folder to store images?
 store_folder = './model_r_alpha_10_classes_VGG16_224_preprocessed/' 
-store_folder = './model_test/'
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 
@@ -55,11 +54,12 @@ learning_rate = 1e-4
 random_seed = 123
 np.random.seed(random_seed)
 batch_size = 64
-epochs = 3
+epochs = 50
 
 # Select Net
-CNN = NeuralNetworks.build_LeNet_own
-# CNN = NeuralNetworks.build_VGG16
+# CNN = NeuralNetworks.build_LeNet_own
+CNN = NeuralNetworks.build_VGG16
+# CNN = NeuralNetworks.build_VGG19
 
 # Classes
 classes = 10
