@@ -21,7 +21,7 @@ call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_5_classes/'
 
 # In which folder to store images?
-store_folder = './model_r_alpha_10_classes_VGG16_224/' 
+store_folder = './model_r_alpha_10_classes_VGG16_224_preprocessed/' 
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 
@@ -84,11 +84,11 @@ print('Test Set:   ', X_test.shape, y_test.shape)
 
 with open(os.path.join(store_folder, 'Dataset_size.csv'), 'w+') as fp:
     fp.write("Set,X_data,y_data\n")
-    line = "Training Set:" + "," + str(X_train.shape) + "," + str(y_train.shape) + "\n"
+    line = "Training_Set:" + "," + str(X_train.shape) + "," + str(y_train.shape) + "\n"
     fp.write(line)
-    line = "Validation Set:" + "," + str(X_valid.shape) + "," + str(y_valid.shape) + "\n"
+    line = "Validation_Set:" + "," + str(X_valid.shape) + "," + str(y_valid.shape) + "\n"
     fp.write(line)
-    line = "Test Set:" + "," + str(X_test.shape) + "," + str(y_test.shape) + "\n"
+    line = "Test_Set:" + "," + str(X_test.shape) + "," + str(y_test.shape) + "\n"
     fp.write(line)
 
 ##############################################################################
