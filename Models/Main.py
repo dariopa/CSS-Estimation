@@ -107,13 +107,13 @@ with g.as_default():
 print()
 print('Training... ')
 with tf.Session(graph=g, config=config) as sess:
-    [avg_loss_plot, val_accuracy_plot, test_accuracy_plot] = train(sess, epochs=epochs, channel=k,
+    [avg_loss_plot, val_accuracy_plot, test_accuracy_plot] = train(path=store_folder, sess=sess,
+                                                                   epochs=epochs, channel=k,
                                                                    training_set=(X_train, y_train),
                                                                    validation_set=(X_valid, y_valid),
                                                                    test_set=None,
                                                                    batch_size=batch_size,
-                                                                   initialize=True,
-                                                                   path=store_folder)
+                                                                   initialize=True)
 
     np.save(os.path.join(store_folder, channel + '_' + parameter + '_avg_loss_plot.npy'), avg_loss_plot)
     np.save(os.path.join(store_folder, channel + '_' + parameter + '_val_accuracy_plot.npy'), val_accuracy_plot)

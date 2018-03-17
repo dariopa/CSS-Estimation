@@ -40,8 +40,8 @@ def batch_generator(X_train, y_train, batch, i, row, col, channel, loops):
 
     return(X_send, y_send)
 
-def train(sess, epochs, channel, training_set, validation_set, test_set, 
-          batch_size, initialize=True, dropout=0.5, path):
+def train(path, sess, epochs, channel, training_set, validation_set, test_set, 
+          batch_size, initialize=True, dropout=0.5):
 
     X_data_train = np.array(training_set[0])
     y_data_train = np.array(training_set[1])
