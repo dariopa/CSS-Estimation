@@ -63,7 +63,9 @@ def train(path, sess, epochs, channel, training_set, validation_set, test_set,
         avg_loss = 0.0   
         start_time = time.time()
         for i in range(0, loops):
-            batch_x, batch_y = batch_generator(X_data_train, y_data_train, batch=batch_size, i=i, row=row, col=col, channel=channel, loops=loops)
+            batch_x, batch_y = batch_generator(X_data_train, y_data_train,
+                                               batch=batch_size, i=i, row=row,
+                                               col=col, channel=channel, loops=loops)
             feed = {'tf_x:0': batch_x, 'tf_y:0': batch_y, 'fc_keep_prob:0': dropout}
             loss, _ = sess.run(['cross_entropy_loss:0', 'train_op'], feed_dict=feed)
             avg_loss += loss
