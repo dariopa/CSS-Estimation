@@ -344,8 +344,8 @@ class NeuralNetworks():
         cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_y_onehot), name='cross_entropy_loss')
 
         ## Optimizer:
-        # optimizer = tf.train.AdamOptimizer(learning_rate)
-        optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+        optimizer = tf.train.AdamOptimizer(learning_rate)
+        # optimizer = tf.train.GradientDescentOptimizer(learning_rate)
         optimizer = optimizer.minimize(cross_entropy_loss, name='train_op')
 
         ## Computing the prediction accuracy
