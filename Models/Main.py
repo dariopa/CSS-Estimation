@@ -21,7 +21,7 @@ call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_5_classes/'
 
 # In which folder to store images?
-store_folder = './model_r_alpha_10_classes_VGG16_224_no_preprocessing/' 
+store_folder = './model_r_alpha_10_classes_VGG19_224_no_preprocessing/' 
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 
@@ -54,12 +54,12 @@ learning_rate = 1e-4
 random_seed = 123
 np.random.seed(random_seed)
 batch_size = 64
-epochs = 40
+epochs = 50
 
 # Select Net
 # CNN = NeuralNetworks.build_LeNet_own
-CNN = NeuralNetworks.build_VGG16
-# CNN = NeuralNetworks.build_VGG19
+# CNN = NeuralNetworks.build_VGG16
+CNN = NeuralNetworks.build_VGG19
 
 # Classes
 classes = 10
@@ -111,7 +111,7 @@ with tf.Session(graph=g, config=config) as sess:
                                                                    epochs=epochs, channel=k,
                                                                    training_set=(X_train, y_train),
                                                                    validation_set=(X_valid, y_valid),
-                                                                   test_set=None,
+                                                                   test_set=(X_test, y_test),
                                                                    batch_size=batch_size,
                                                                    initialize=True)
 

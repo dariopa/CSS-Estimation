@@ -12,7 +12,9 @@ channel = 'red'
 # call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_5_classes_VGG16_150/'
 # call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_VGG16_150/'
 # call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_5_classes_VGG16_224/'
-call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_VGG16_224_preprocessed/'
+# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_VGG16_224_preprocessed/'
+# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_VGG16_224_no_preprocessing/'
+call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_VGG16_224_sgd/'
 ##############################################################################
 
 avg_loss_plot = np.load(call_folder + channel + '_' + parameter + '_avg_loss_plot.npy')
