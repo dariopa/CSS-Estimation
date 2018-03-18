@@ -111,7 +111,7 @@ with tf.Session(graph=g, config=config) as sess:
                                                                    epochs=epochs, channel=k,
                                                                    training_set=(X_train, y_train),
                                                                    validation_set=(X_valid, y_valid),
-                                                                   test_set=(X_test, y_test),
+                                                                   test_set=None,
                                                                    batch_size=batch_size,
                                                                    initialize=True)
 
