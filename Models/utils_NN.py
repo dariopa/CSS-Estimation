@@ -345,7 +345,6 @@ class NeuralNetworks():
 
         ## Optimizer:
         optimizer = tf.train.AdamOptimizer(learning_rate)
-        # optimizer = tf.train.GradientDescentOptimizer(learning_rate)
         optimizer = optimizer.minimize(cross_entropy_loss, name='train_op')
 
         ## Computing the prediction accuracy
@@ -458,7 +457,7 @@ class NeuralNetworks():
                                 strides=[1, 2, 2, 1],
                                 padding='SAME')
         # 14th layer: Conv_14
-        h14 = conv_layer(h13, name='conv_14',
+        h14 = conv_layer(h5_pool, name='conv_14',
                         kernel_size=(3, 3),
                         padding_mode='SAME',
                         n_output_channels=512)
@@ -473,12 +472,12 @@ class NeuralNetworks():
                         padding_mode='SAME',
                         n_output_channels=512)
         # MaxPooling
-        h5_pool = tf.nn.max_pool(h16,
+        h6_pool = tf.nn.max_pool(h16,
                                 ksize=[1, 2, 2, 1],
                                 strides=[1, 2, 2, 1],
                                 padding='SAME')
         # 17th layer: FulCon_1
-        h17 = fc_layer(h5_pool, name='fc_17',
+        h17 = fc_layer(h6_pool, name='fc_17',
                        n_output_units=4096,
                        activation_fn=tf.nn.relu)
         # 18th layer: FulCon_2
