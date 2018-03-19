@@ -411,33 +411,28 @@ class NeuralNetworks():
                         kernel_size=(3, 3),
                         padding_mode='SAME',
                         n_output_channels=256)
+        # 8th layer: Conv_8
+        h8 = conv_layer(h7, name='conv_8',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=256)
         # MaxPooling
-        h3_pool = tf.nn.max_pool(h7,
+        h3_pool = tf.nn.max_pool(h8,
                                 ksize=[1, 2, 2, 1],
                                 strides=[1, 2, 2, 1],
                                 padding='SAME')
-        # 8th layer: Conv_8
-        h8 = conv_layer(h3_pool, name='conv_8',
+        # 9th layer: Conv_9
+        h9 = conv_layer(h3_pool, name='conv_9',
                         kernel_size=(3, 3),
                         padding_mode='SAME',
                         n_output_channels=512)
         # 10th layer: Conv_10
-        h9 = conv_layer(h8, name='conv_9',
-                        kernel_size=(3, 3),
-                        padding_mode='SAME',
-                        n_output_channels=512)
-        # 11th layer: Conv_11
         h10 = conv_layer(h9, name='conv_10',
                         kernel_size=(3, 3),
                         padding_mode='SAME',
                         n_output_channels=512)
-        # MaxPooling
-        h4_pool = tf.nn.max_pool(h10,
-                                ksize=[1, 2, 2, 1],
-                                strides=[1, 2, 2, 1],
-                                padding='SAME')
         # 11th layer: Conv_11
-        h11 = conv_layer(h4_pool, name='conv_11',
+        h11 = conv_layer(h10, name='conv_11',
                         kernel_size=(3, 3),
                         padding_mode='SAME',
                         n_output_channels=512)
@@ -446,18 +441,18 @@ class NeuralNetworks():
                         kernel_size=(3, 3),
                         padding_mode='SAME',
                         n_output_channels=512)
-        # 13th layer: Conv_13
-        h13 = conv_layer(h12, name='conv_13',
-                        kernel_size=(3, 3),
-                        padding_mode='SAME',
-                        n_output_channels=512)
         # MaxPooling
-        h5_pool = tf.nn.max_pool(h13,
+        h4_pool = tf.nn.max_pool(h12,
                                 ksize=[1, 2, 2, 1],
                                 strides=[1, 2, 2, 1],
                                 padding='SAME')
+        # 13th layer: Conv_13
+        h13 = conv_layer(h4_pool, name='conv_13',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=512)
         # 14th layer: Conv_14
-        h14 = conv_layer(h5_pool, name='conv_14',
+        h14 = conv_layer(h13, name='conv_14',
                         kernel_size=(3, 3),
                         padding_mode='SAME',
                         n_output_channels=512)
@@ -472,12 +467,12 @@ class NeuralNetworks():
                         padding_mode='SAME',
                         n_output_channels=512)
         # MaxPooling
-        h6_pool = tf.nn.max_pool(h16,
+        h5_pool = tf.nn.max_pool(h16,
                                 ksize=[1, 2, 2, 1],
                                 strides=[1, 2, 2, 1],
                                 padding='SAME')
         # 17th layer: FulCon_1
-        h17 = fc_layer(h6_pool, name='fc_17',
+        h17 = fc_layer(h5_pool, name='fc_17',
                        n_output_units=4096,
                        activation_fn=tf.nn.relu)
         # 18th layer: FulCon_2
