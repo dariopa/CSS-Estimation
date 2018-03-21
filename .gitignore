@@ -11,3 +11,4 @@
 /SemThes_Local
 /Models/MNIST/__*
 /Models/.DS_Store
+/Models/model*/cnn*
