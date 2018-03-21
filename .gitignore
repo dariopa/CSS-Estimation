@@ -12,3 +12,4 @@
 /Models/MNIST/__*
 /Models/.DS_Store
 /Models/model*/cnn*
+/Models/model*/checkpoint
