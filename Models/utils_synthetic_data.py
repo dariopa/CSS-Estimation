@@ -8,8 +8,9 @@ import math
 import cv2
 from PIL import Image
 from sklearn.utils import shuffle
+from utils_preprocessing import scale, norm
 
-def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean, b_mean, sigma, classes):
+def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean, b_mean, sigma, classes, preprocessing=True):
     _, nr_param = alpha.shape
     nr_hyp_images = len(fnmatch.filter(os.listdir(call_folder), '*.mat'))
     batch_counter = 1
@@ -50,11 +51,15 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean,
             I_image = np.swapaxes(I_image, 1, 2)
             I_image[I_image > 1] = 1
 
+            if preprocessing == True:
+                I_image = norm(I_image)
+                I_image = scale(I_image)
+
             # Now store batches of Image!
             for i in range(0,X_window):
                 for j in range (0,Y_window):
                     I_image_batch = I_image[(0 + i * X_shape):(i * X_shape + X_shape), (0 + j * Y_shape):(j * Y_shape + Y_shape), :]
-                    scipy.misc.toimage(I_image_batch, cmin=0, cmax=1).save(os.path.join(store_folder + '/Images/', str(batch_counter) + '.jpg'))
+                    scipy.misc.toimage(I_image_batch, cmin=0., cmax=1.).save(os.path.join(store_folder + '/Images/', str(batch_counter) + '.jpg'))
 
                     # Fill CSS Array
                     CSS[batch_counter - 1, :] = [alpha[0, counter], sigma]

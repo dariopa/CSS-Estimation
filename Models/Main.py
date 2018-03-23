@@ -3,7 +3,6 @@ import numpy as np
 os.environ["CUDA_VISIBLE_DEVICES"] = os.environ['SGE_GPU']
 import tensorflow as tf
 from PIL import Image
-from utils_preprocessing import standardize
 from utils_training import train, predict, save, load
 from utils_NN import NeuralNetworks
 
@@ -15,14 +14,15 @@ config.allow_soft_placement = True #If an operation is not defined in the defaul
 ##############################################################################
 # Which dataset to use?
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
-call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150/'
+# call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_big/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_5_classes/'
+call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_preprocessed/'
 
 # In which folder to store images?
-store_folder = './model_r_alpha_10_classes_VGG16_150_standardized/' 
+store_folder = './model_r_alpha_10_classes_VGG16_150_normalized/' 
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 
@@ -148,7 +148,6 @@ with tf.Session(graph=g2, config=config) as sess:
 
     for i in range(len(X_test)):
         X[0, :, :, :] = np.array(Image.open(str(X_test[i])))[:, :, k:(k+1)]
-        X = standardize(X)
         y_pred[i] = predict(sess, X, return_proba=False)
     test_acc = 100*np.sum((y_pred == y_test)/len(y_test))
     print('Test Acc: %7.3f%%' % test_acc)
@@ -163,7 +162,6 @@ with tf.Session(graph=g2, config=config) as sess:
 
     for i in range(len(X_test)):
         X[0, :, :, :] = np.array(Image.open(str(X_test[i])))[:, :, k:(k+1)]
-        X = standardize(X)
         y_pred_proba[i] = predict(sess, X, return_proba=True)
     print(y_pred_proba)
     np.save(os.path.join(store_folder, channel + '_' + parameter + '_pred_proba.npy'), y_pred_proba)

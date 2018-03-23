@@ -5,7 +5,7 @@ import tensorflow as tf
 from sklearn.utils import shuffle
 from PIL import Image
 import time
-from utils_preprocessing import standardize
+
 
 def save(saver, sess, epoch, path, accuracy):
     if epoch == 1:
@@ -32,7 +32,6 @@ def batch_generator(X_train, y_train, batch, i, row, col, channel, loops):
     
     for k in range(0, batch_size):
         img = np.array(Image.open(str(X_train[k + i * batch])))[:, :, channel:(channel+1)]
-        img = standardize(img)
         X_send[k, :, :, :] = img
     y_send = y_train[i * batch:(i + 1) * batch]
 
@@ -83,7 +82,6 @@ def train(path, sess, epochs, channel, training_set, validation_set, test_set,
 
             for i in range(len(X_data)):
                 X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:, :, channel:(channel+1)]
-                X = standardize(X)
                 y_pred[i] = predict(sess, X, return_proba=False)
             valid_acc = 100*np.sum((y_pred == y_data)/len(y_data))
             val_accuracy_plot.append(valid_acc)
@@ -100,7 +98,6 @@ def train(path, sess, epochs, channel, training_set, validation_set, test_set,
 
             for i in range(len(X_data)):
                 X[0, :, :, :] = np.array(Image.open(str(X_data[i])))[:, :, channel:(channel+1)]
-                X = standardize(X)
                 y_pred[i] = predict(sess, X, return_proba=False)
             test_acc = 100*np.sum((y_pred == y_data)/len(y_data))
             test_accuracy_plot.append(test_acc)
