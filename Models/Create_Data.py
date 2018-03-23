@@ -15,8 +15,8 @@ store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_preprocessed'
 
 # FOR IMAGE GENERATION ----------------------
 # Batch size of images
-X_shape = 224
-Y_shape = 224
+X_shape = 150
+Y_shape = 150
 
 alpha = np.array([[0.501, 0.51, 0.52, 0.53, 0.54, 0.55, 0.56, 0.57, 0.58, 0.59, 0.599]])
 # alpha = np.array([[0.501, 0.505, 0.51, 0.515, 0.52, 05.25, 0.53, 05.35, 0.54, 0.545, 0.55, 0.555, 0.56, 0.565, 0.57, 0.575, 0.58, 0.585, 0.59, 0.595, 0.599]])
