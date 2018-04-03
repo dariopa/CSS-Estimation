@@ -15,14 +15,14 @@ config.allow_soft_placement = True #If an operation is not defined in the defaul
 # Which dataset to use?
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_32_32/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150/'
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes/'
+call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_big/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_5_classes/'
-call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_preprocessed/'
+# call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_preprocessed/'
 
 # In which folder to store images?
-store_folder = './model_r_alpha_10_classes_VGG16_150_normalized/' 
+store_folder = './model_r_alpha_5_classes_VGG16_150/' 
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 
@@ -54,6 +54,7 @@ else:
 learning_rate = 1e-4
 random_seed = 123
 np.random.seed(random_seed)
+tf.set_random_seed(random_seed)
 batch_size = 64
 epochs = 40
 
@@ -63,7 +64,7 @@ CNN = NeuralNetworks.build_VGG16
 # CNN = NeuralNetworks.build_VGG19
 
 # Classes
-classes = 10
+classes = 5
 
 ##############################################################################
 # IMPORT DATA
