@@ -22,7 +22,7 @@ call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_preprocessed/'
 
 # In which folder to store images?
-store_folder = './model_r_alpha_5_classes_VGG16_150/' 
+store_folder = './model_r_alpha_5_classes_VGG16_150_no_preprocessing/' 
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 
