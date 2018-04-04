@@ -10,6 +10,9 @@ config = tf.ConfigProto()
 config.gpu_options.allow_growth = True #Do not assign whole gpu memory, just use it on the go
 config.allow_soft_placement = True #If an operation is not defined in the default device, let it execute in another.
 
+random_seed = 123
+np.random.seed(random_seed)
+tf.set_random_seed(random_seed)
 
 ##############################################################################
 # Which dataset to use?
@@ -21,13 +24,26 @@ call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_5_classes/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_preprocessed/'
 
-# In which folder to store images?
-store_folder = './model_r_alpha_5_classes_VGG16_150_no_preprocessing/' 
-if not os.path.isdir(store_folder):
-    os.makedirs(store_folder)
-
 # Name of analysed channel
 channel = 'red'
+
+# Name of analysed parameter:
+parameter = 'alpha'
+
+# Select Net
+# CNN = NeuralNetworks.build_LeNet_own
+CNN = NeuralNetworks.build_VGG16
+# CNN = NeuralNetworks.build_VGG19
+
+## Define hyperparameters
+learning_rate = 1e-4
+batch_size = 64
+epochs = 40
+classes = 5
+
+# In which folder to store images?
+store_folder = './model_' + str(channel) + '_' + str(parameter) + '_' + str(classes) + 'VGG16_150_no_preprocessing_V2/'
+##############################################################################
 
 if channel == 'red':
     k = 0
@@ -38,9 +54,6 @@ elif channel == 'blue':
 else:
     k = None
 
-# Name of analysed parameter:
-parameter = 'alpha'
-
 if parameter == 'alpha':
     j = 0
 elif parameter == 'mean':
@@ -50,22 +63,16 @@ elif parameter == 'sigma':
 else:
     j = None
 
-## Define hyperparameters
-learning_rate = 1e-4
-random_seed = 123
-np.random.seed(random_seed)
-tf.set_random_seed(random_seed)
-batch_size = 64
-epochs = 40
+if not os.path.isdir(store_folder):
+    os.makedirs(store_folder)
 
-# Select Net
-# CNN = NeuralNetworks.build_LeNet_own
-CNN = NeuralNetworks.build_VGG16
-# CNN = NeuralNetworks.build_VGG19
-
-# Classes
-classes = 5
-
+with open(os.path.join(store_folder, 'Hyperparameters.csv'), 'w+') as fp:
+    line = "Learning_rate:" + "," + str(learning_rate) + "\n"
+    fp.write(line)
+    line = "Batch_size:" + "," + str(batch_size) + "\n"
+    fp.write(line)
+    line = "Epochs:" + "," + str(epochs) + "\n"
+    fp.write(line)
 ##############################################################################
 # IMPORT DATA
 
