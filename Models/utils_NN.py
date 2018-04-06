@@ -282,12 +282,12 @@ class NeuralNetworks():
                         kernel_size=(3, 3),
                         padding_mode='SAME',
                         n_output_channels=512)
-        # 10th layer: Conv_10
+        # 9th layer: Conv_9
         h9 = conv_layer(h8, name='conv_9',
                         kernel_size=(3, 3),
                         padding_mode='SAME',
                         n_output_channels=512)
-        # 11th layer: Conv_11
+        # 10th layer: Conv_10
         h10 = conv_layer(h9, name='conv_10',
                         kernel_size=(3, 3),
                         padding_mode='SAME',
@@ -505,4 +505,161 @@ class NeuralNetworks():
         correct_predictions = tf.equal(predictions['labels'], tf_y, name='correct_preds')
 
         accuracy = tf.reduce_mean(tf.cast(correct_predictions, tf.float32), name='accuracy')
+    
+###############################################################################################
+     
+    def build_VGG19s(classes, x_row, y_col, learning_rate):
+        # Placeholders for X and y:
+        tf_x = tf.placeholder(tf.float32, shape=[None, x_row, y_col, 1], name='tf_x')
+        tf_y = tf.placeholder(tf.int32, shape=[None], name='tf_y')
+
+        ## One-hot encoding:
+        tf_y_onehot = tf.one_hot(indices=tf_y, depth=classes,
+                                dtype=tf.float32,
+                                name='tf_y_onehot')
+
+
+        print('\nBuilding Neuronal Network...')
+        # 1st layer: Conv_1
+        h1 = conv_layer(tf_x, name='conv_1',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=64)
+        # 2nd layer: Conv_2
+        h2 = conv_layer(h1, name='conv_2',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=64)
+        # MaxPooling
+        h1_pool = tf.nn.max_pool(h2,
+                                ksize=[1, 2, 2, 1],
+                                strides=[1, 2, 2, 1],
+                                padding='SAME')
+        # 3rd layer: Conv_3
+        h3 = conv_layer(h1_pool, name='conv_3',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=128)
+        # 4th layer: Conv_4
+        h4 = conv_layer(h3, name='conv_4',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=128)
+        # MaxPooling
+        h2_pool = tf.nn.max_pool(h4,
+                                ksize=[1, 2, 2, 1],
+                                strides=[1, 2, 2, 1],
+                                padding='SAME')
+        # 5th layer: Conv_5
+        h5 = conv_layer(h2_pool, name='conv_5',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=256)
+        # 6th layer: Conv_6
+        h6 = conv_layer(h5, name='conv_6',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=256)
+        # 7th layer: Conv_7
+        h7 = conv_layer(h6, name='conv_7',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=256)
+
+        # 7sth layer: Conv_7s
+        h7s = conv_layer(h7, name='conv_7s',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=256)
+        # MaxPooling
+        h3_pool = tf.nn.max_pool(h7s,
+                                ksize=[1, 2, 2, 1],
+                                strides=[1, 2, 2, 1],
+                                padding='SAME')
+        # 8th layer: Conv_8
+        h8 = conv_layer(h3_pool, name='conv_8',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=512)
+        # 9th layer: Conv_9
+        h9 = conv_layer(h8, name='conv_9',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=512)
+        # 10th layer: Conv_10
+        h10 = conv_layer(h9, name='conv_10',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=512)
+        # 10sth layer: Conv_10s
+        h10s = conv_layer(h10, name='conv_10s',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=512)
+        # MaxPooling
+        h4_pool = tf.nn.max_pool(h10s,
+                                ksize=[1, 2, 2, 1],
+                                strides=[1, 2, 2, 1],
+                                padding='SAME')
+        # 11th layer: Conv_11
+        h11 = conv_layer(h4_pool, name='conv_11',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=512)
+        # 12th layer: Conv_12
+        h12 = conv_layer(h11, name='conv_12',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=512)
+        # 13th layer: Conv_13
+        h13 = conv_layer(h12, name='conv_13',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=512)
+        # 13sth layer: Conv_13s
+        h13s = conv_layer(h13, name='conv_13s',
+                        kernel_size=(3, 3),
+                        padding_mode='SAME',
+                        n_output_channels=512)
+        # MaxPooling
+        h5_pool = tf.nn.max_pool(h13s,
+                                ksize=[1, 2, 2, 1],
+                                strides=[1, 2, 2, 1],
+                                padding='SAME')
+        # 14th layer: FulCon_1
+        h14 = fc_layer(h5_pool, name='fc_14',
+                    n_output_units=4096,
+                    activation_fn=tf.nn.relu)
+        # 15th layer: FulCon_2
+        h15 = fc_layer(h14, name='fc_15',
+                    n_output_units=4096,
+                    activation_fn=tf.nn.relu)
+        # Dropout
+        keep_prob = tf.placeholder(tf.float32, name='fc_keep_prob')
+        h_drop = tf.nn.dropout(h15, keep_prob=keep_prob, name='dropout_layer')
+
+        # 16th layer: FulCon_3 (linear activation)
+        logits = fc_layer(h_drop, name='fc_16',
+                    n_output_units=classes,
+                    activation_fn=None)
+
+        ## Prediction
+        predictions = {
+            'probabilities' : tf.nn.softmax(logits, name='probabilities'),
+            'labels' : tf.cast(tf.argmax(logits, axis=1), tf.int32, name='labels')
+        }
+        
+        ## Loss Function and Optimization
+        cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_y_onehot), name='cross_entropy_loss')
+
+        ## Optimizer:
+        optimizer = tf.train.AdamOptimizer(learning_rate)
+        optimizer = optimizer.minimize(cross_entropy_loss, name='train_op')
+
+        ## Computing the prediction accuracy
+        correct_predictions = tf.equal(predictions['labels'], tf_y, name='correct_preds')
+
+        accuracy = tf.reduce_mean(tf.cast(correct_predictions, tf.float32), name='accuracy')
+
+###############################################################################################
 
