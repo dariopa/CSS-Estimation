@@ -25,7 +25,7 @@ call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_preprocessed/'
 
 # Name of analysed channel
-channel = ''
+channel = 'green'
 
 # Name of analysed parameter:
 parameter = 'alpha'
