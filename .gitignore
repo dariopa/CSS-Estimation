@@ -10,6 +10,8 @@
 /.pyenv/
 /SemThes_Local
 /Models/.DS_Store
+/Models/SingleParam_*/__pycache__/
+/Models/ClassifyBellCurve/__pycache__/
 /Models/SingleParam_*/model*/cnn*
 /Models/SingleParam_*/model*/checkpoint
 /Models/ClassifyBellCurve/model*/cnn*
