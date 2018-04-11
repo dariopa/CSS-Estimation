@@ -9,7 +9,8 @@
 /Models/.vscode/
 /.pyenv/
 /SemThes_Local
-/Models/MNIST/__*
 /Models/.DS_Store
-/Models/model*/cnn*
-/Models/model*/checkpoint
+/Models/SingleParam_*/model*/cnn*
+/Models/SingleParam_*/model*/checkpoint
+/Models/ClassifyBellCurve/model*/cnn*
+/Models/ClassifyBellCurve/model*/checkpoint
