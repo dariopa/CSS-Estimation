@@ -62,7 +62,6 @@ X_test = np.load(call_folder + 'X_test.npy')
 y_train = np.load(call_folder + 'y_binned_train.npy')[:, 0]
 y_valid = np.load(call_folder + 'y_binned_validation.npy')[:, 0]
 y_test = np.load(call_folder + 'y_binned_test.npy')[:, 0]
-print(y_test)
 
 img = np.asarray(Image.open(X_train[0]), dtype=np.uint8)
 print(img.shape)
