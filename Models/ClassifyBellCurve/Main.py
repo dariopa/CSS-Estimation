@@ -59,9 +59,9 @@ with open(os.path.join(store_folder, 'Hyperparameters.csv'), 'w+') as fp:
 X_train = np.load(call_folder + 'X_train.npy')
 X_valid = np.load(call_folder + 'X_validation.npy')
 X_test = np.load(call_folder + 'X_test.npy')
-y_train = np.load(call_folder + 'y_binned_train.npy')
-y_valid = np.load(call_folder + 'y_binned_validation.npy')
-y_test = np.load(call_folder + 'y_binned_test.npy')
+y_train = np.load(call_folder + 'y_binned_train.npy')[:, 0]
+y_valid = np.load(call_folder + 'y_binned_validation.npy')[:, 0]
+y_test = np.load(call_folder + 'y_binned_test.npy')[:, 0]
 
 img = np.asarray(Image.open(X_train[0]), dtype=np.uint8)
 print(img.shape)
