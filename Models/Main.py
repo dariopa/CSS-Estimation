@@ -41,7 +41,7 @@ epochs = 40
 classes = 5
 
 # In which folder to store images?
-store_folder = './model_' + str(channel) + '_' + str(parameter) + '_classes_' + str(classes) + '_' + 'VGG19_150_no_preprocessing/'
+store_folder = './model_' + str(channel) + '_' + str(parameter) + '_classes_' + str(classes) + '_' + 'VGG16_150_no_preprocessing/'
 ##############################################################################
 
 if channel == 'red':
