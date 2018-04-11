@@ -15,8 +15,6 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean,
     nr_hyp_images = len(fnmatch.filter(os.listdir(call_folder), '*.mat'))
     batch_counter = 1
 
-    nr_hyp_images = 3
-
     CSS_calc = np.full((3, 31), 0.)
     CSS = np.full((int(np.floor(1392/X_shape)) * int(np.floor(1300/Y_shape)) * nr_hyp_images * nr_param, 2), 0.)
 

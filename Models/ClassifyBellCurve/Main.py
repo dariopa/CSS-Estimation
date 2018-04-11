@@ -27,7 +27,7 @@ CNN = NeuralNetworks.build_VGG16
 ## Define hyperparameters
 learning_rate = 1e-4
 batch_size = 64
-epochs = 1
+epochs = 10
 classes = 16
 
 # In which folder to store images?
