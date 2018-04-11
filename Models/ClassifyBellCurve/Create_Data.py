@@ -5,12 +5,13 @@ from utils_synthetic_data import Generate, Split
 generate = True
 # Split Data?
 split = True
+# preprocess Data?
+preprocess = False
 
 # call_folder = '/home/dario/Documents/SemThes_Local/Images_RAD/'
 call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
 
-# store_folder = '/home/dario/Documents/SemThes_Local/Data_150_150'
-
+# store_folder = '/home/dario/Documents/SemThes_Local/Data_150_150_Classify_Curves'
 store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_Classify_Curves'
 
 # FOR IMAGE GENERATION ----------------------

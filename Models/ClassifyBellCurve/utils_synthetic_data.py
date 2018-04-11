@@ -78,45 +78,43 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean,
 
     y_binned = np.zeros([len(CSS), 1])
 
+    bla = 0
     for i in range(0,len(CSS)):
         # categorize alpha and sigma values: 
-        if CSS[i, 1] == 0.5 and CSS[i,2] == 28.:
+        if CSS[i, 0] == 0.5 and CSS[i,1] == 28.:
             y_binned[i] = 1
-        elif CSS[i, 1] == 0.533 and CSS[i,2] == 30.:
+        elif CSS[i, 0] == 0.533 and CSS[i,1] == 30.:
             y_binned[i] = 2
-        elif CSS[i, 1] == 0.566 and CSS[i,2] == 32.:
+        elif CSS[i, 0] == 0.566 and CSS[i,1] == 32.:
             y_binned[i] = 3
-        elif CSS[i, 1] == 0.6 and CSS[i,2] == 34.:
+        elif CSS[i, 0] == 0.6 and CSS[i,1] == 34.:
             y_binned[i] = 4
-        elif CSS[i, 1] == 0.5 and CSS[i,2] == 34.:
+        elif CSS[i, 0] == 0.5 and CSS[i,1] == 34.:
             y_binned[i] = 5
-        elif CSS[i, 1] == 0.533 and CSS[i,2] == 28.:
+        elif CSS[i, 0] == 0.533 and CSS[i,1] == 28.:
             y_binned[i] = 6
-        elif CSS[i, 1] == 0.566 and CSS[i,2] == 30.:
+        elif CSS[i, 0] == 0.566 and CSS[i,1] == 30.:
             y_binned[i] = 7
-        elif CSS[i, 1] == 0.6 and CSS[i,2] == 32.:
+        elif CSS[i, 0] == 0.6 and CSS[i,1] == 32.:
             y_binned[i] = 8
-        elif CSS[i, 1] == 0.5 and CSS[i,2] == 32.:
+        elif CSS[i, 0] == 0.5 and CSS[i,1] == 32.:
             y_binned[i] = 9
-        elif CSS[i, 1] == 0.533 and CSS[i,2] == 34.:
+        elif CSS[i, 0] == 0.533 and CSS[i,1] == 34.:
             y_binned[i] = 10
-        elif CSS[i, 1] == 0.566 and CSS[i,2] == 28.:
+        elif CSS[i, 0] == 0.566 and CSS[i,1] == 28.:
             y_binned[i] = 11
-        elif CSS[i, 1] == 0.6 and CSS[i,2] == 30.:
+        elif CSS[i, 0] == 0.6 and CSS[i,1] == 30.:
             y_binned[i] = 12
-        elif CSS[i, 1] == 0.5 and CSS[i,2] == 30.:
+        elif CSS[i, 0] == 0.5 and CSS[i,1] == 30.:
             y_binned[i] = 13
-        elif CSS[i, 1] == 0.533 and CSS[i,2] == 32.:
+        elif CSS[i, 0] == 0.533 and CSS[i,1] == 32.:
             y_binned[i] = 14
-        elif CSS[i, 1] == 0.566 and CSS[i,2] == 34.:
+        elif CSS[i, 0] == 0.566 and CSS[i,1] == 34.:
             y_binned[i] = 15
-        elif CSS[i, 1] == 0.6 and CSS[i,2] == 28.:
-            y_binned[i] = 15
+        elif CSS[i, 0] == 0.6 and CSS[i,1] == 28.:
+            y_binned[i] = 16
         else:
             print('No matching class!')
-            alpha = np.array([[0.500, 0.533, 0.566, 0.600, 0.500, 0.533, 0.566, 0.600, 0.500, 0.533, 0.566, 0.600, 0.500, 0.533, 0.566, 0.600]])
-            sigma = np.array([[28., 30., 32., 34., 34., 28., 30., 32., 32., 34., 28., 30., 30., 32., 34., 28.]])
-
     print('Done!')
 
     # SAVE DATA IN BINARY FORMAT
