@@ -16,18 +16,10 @@ tf.set_random_seed(random_seed)
 
 ##############################################################################
 # Which dataset to use?
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150/'
-call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes/'
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_big/'
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_5_classes/'
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_preprocessed/'
+call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_Classify_Curves'
 
 # Name of analysed channel
 channel = 'green'
-
-# Name of analysed parameter:
-parameter = 'alpha'
 
 # Select Net
 CNN = NeuralNetworks.build_VGG16
@@ -35,11 +27,11 @@ CNN = NeuralNetworks.build_VGG16
 ## Define hyperparameters
 learning_rate = 1e-4
 batch_size = 64
-epochs = 40
-classes = 5
+epochs = 1
+classes = 16
 
 # In which folder to store images?
-store_folder = './model_' + str(channel) + '_' + str(parameter) + '_classes_' + str(classes) + '_' + 'VGG16_150_no_preprocessing/'
+store_folder = './model_' + str(channel) + '_classes_' + str(classes) + '_' + 'VGG16_150_no_preprocessing/'
 ##############################################################################
 
 if channel == 'red':
@@ -50,15 +42,6 @@ elif channel == 'blue':
     k = 2
 else:
     k = None
-
-if parameter == 'alpha':
-    j = 0
-elif parameter == 'mean':
-    j = 1
-elif parameter == 'sigma':
-    j = 2
-else:
-    j = None
 
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
@@ -76,9 +59,9 @@ with open(os.path.join(store_folder, 'Hyperparameters.csv'), 'w+') as fp:
 X_train = np.load(call_folder + 'X_train.npy')
 X_valid = np.load(call_folder + 'X_validation.npy')
 X_test = np.load(call_folder + 'X_test.npy')
-y_train = np.load(call_folder + 'y_binned_train.npy')[:, j]
-y_valid = np.load(call_folder + 'y_binned_validation.npy')[:, j]
-y_test = np.load(call_folder + 'y_binned_test.npy')[:, j]
+y_train = np.load(call_folder + 'y_binned_train.npy')
+y_valid = np.load(call_folder + 'y_binned_validation.npy')
+y_test = np.load(call_folder + 'y_binned_test.npy')
 
 img = np.asarray(Image.open(X_train[0]), dtype=np.uint8)
 print(img.shape)
@@ -121,9 +104,9 @@ with tf.Session(graph=g, config=config) as sess:
                                                                    batch_size=batch_size,
                                                                    initialize=True)
 
-    np.save(os.path.join(store_folder, channel + '_' + parameter + '_avg_loss_plot.npy'), avg_loss_plot)
-    np.save(os.path.join(store_folder, channel + '_' + parameter + '_val_accuracy_plot.npy'), val_accuracy_plot)
-    np.save(os.path.join(store_folder, channel + '_' + parameter + '_test_accuracy_plot.npy'), test_accuracy_plot)
+    np.save(os.path.join(store_folder, channel + '_avg_loss_plot.npy'), avg_loss_plot)
+    np.save(os.path.join(store_folder, channel + '_val_accuracy_plot.npy'), val_accuracy_plot)
+    np.save(os.path.join(store_folder, channel + '_test_accuracy_plot.npy'), test_accuracy_plot)
 
 del g
 ##############################################################################
@@ -156,7 +139,7 @@ with tf.Session(graph=g2, config=config) as sess:
         y_pred[i] = predict(sess, X, return_proba=False)
     test_acc = 100*np.sum((y_pred == y_test)/len(y_test))
     print('Test Acc: %7.3f%%' % test_acc)
-    with open(os.path.join(store_folder, channel + '_' + parameter + '_AccuracyTest.txt'), 'w') as fp:
+    with open(os.path.join(store_folder, channel + '_AccuracyTest.txt'), 'w') as fp:
         fp.write('%.3f%%' % (test_acc))
 
     # PROBABILITIES
@@ -169,4 +152,4 @@ with tf.Session(graph=g2, config=config) as sess:
         X[0, :, :, :] = np.array(Image.open(str(X_test[i])))[:, :, k:(k+1)]
         y_pred_proba[i] = predict(sess, X, return_proba=True)
     print(y_pred_proba)
-    np.save(os.path.join(store_folder, channel + '_' + parameter + '_pred_proba.npy'), y_pred_proba)
+    np.save(os.path.join(store_folder, channel + '_pred_proba.npy'), y_pred_proba)

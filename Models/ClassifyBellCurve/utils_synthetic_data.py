@@ -38,9 +38,9 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean,
         for counter in range(0, nr_param):
             q = 0
             for i in range(401, 711, 10):
-                CSS_calc[0,q] = alpha[0, counter] * math.exp(-(i-r_mean) ** 2 / (2 * sigma ** 2))
-                CSS_calc[1,q] = alpha[0, counter] * math.exp(-(i-g_mean) ** 2 / (2 * sigma ** 2))
-                CSS_calc[2,q] = alpha[0, counter] * math.exp(-(i-b_mean) ** 2 / (2 * sigma ** 2))
+                CSS_calc[0,q] = alpha[0, counter] * math.exp(-(i-r_mean) ** 2 / (2 * sigma[0, counter] ** 2))
+                CSS_calc[1,q] = alpha[0, counter] * math.exp(-(i-g_mean) ** 2 / (2 * sigma[0, counter] ** 2))
+                CSS_calc[2,q] = alpha[0, counter] * math.exp(-(i-b_mean) ** 2 / (2 * sigma[0, counter] ** 2))
                 q = q + 1
 
             # I = [3 x m] || CSS_new = [3 x 33] || rad_reshaped = [33 x m]
@@ -62,7 +62,7 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean,
                     scipy.misc.toimage(I_image_batch, cmin=0., cmax=1.).save(os.path.join(store_folder + '/Images/', str(batch_counter) + '.jpg'))
 
                     # Fill CSS Array
-                    CSS[batch_counter - 1, :] = [alpha[0, counter], sigma]
+                    CSS[batch_counter - 1, :] = [alpha[0, counter], sigma[0, counter]]
                     batch_counter = batch_counter + 1
 
     batch_counter = batch_counter - 1 # just to have right amount of images
@@ -76,12 +76,46 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean,
     print('Binning y Data...')
     nr_images = len(fnmatch.filter(os.listdir(store_folder + '/Images/'), '*.jpg'))
 
-    y_binned = np.zeros([len(CSS), 2])
+    y_binned = np.zeros([len(CSS), 1])
 
     for i in range(0,len(CSS)):
-        # binning r_alpha values
-        class_alpha, bins_alpha = np.histogram(CSS[i, 0], bins=classes, range=[0.5, 0.6])
-        y_binned[i, 0] = np.argmax(class_alpha)
+        # categorize alpha and sigma values: 
+        if CSS[i, 1] = 0.5 and CSS[i,2] = 28.:
+            y_binned[i] = 1
+        elif CSS[i, 1] = 0.533 and CSS[i,2] = 30.:
+            y_binned[i] = 2
+        elif CSS[i, 1] = 0.566 and CSS[i,2] = 32.:
+            y_binned[i] = 3
+        elif CSS[i, 1] = 0.6 and CSS[i,2] = 34.:
+            y_binned[i] = 4
+        elif CSS[i, 1] = 0.5 and CSS[i,2] = 34.:
+            y_binned[i] = 5
+        elif CSS[i, 1] = 0.533 and CSS[i,2] = 28.:
+            y_binned[i] = 6
+        elif CSS[i, 1] = 0.566 and CSS[i,2] = 30.:
+            y_binned[i] = 7
+        elif CSS[i, 1] = 0.6 and CSS[i,2] = 32.:
+            y_binned[i] = 8
+        elif CSS[i, 1] = 0.5 and CSS[i,2] = 32.:
+            y_binned[i] = 9
+        elif CSS[i, 1] = 0.533 and CSS[i,2] = 34.:
+            y_binned[i] = 10
+        elif CSS[i, 1] = 0.566 and CSS[i,2] = 28.:
+            y_binned[i] = 11
+        elif CSS[i, 1] = 0.6 and CSS[i,2] = 30.:
+            y_binned[i] = 12
+        elif CSS[i, 1] = 0.5 and CSS[i,2] = 30.:
+            y_binned[i] = 13
+        elif CSS[i, 1] = 0.533 and CSS[i,2] = 32.:
+            y_binned[i] = 14
+        elif CSS[i, 1] = 0.566 and CSS[i,2] = 34.:
+            y_binned[i] = 15
+        elif CSS[i, 1] = 0.6 and CSS[i,2] = 28.:
+            y_binned[i] = 15
+        else:
+            print('No matching class!')
+            alpha = np.array([[0.500, 0.533, 0.566, 0.600, 0.500, 0.533, 0.566, 0.600, 0.500, 0.533, 0.566, 0.600, 0.500, 0.533, 0.566, 0.600]])
+            sigma = np.array([[28., 30., 32., 34., 34., 28., 30., 32., 32., 34., 28., 30., 30., 32., 34., 28.]])
 
     print('Done!')
 
