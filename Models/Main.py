@@ -25,15 +25,14 @@ call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes/'
 # call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_preprocessed/'
 
 # Name of analysed channel
-channel = 'red'
+channel = ''
 
 # Name of analysed parameter:
 parameter = 'alpha'
 
 # Select Net
 # CNN = NeuralNetworks.build_LeNet_own
-# CNN = NeuralNetworks.build_VGG16
-CNN = NeuralNetworks.build_VGG19s
+CNN = NeuralNetworks.build_VGG16
 
 ## Define hyperparameters
 learning_rate = 1e-4
