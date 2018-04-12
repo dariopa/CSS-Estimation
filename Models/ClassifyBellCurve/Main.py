@@ -27,11 +27,11 @@ CNN = NeuralNetworks.build_VGG16
 ## Define hyperparameters
 learning_rate = 1e-4
 batch_size = 64
-epochs = 10
+epochs = 40
 classes = 16
 
 # In which folder to store images?
-store_folder = './model_' + str(channel) + '_classes_' + str(classes) + '_' + 'VGG16_150_no_preprocessing/'
+store_folder = './model_' + str(channel) + '_classes_' + str(classes) + '_' + 'VGG16_150_no_preprocessing_V2/'
 ##############################################################################
 
 if channel == 'red':
