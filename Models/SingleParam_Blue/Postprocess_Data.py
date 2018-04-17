@@ -4,19 +4,8 @@ import matplotlib.pyplot as plt
 
 ##############################################################################
 parameter = 'alpha'
-channel = 'red'
-# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_3_classes_LeNet_150/'
-# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_3_classes_VGG16_150/'
-# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_LeNet_150/'
-# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_VGG16_224/'
-# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_5_classes_VGG16_150/'
-# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_VGG16_150/'
-# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_5_classes_VGG16_224/'
-# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_VGG16_224_preprocessed/'
-# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_VGG16_224_no_preprocessing/'
-# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_VGG16_224_sgd/'
-# call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_VGG19_224_no_preprocessing/'
-call_folder = '/home/dario/Desktop/SemThes/Models/model_r_alpha_10_classes_VGG16_150/'
+channel = 'blue'
+call_folder = 'model_blue_alpha_classes_5_VGG16_150_no_preprocessing/'
 ##############################################################################
 
 avg_loss_plot = np.load(call_folder + channel + '_' + parameter + '_avg_loss_plot.npy')

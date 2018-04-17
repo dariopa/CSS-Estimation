@@ -3,9 +3,9 @@ from matplotlib.pyplot import imshow
 import matplotlib.pyplot as plt
 
 ##############################################################################
-channel = 'green'
+channel = 'red'
 
-call_folder = 'model_green_classes_16_VGG16_150_no_preprocessing/'
+call_folder = 'model_red_classes_16_VGG16_150_no_preprocessing_V2/'
 ##############################################################################
 
 avg_loss_plot = np.load(call_folder + channel + '_avg_loss_plot.npy')
