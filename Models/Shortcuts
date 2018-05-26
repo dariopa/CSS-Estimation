@@ -3,7 +3,7 @@ ssh dariopa@biwidl103.ethz.ch
 
 %% Path to Folder with code
 exec $SHELL
-cd /scratch_net/biwidl103/SemThes/Models/
+cd /scratch_net/biwidl103/dariopa/SemThes/Models/
 
 %% Submitting Jobs
 exec $SHELL
@@ -12,7 +12,7 @@ qrsh -l gpu=1 -l h_vmem=60G -q gpu.long.q@*
 exec $SHELL
 qrsh -l gpu=1 -l h_vmem=40G -l h_rt=24:00:00 -l hostname=bmicgpu02
 % with
-cd /scratch_net/biwidl103/SemThes/Models/
+cd /scratch_net/biwidl103/dariopa/SemThes/Models/
 exec $SHELL
 export SGE_GPU=`grep -h $(whoami) /tmp/lock-gpu*/info.txt | sed  's/^[^0-9]*//;s/[^0-9].*$//'`
 python Main.py
