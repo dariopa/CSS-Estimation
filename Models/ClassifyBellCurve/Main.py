@@ -16,7 +16,7 @@ tf.set_random_seed(random_seed)
 
 ##############################################################################
 # Which dataset to use?
-call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_Classify_Curves/'
+call_folder = '../../Data_150_150_Classify_Curves/'
 
 # Name of analysed channel
 channel = 'blue'
@@ -31,7 +31,7 @@ epochs = 40
 classes = 16
 
 # In which folder to store images?
-store_folder = './model_' + str(channel) + '_classes_' + str(classes) + '_' + 'VGG16_150_no_preprocessing_V2/'
+store_folder = './model_' + str(channel) + '_classes_' + str(classes) + '_' + 'VGG16_150_with_preprocessing/'
 ##############################################################################
 
 if channel == 'red':

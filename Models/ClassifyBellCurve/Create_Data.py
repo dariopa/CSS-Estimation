@@ -5,14 +5,9 @@ from utils_synthetic_data import Generate, Split
 generate = True
 # Split Data?
 split = True
-# preprocess Data?
-preprocess = False
 
-# call_folder = '/home/dario/Documents/SemThes_Local/Images_RAD/'
-call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
-
-# store_folder = '/home/dario/Documents/SemThes_Local/Data_150_150_Classify_Curves'
-store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_Classify_Curves'
+call_folder = '../../Images_RAD/'
+store_folder = '../../Data_TEST/'
 
 # FOR IMAGE GENERATION ----------------------
 # Batch size of images
@@ -38,7 +33,7 @@ Test_split = 1./10
 
 if generate == True:
     print('Generating images')
-    Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean, b_mean, sigma, classes, preprocessing=preprocess)
+    Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean, b_mean, sigma, classes)
 if split == True:
     print('\nSplit Data')
     Split(store_folder, use_data, Train_split, Val_split, Test_split)
