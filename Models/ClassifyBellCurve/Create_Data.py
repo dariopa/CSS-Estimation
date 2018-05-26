@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from utils_synthetic_data import Generate, Split
 
@@ -8,6 +9,10 @@ split = True
 
 call_folder = '../../Images_RAD/'
 store_folder = '../../Data_TEST'
+if not os.path.isdir(store_folder):
+    os.makedirs(store_folder)
+if not os.path.isdir(os.path.join(store_folder, 'Images'))
+    os.makedirs(os.path.join(store_folder, 'Images'))
 
 # FOR IMAGE GENERATION ----------------------
 # Batch size of images
