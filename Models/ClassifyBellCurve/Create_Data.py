@@ -38,7 +38,7 @@ Test_split = 1./10
 
 if generate == True:
     print('Generating images')
-    Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean, b_mean, sigma)
+    Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean, b_mean, sigma, classes)
 if split == True:
     print('\nSplit Data')
     Split(store_folder, use_data, Train_split, Val_split, Test_split)
