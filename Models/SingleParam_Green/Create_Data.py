@@ -1,17 +1,13 @@
+import os
 import numpy as np
 from utils_synthetic_data import Generate, Split
 
-# Preprocess images?
-preprocess = True
-
-# call_folder = '/home/dario/Documents/SemThes_Local/Images_RAD/'
-call_folder = '/scratch_net/biwidl102/dariopa/Images_RAD/'
-
-# store_folder = '/home/dario/Documents/SemThes_Local/Data_150_150'
-
-# store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150'
-# store_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_big'
-store_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_preprocessed'
+call_folder = '../../Images_RAD/'
+store_folder = '../../Data_150_150_preprocessed'
+if not os.path.isdir(store_folder):
+    os.makedirs(store_folder)
+if not os.path.isdir(os.path.join(store_folder, 'Images')):
+    os.makedirs(os.path.join(store_folder, 'Images'))
 
 # FOR IMAGE GENERATION ----------------------
 # Batch size of images
@@ -38,6 +34,6 @@ Val_split = 1./10
 Test_split = 1./10
 
 print('Generating images')
-Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean, b_mean, sigma, classes, preprocessing=preprocess)
+Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean, b_mean, sigma, classes)
 print('\nPreprocess Data')
 Split(store_folder, use_data, Train_split, Val_split, Test_split)

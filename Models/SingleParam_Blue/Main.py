@@ -16,12 +16,7 @@ tf.set_random_seed(random_seed)
 
 ##############################################################################
 # Which dataset to use?
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150/'
-call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_5_classes/'
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224/'
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_big/'
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_224_224_5_classes/'
-# call_folder = '/scratch_net/biwidl102/dariopa/Data_150_150_preprocessed/'
+call_folder = '../../Data_150_150_5_classes/'
 
 # Name of analysed channel
 channel = 'blue'

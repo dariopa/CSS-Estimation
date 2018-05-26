@@ -8,9 +8,8 @@ import math
 import cv2
 from PIL import Image
 from sklearn.utils import shuffle
-from utils_preprocessing import scale, norm
 
-def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean, b_mean, sigma, classes, preprocessing=True):
+def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean, b_mean, sigma, classes):
     _, nr_param = alpha.shape
     nr_hyp_images = len(fnmatch.filter(os.listdir(call_folder), '*.mat'))
     batch_counter = 1
@@ -50,10 +49,6 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean,
             I_image = np.swapaxes(I_image, 0, 1)
             I_image = np.swapaxes(I_image, 1, 2)
             I_image[I_image > 1] = 1
-
-            if preprocessing == True:
-                I_image = norm(I_image)
-                I_image = scale(I_image)
 
             # Now store batches of Image!
             for i in range(0,X_window):
