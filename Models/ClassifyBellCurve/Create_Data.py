@@ -8,7 +8,7 @@ generate = True
 split = True
 
 call_folder = '../../Images_RAD/'
-store_folder = '../../Data_TEST'
+store_folder = '../../Data_224_224_Classify_Curves'
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 if not os.path.isdir(os.path.join(store_folder, 'Images')):
@@ -16,8 +16,8 @@ if not os.path.isdir(os.path.join(store_folder, 'Images')):
 
 # FOR IMAGE GENERATION ----------------------
 # Batch size of images
-X_shape = 150
-Y_shape = 150
+X_shape = 224
+Y_shape = 224
 
 alpha = np.array([[0.500, 0.533, 0.566, 0.600, 0.500, 0.533, 0.566, 0.600, 0.500, 0.533, 0.566, 0.600, 0.500, 0.533, 0.566, 0.600]])
 r_mean = 615
