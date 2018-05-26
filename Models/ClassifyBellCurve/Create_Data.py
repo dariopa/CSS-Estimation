@@ -7,7 +7,7 @@ generate = True
 split = True
 
 call_folder = '../../Images_RAD/'
-store_folder = '../../Data_TEST/'
+store_folder = '../../Data_TEST'
 
 # FOR IMAGE GENERATION ----------------------
 # Batch size of images
