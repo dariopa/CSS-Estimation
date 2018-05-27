@@ -19,7 +19,7 @@ tf.set_random_seed(random_seed)
 call_folder = '../../Data_100_100_Classify_Curves/'
 
 # Name of analysed channel
-channel = 'red'
+channel = 'green'
 
 # Select Net
 CNN = NeuralNetworks.build_VGG16
