@@ -7,7 +7,7 @@ imtool close all;	% Close all figure windows created by imtool.
 
 
 %% Import all images in loop:
-myFolder = 'C:\Users\dario\Documents\Backups_Semesterarbeit\29.01.2018\Sensitivity_Functions'; % Define your working folder
+myFolder = 'C:\Users\dario\Documents\SemThes\Sensitivity_Functions'; % Define your working folder
 if ~isdir(myFolder)
   errorMessage = sprintf('Error: The following folder does not exist:\n%s', myFolder);
   uiwait(warndlg(errorMessage));

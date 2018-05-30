@@ -16,7 +16,7 @@ tf.set_random_seed(random_seed)
 
 ##############################################################################
 # Which dataset to use?
-call_folder = '../../Data_224_224_Classify_Curves/'
+call_folder = '../../Data_100_100_Classify_Curves/'
 
 # Name of analysed channel
 channel = 'green'
