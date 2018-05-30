@@ -1,8 +1,5 @@
-/cuda
-/cuda*
-/Data_*
-/Images_RAD
-/Images
+/Data_*/Images/
+/Images_RAD/
 /Models/__pycache__/
 /.DS_Store
 /.vscode/
