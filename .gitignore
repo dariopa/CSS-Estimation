@@ -1,5 +1,6 @@
 /Data_*/Images/
 /Data_*/X_*
+/Data_*/datapath.npy
 /Images_RAD/
 /Models/__pycache__/
 /.DS_Store
