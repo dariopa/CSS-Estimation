@@ -7,7 +7,7 @@ imtool close all;	% Close all figure windows created by imtool.
 
 
 %% Read the image
-load D:/Images/1.mat;
+load C:\Users\dario\Documents\SemThes\Images_RAD\1.mat;
 imshow(rgb);
 
 %% Plot the RGB values
