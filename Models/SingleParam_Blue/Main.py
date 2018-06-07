@@ -16,7 +16,7 @@ tf.set_random_seed(random_seed)
 
 ##############################################################################
 # Which dataset to use?
-call_folder = '../../Data_150_150_5_classes/'
+call_folder = '../../Data_150_150_5_classes_sigma/'
 
 # Name of analysed channel
 channel = 'blue'

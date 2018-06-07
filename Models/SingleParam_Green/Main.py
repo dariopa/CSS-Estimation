@@ -16,13 +16,13 @@ tf.set_random_seed(random_seed)
 
 ##############################################################################
 # Which dataset to use?
-call_folder = '../../Data_150_150_5_classes/'
+call_folder = '../../Data_150_150_5_classes_sigma/'
 
 # Name of analysed channel
 channel = 'green'
 
 # Name of analysed parameter:
-parameter = 'alpha'
+parameter = 'sigma'
 
 # Select Net
 CNN = NeuralNetworks.build_VGG16
