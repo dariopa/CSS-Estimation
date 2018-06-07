@@ -7,7 +7,7 @@ imtool close all;	% Close all figure windows created by imtool.
 
 
 %% Import all images:
-myFolder = 'C:\Users\dario\Documents\Backups_Semesterarbeit\Images\';
+myFolder = 'C:\Users\dario\Documents\SemThes\Images_RAD\';
 matFiles = dir(fullfile(myFolder, '*.mat'));
 
 for k = 1:1%20:length(matFiles)
