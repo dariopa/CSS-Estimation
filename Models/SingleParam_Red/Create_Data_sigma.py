@@ -4,7 +4,7 @@ from utils_synthetic_data_sigma import Generate, Split
 
 
 call_folder = '../../Images_RAD/'
-store_folder = '../../dariopa/Data_150_150_5_classes_sigma'
+store_folder = '../../Data_150_150_5_classes_sigma'
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 if not os.path.isdir(os.path.join(store_folder, 'Images')):
