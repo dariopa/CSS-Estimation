@@ -4,7 +4,7 @@ from utils_synthetic_data import Generate, Split
 
 
 call_folder = '../../Images_RAD/'
-store_folder = '../../dariopa/Data_150_150'
+store_folder = '../../dariopa/Data_150_150_5_classes_sigma'
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 if not os.path.isdir(os.path.join(store_folder, 'Images')):
@@ -15,15 +15,14 @@ if not os.path.isdir(os.path.join(store_folder, 'Images')):
 X_shape = 150
 Y_shape = 150
 
-alpha = np.array([[0.501, 0.51, 0.52, 0.53, 0.54, 0.55, 0.56, 0.57, 0.58, 0.59, 0.599]])
-# alpha = np.array([[0.501, 0.505, 0.51, 0.515, 0.52, 05.25, 0.53, 05.35, 0.54, 0.545, 0.55, 0.555, 0.56, 0.565, 0.57, 0.575, 0.58, 0.585, 0.59, 0.595, 0.599]])
+alpha = 0.55
 r_mean = 615
 g_mean = 530
 b_mean = 465
-sigma = 28
+sigma = np.array([[28.01, 28.7, 29.4, 30.1, 30.8, 31.5, 32.2, 32.9, 33.6, 34.3, 34.599]])
 
 # classes
-classes = 10
+classes = 5
 
 # FOR PREPROCESSING ----------------------
 # How much data to use?

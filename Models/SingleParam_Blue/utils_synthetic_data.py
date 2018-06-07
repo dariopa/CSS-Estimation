@@ -37,9 +37,9 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean,
         for counter in range(0, nr_param):
             q = 0
             for i in range(401, 711, 10):
-                CSS_calc[0,q] = alpha[0, counter] * math.exp(-(i-r_mean) ** 2 / (2 * sigma ** 2))
-                CSS_calc[1,q] = alpha[0, counter] * math.exp(-(i-g_mean) ** 2 / (2 * sigma ** 2))
-                CSS_calc[2,q] = alpha[0, counter] * math.exp(-(i-b_mean) ** 2 / (2 * sigma ** 2))
+                CSS_calc[0,q] = alpha * math.exp(-(i-r_mean) ** 2 / (2 * sigma[0, counter] ** 2))
+                CSS_calc[1,q] = alpha * math.exp(-(i-g_mean) ** 2 / (2 * sigma[0, counter] ** 2))
+                CSS_calc[2,q] = alpha * math.exp(-(i-b_mean) ** 2 / (2 * sigma[0, counter] ** 2))
                 q = q + 1
 
             # I = [3 x m] || CSS_new = [3 x 33] || rad_reshaped = [33 x m]
@@ -57,7 +57,7 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean,
                     scipy.misc.toimage(I_image_batch, cmin=0., cmax=1.).save(os.path.join(store_folder + '/Images/', str(batch_counter) + '.jpg'))
 
                     # Fill CSS Array
-                    CSS[batch_counter - 1, :] = [alpha[0, counter], sigma]
+                    CSS[batch_counter - 1, :] = [alpha, sigma[0, counter]]
                     batch_counter = batch_counter + 1
 
     batch_counter = batch_counter - 1 # just to have right amount of images
@@ -75,8 +75,8 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean,
 
     for i in range(0,len(CSS)):
         # binning r_alpha values
-        class_alpha, bins_alpha = np.histogram(CSS[i, 0], bins=classes, range=[0.5, 0.6])
-        y_binned[i, 0] = np.argmax(class_alpha)
+        class_sigma, bins_alpha = np.histogram(CSS[i, 0], bins=classes, range=[28, 35])
+        y_binned[i, 0] = np.argmax(class_sigma)
 
     print('Done!')
 

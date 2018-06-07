@@ -22,7 +22,7 @@ call_folder = '../../Data_150_150_5_classes/'
 channel = 'blue'
 
 # Name of analysed parameter:
-parameter = 'alpha'
+parameter = 'sigma'
 
 # Select Net
 CNN = NeuralNetworks.build_VGG16
@@ -48,10 +48,8 @@ else:
 
 if parameter == 'alpha':
     j = 0
-elif parameter == 'mean':
-    j = 1
 elif parameter == 'sigma':
-    j = 2
+    j = 1
 else:
     j = None
 
