@@ -1,6 +1,9 @@
 import os
 import numpy as np
-from utils_synthetic_data import Generate, Split
+from utils_synthetic_data_alpha import Generate, Split
+
+# Preprocess images?
+preprocess = True
 
 call_folder = '../../Images_RAD/'
 store_folder = '../../Data_150_150_preprocessed'

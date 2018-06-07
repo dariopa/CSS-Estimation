@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from utils_synthetic_data import Generate, Split
+from utils_synthetic_data_alpha import Generate, Split
 
 # Preprocess images?
 preprocess = True
