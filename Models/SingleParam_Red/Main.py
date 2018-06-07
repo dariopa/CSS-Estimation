@@ -48,10 +48,8 @@ else:
 
 if parameter == 'alpha':
     j = 0
-elif parameter == 'mean':
-    j = 1
 elif parameter == 'sigma':
-    j = 2
+    j = 1
 else:
     j = None
 
