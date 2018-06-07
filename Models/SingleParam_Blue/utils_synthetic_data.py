@@ -10,7 +10,7 @@ from PIL import Image
 from sklearn.utils import shuffle
 
 def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean, b_mean, sigma, classes):
-    _, nr_param = alpha.shape
+    _, nr_param = sigma.shape
     nr_hyp_images = len(fnmatch.filter(os.listdir(call_folder), '*.mat'))
     batch_counter = 1
 
