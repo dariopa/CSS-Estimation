@@ -75,8 +75,8 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean,
 
     for i in range(0,len(CSS)):
         # binning r_alpha values
-        class_sigma, bins_alpha = np.histogram(CSS[i, 0], bins=classes, range=[28, 35])
-        y_binned[i, 0] = np.argmax(class_sigma)
+        class_sigma, bins_alpha = np.histogram(CSS[i, 1], bins=classes, range=[28, 35])
+        y_binned[i, 1] = np.argmax(class_sigma)
 
     print('Done!')
 
