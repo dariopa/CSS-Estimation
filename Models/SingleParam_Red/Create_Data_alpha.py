@@ -2,11 +2,9 @@ import os
 import numpy as np
 from utils_synthetic_data_alpha import Generate, Split
 
-# Preprocess images?
-preprocess = True
 
 call_folder = '../../Images_RAD/'
-store_folder = '../../Data_150_150_preprocessed'
+store_folder = '../../Data_150_150_5_classes_alpha'
 if not os.path.isdir(store_folder):
     os.makedirs(store_folder)
 if not os.path.isdir(os.path.join(store_folder, 'Images')):
