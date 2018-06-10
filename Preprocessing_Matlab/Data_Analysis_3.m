@@ -1,4 +1,4 @@
-%% Analysis of hyperspectral images
+%% Analysis of pixel-intensity distribution when changing a_i, mu_i and sigma_i
 
 clc;	% Clear command window.
 clear;	% Delete all variables.

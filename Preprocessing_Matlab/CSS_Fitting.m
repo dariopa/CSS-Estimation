@@ -3,11 +3,10 @@
 clc;	% Clear command window.
 clear;	% Delete all variables.
 close all;	% Close all figure windows except those created by imtool.
-imtool close all;	% Close all figure windows created by imtool.
 
 
 %% Import all images in loop:
-myFolder = 'C:\Users\dario\Documents\SemThes\Sensitivity_Functions'; % Define your working folder
+myFolder = 'Sensitivity_Functions'; % Define your working folder
 if ~isdir(myFolder)
   errorMessage = sprintf('Error: The following folder does not exist:\n%s', myFolder);
   uiwait(warndlg(errorMessage));

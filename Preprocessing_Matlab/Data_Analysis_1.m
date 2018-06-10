@@ -1,4 +1,4 @@
-%% Analysis of hyperspectral images
+%% Trial of how to reconstruct RGB image from hyperspectral image and CSS functions
 
 clc;	% Clear command window.
 clear;	% Delete all variables.
