@@ -33,8 +33,10 @@ Preprocessing_Matlab: This folder contains some matlab script which have been us
 
 Clone the repository by typing
 
-''' git clone https://github.com/dariopa/CSS-Reconstruction.git '''
+``` git clone https://github.com/dariopa/CSS-Reconstruction.git ```
 
 ## Running the code locally
 
-1) Open the file 'config/system.py'
+1) Open for instance the file `Models/ClassifyBellCurve/Create_Data.py` and edit all paths there to match your system. When you're done, type ``` python Create_Data.py ``` - this will create your RGB dataset. 
+2) Next, open `Models/ClassifyBellCurve/Main.py` and edit your path and parameters from line 18 to line 31. When you're done, type ``` python Main.py ``` - this will start your training.
+2.1) Keep in mind to comment line 3 if you're not using GPU environment. 
