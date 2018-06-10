@@ -4,13 +4,15 @@ Author:
 
 ## Dataset
 The raw hyperspectral images that have been used for this project were downloaded here: 
+
 http://icvl.cs.bgu.ac.il/hyperspectral/
+
 Store this data in a folder called `Images_RAD`. The images will come as *.mat files with arbitrary titles. Renumber them (in order to be fed in the Neural Network) by running ``` Originial_RAD.m ``` on matlab. 
 
 ## Requirements 
 
 - Python 3.6 (only tested with 3.6.3)
-- Tensorflow >= 1.0 (tested with 1.1.0, and 1.2.0)
+- Tensorflow >= 1.0 (tested with 1.2.0)
 - GPU environment recomended
 
 To install tensorflow, type: 
