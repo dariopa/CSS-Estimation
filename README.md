@@ -33,4 +33,8 @@ Preprocessing_Matlab: This folder contains some matlab script which have been us
 
 Clone the repository by typing
 
-``` git clone https://github.com/dariopa/CSS-Reconstruction.git ```
+''' git clone https://github.com/dariopa/CSS-Reconstruction.git '''
+
+## Running the code locally
+
+1) Open the file 'config/system.py'
