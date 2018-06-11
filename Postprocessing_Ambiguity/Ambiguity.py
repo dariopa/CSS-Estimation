@@ -7,7 +7,7 @@ call_folder = '../Data_Ambiguity/Images'
 store_folder = '../Data_Ambiguity'
 classes = 16
 
-nr_images = len(fnmatch.filter(os.listdir(call_folder), '*.jpg'))+1
+nr_images = len(fnmatch.filter(os.listdir(call_folder), '*.jpg'))
 print('Total number of images: ', nr_images)
 
 
