@@ -78,35 +78,35 @@ def Generate(call_folder, store_folder, X_shape, Y_shape, alpha, r_mean, g_mean,
         # categorize alpha and sigma values: 
         if CSS[i, 0] == 0.5 and CSS[i,1] == 28.:
             y_binned[i] = 0
-        elif CSS[i, 0] == 0.533 and CSS[i,1] == 30.:
-            y_binned[i] = 1
-        elif CSS[i, 0] == 0.566 and CSS[i,1] == 32.:
-            y_binned[i] = 2
-        elif CSS[i, 0] == 0.6 and CSS[i,1] == 34.:
-            y_binned[i] = 3
-        elif CSS[i, 0] == 0.5 and CSS[i,1] == 34.:
-            y_binned[i] = 4
-        elif CSS[i, 0] == 0.533 and CSS[i,1] == 28.:
-            y_binned[i] = 5
-        elif CSS[i, 0] == 0.566 and CSS[i,1] == 30.:
-            y_binned[i] = 6
-        elif CSS[i, 0] == 0.6 and CSS[i,1] == 32.:
-            y_binned[i] = 7
-        elif CSS[i, 0] == 0.5 and CSS[i,1] == 32.:
-            y_binned[i] = 8
-        elif CSS[i, 0] == 0.533 and CSS[i,1] == 34.:
-            y_binned[i] = 9
-        elif CSS[i, 0] == 0.566 and CSS[i,1] == 28.:
-            y_binned[i] = 10
-        elif CSS[i, 0] == 0.6 and CSS[i,1] == 30.:
-            y_binned[i] = 11
         elif CSS[i, 0] == 0.5 and CSS[i,1] == 30.:
-            y_binned[i] = 12
+            y_binned[i] = 1
+        elif CSS[i, 0] == 0.5 and CSS[i,1] == 32.:
+            y_binned[i] = 2
+        elif CSS[i, 0] == 0.5 and CSS[i,1] == 34.:
+            y_binned[i] = 3
+        elif CSS[i, 0] == 0.533 and CSS[i,1] == 28.:
+            y_binned[i] = 4
+        elif CSS[i, 0] == 0.533 and CSS[i,1] == 30.:
+            y_binned[i] = 5
         elif CSS[i, 0] == 0.533 and CSS[i,1] == 32.:
-            y_binned[i] = 13
+            y_binned[i] = 6
+        elif CSS[i, 0] == 0.533 and CSS[i,1] == 34.:
+            y_binned[i] = 7
+        elif CSS[i, 0] == 0.566 and CSS[i,1] == 28.:
+            y_binned[i] = 8
+        elif CSS[i, 0] == 0.566 and CSS[i,1] == 30.:
+            y_binned[i] = 9
+        elif CSS[i, 0] == 0.566 and CSS[i,1] == 32.:
+            y_binned[i] = 10
         elif CSS[i, 0] == 0.566 and CSS[i,1] == 34.:
-            y_binned[i] = 14
+            y_binned[i] = 11
         elif CSS[i, 0] == 0.6 and CSS[i,1] == 28.:
+            y_binned[i] = 12
+        elif CSS[i, 0] == 0.6 and CSS[i,1] == 30.:
+            y_binned[i] = 13
+        elif CSS[i, 0] == 0.6 and CSS[i,1] == 32.:
+            y_binned[i] = 14
+        elif CSS[i, 0] == 0.6 and CSS[i,1] == 34.:
             y_binned[i] = 15
         else:
             print('No matching class!')
