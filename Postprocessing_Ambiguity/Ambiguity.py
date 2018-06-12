@@ -4,7 +4,6 @@ import fnmatch
 from PIL import Image
 
 call_folder = '../Data_Ambiguity/Images'
-store_folder = '../Data_Ambiguity'
 classes = 16
 
 nr_images = len(fnmatch.filter(os.listdir(call_folder), '*.jpg'))
@@ -37,10 +36,10 @@ for i in range(3): # Loop for channel
     np.divide(MSE_array_tot,counter)
         
     if i == 0:
-        np.savetxt(os.path.join(store_folder,"statistics_red.csv"), MSE_array, delimiter=",")
+        np.savetxt("statistics_red.csv", MSE_array, delimiter=",")
     elif i == 1:
-        np.savetxt(os.path.join(store_folder,"statistics_green.csv"), MSE_array, delimiter=",")
+        np.savetxt("statistics_green.csv", MSE_array, delimiter=",")
     elif i == 2:
-        np.savetxt(os.path.join(store_folder,"statistics_blue.csv"), MSE_array, delimiter=",")
+        np.savetxt("statistics_blue.csv", MSE_array, delimiter=",")
     else:
         print('ERROR!')
