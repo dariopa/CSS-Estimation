@@ -3,7 +3,7 @@ Author:
 - Dario Panzuto ([email](mailto:dariopa@ethz.ch))
 
 ## Dataset
-The raw hyperspectral images that have been used for this project were downloaded from this [here](http://icvl.cs.bgu.ac.il/hyperspectral/)
+The raw hyperspectral images that have been used for this project were downloaded from this [website](http://icvl.cs.bgu.ac.il/hyperspectral/)
 
 Store this data in a folder called `Images_RAD`. The images will come as *.mat files with arbitrary titles. Renumber them (in order to be fed in the Neural Network) by running ``` Originial_RAD.m ``` on matlab. 
 
